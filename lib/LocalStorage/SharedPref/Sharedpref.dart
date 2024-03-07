@@ -32,6 +32,7 @@ class Sharedpref{
 
   // setting and getting of DetailsDone
   setDetails(bool value) async {
+    print("Set Details Done Called");
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool("DetailsDone", value);
 

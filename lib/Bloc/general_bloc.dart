@@ -14,12 +14,13 @@ class GeneralBloc extends Bloc<GeneralEvent, GeneralState> {
   GeneralBloc() : super(GeneralInitial()) {
     on<checkisAuthenticated>((event, emit) async {
       bool isOnboarding = await Sharedpref().getOnBoarding()??false;
-      final auth = FirebaseAuth.instance;
+      String uid=await Sharedpref().getUid();
       bool Guest=await Sharedpref().getGuest()??false;
       bool DetailsDone=await Sharedpref().getDetails()??false;
       int Date= await Sharedpref().getFeelingsDate();
      if(isOnboarding){
-       if( auth.currentUser!=null || Guest){
+       if( (uid!=null && uid.isNotEmpty) || Guest){
+         print("${(uid!=null && uid.isNotEmpty)} ${Guest}");
          if(DetailsDone){
            if(Date!=DateTime.now().day){
              Navigator.of(event.context).pushReplacementNamed("/FeelingsSelection");
@@ -27,9 +28,12 @@ class GeneralBloc extends Bloc<GeneralEvent, GeneralState> {
              Navigator.of(event.context).pushReplacementNamed("/MainScreen");
 
            }
-           }else{Navigator.of(event.context).pushReplacementNamed("/AvatarScreen");}
+           }else{
+           Navigator.of(event.context).pushReplacementNamed("/AvatarScreen");
+         }
        }else {
-          Navigator.of(event.context).pushReplacementNamed("/SignupScreen");
+         print("${(uid!=null && uid.isNotEmpty)} ${Guest}");
+         Navigator.of(event.context).pushReplacementNamed("/SignupScreen");
         }
       }else{
        Navigator.of(event.context).pushReplacementNamed("/onBoarding");

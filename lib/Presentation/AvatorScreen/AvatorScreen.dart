@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttermoji/fluttermojiCircleAvatar.dart';
@@ -11,6 +12,8 @@ import 'package:fluttermoji/fluttermojiThemeData.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:habitup/LocalStorage/SharedPref/Sharedpref.dart';
 import 'package:habitup/Presentation/AvatorScreen/avator_bloc.dart';
+
+import '../../Widgets/edit_avator.dart';
 
 class AvatorScreen extends StatefulWidget {
   const AvatorScreen({super.key});
@@ -121,26 +124,8 @@ class _AvatorScreenState extends State<AvatorScreen> {
                               elevation: 5, // Change elevation
                             ),
                             onPressed: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return FluttermojiCustomizer(
-                                      scaffoldWidth:
-                                      MediaQuery.of(context).size.width,
-                                      scaffoldHeight: MediaQuery.of(context)
-                                          .size
-                                          .height -
-                                          400,
-                                      autosave: true,
-                                      theme: FluttermojiThemeData(
-                                          primaryBgColor: Colors.white,
-                                          labelTextStyle: const TextStyle(
-                                              color: Colors.black),
-                                          tileMargin: EdgeInsets.zero,
-                                          tilePadding: EdgeInsets.zero,
-                                          secondaryBgColor: Colors.white),
-                                    );
-                                  });
+                              HapticFeedback.lightImpact();
+                              EditAvator(context);
                             },
                             child: const Text(
                               "Customize Avator",

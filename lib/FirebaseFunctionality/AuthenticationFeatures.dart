@@ -310,6 +310,50 @@ class AuthenticationFeatures {
       });
     });
   }
+
+  Future signout() async {
+    try {
+      print("logout clicked");
+      return await _auth.signOut(); //signout method of Firebase Auth
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void resetPassword(String email, BuildContext context) async {
+    try {
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: email)
+          .then((value) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              // side: BorderSide(width: borderWidth, color: borderColor),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            content: Text(
+              "Email sent to the mentioned Id",
+              style: TextStyle(color: Colors.black),
+            )));
+
+      });
+      // Reset email sent successfully
+    } catch (e) {
+      String errorMessage = _extractErrorMessage(e.toString());
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.white,
+          shape: const RoundedRectangleBorder(
+            // side: BorderSide(width: borderWidth, color: borderColor),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          content: Text(
+            errorMessage,
+            style: const TextStyle(color: Colors.black),
+          )));
+      // Handle error
+    }
+  }
+
 }
 
 String _extractErrorMessage(String errorString) {

@@ -24,11 +24,19 @@ class WrongPassState extends LoginState {
   WrongPassState({required this.error});
 }
 
+class WrongForgotEmailState extends LoginState {
+  bool animation=true;
+  String error;
+  WrongForgotEmailState({required this.error});
+}
+
 class ActiveLoginButtom extends LoginState{
   bool Active;
 
   ActiveLoginButtom(this.Active);
 }
+
+
 
 
 

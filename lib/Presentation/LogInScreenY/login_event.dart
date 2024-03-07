@@ -34,3 +34,24 @@ class GooggleLoginButton extends LoginEvent {
 
   GooggleLoginButton({required this.context});
 }
+
+class ForgoButtonCalled extends LoginEvent {
+  ForgoButtonCalled();
+}
+
+class ForgoButtonPressed extends LoginEvent {
+  String email;
+  BuildContext context;
+
+  ForgoButtonPressed({required this.context,required this.email});
+}
+
+class ForgotEmailTextchangeEvent extends LoginEvent {
+  String email;
+
+  ForgotEmailTextchangeEvent({required this.email});
+}
+
+class RememberEvent extends LoginEvent{}
+
+

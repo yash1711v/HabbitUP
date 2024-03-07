@@ -213,6 +213,7 @@ class SignupScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+
                   ],
                 );
               },
@@ -270,7 +271,7 @@ class SignupScreen extends StatelessWidget {
                 )),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 100, bottom: 15),
+            padding: const EdgeInsets.only(top: 59, bottom: 15),
             child: Column(
               children: [
                 BlocBuilder<SignupBloc, SignupState>(
@@ -345,9 +346,10 @@ class SignupScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                GestureDetector(
-                  onTap: () {
+                TextButton(
+                  onPressed: () {
                     Sharedpref().setGuest(true);
+                    Sharedpref().setUsername("User");
                     Navigator.of(conText).pushReplacementNamed("/AvatarScreen");
                   },
                   child: Text(

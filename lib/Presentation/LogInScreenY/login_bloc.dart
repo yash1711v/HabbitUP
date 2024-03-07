@@ -26,6 +26,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
     emit(WrongEmailState(error: Error));
   });
+  on<ForgotEmailTextchangeEvent>((event, emit) {
+    String Error="";
+    bool isValid=EmailValidator.validate(event.email);
+    if(isValid){
+
+    }else{
+      Error="Invalid ID";
+    }
+    emit(WrongForgotEmailState(error: Error));
+  });
 
   //Checking for Pass Validation
   on<loginPassTextchangeEvent>((event, emit) {
@@ -89,5 +99,30 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     bool Guest=await Sharedpref().getGuest();
     AuthenticationFeatures().signInWithGoogle(event.context, Guest);
   });
+
+
+  on<ForgoButtonCalled>((event, emit) {
+    emit(WrongForgotEmailState(error: ""));
+
+   });
+
+  on<ForgoButtonPressed>((event, emit) {
+    bool isValid=EmailValidator.validate(event.email);
+    if(isValid) {
+        AuthenticationFeatures().resetPassword(event.email, event.context);
+      }else{
+      ScaffoldMessenger.of(event.context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            // side: BorderSide(width: borderWidth, color: borderColor),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          content: Text(
+            "Enter valid email id",
+            style: TextStyle(color: Colors.black),
+          )));
+    }
+    });
+  on<RememberEvent>((event, emit) =>  emit(LoginInitial()));
   }
 }

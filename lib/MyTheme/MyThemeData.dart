@@ -81,11 +81,11 @@ scaffoldBackgroundColor:  Colors.white,
     primaryColor: Color(0xFF1F1F1F),
     scaffoldBackgroundColor: Color(0xFF1F1F1F),
     dialogBackgroundColor: Colors.white,
-    progressIndicatorTheme: ProgressIndicatorThemeData(
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: Colors.black,
             circularTrackColor: Colors.black
     ),
-    textTheme: TextTheme(
+    textTheme: const TextTheme(
       headline1: TextStyle(color: Colors.white,fontFamily: 'Varta'),
       headline2: TextStyle(color: Colors.white,fontFamily: 'Varta'),
       bodyText1: TextStyle(color: Colors.black,fontFamily: 'Varta'),
