@@ -46,6 +46,7 @@ dependencies:
   animated_text_kit: ^4.2.2
   google_fonts: ^6.2.1
   chips_choice: ^3.0.1
+  stylish_bottom_bar: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +76,7 @@ flutter:
      - assets/ImagesY/
      - assets/ImagesY/Mood/
      - assets/ImagesY/RoutineScreen/
+     - assets/ImagesY/BottomNavigationIconImages/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

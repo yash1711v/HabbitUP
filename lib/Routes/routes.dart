@@ -1,10 +1,9 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habitup/Presentation/AvatorScreen/AvatorScreen.dart';
 import 'package:habitup/Presentation/AvatorScreen/avator_bloc.dart';
-import 'package:habitup/Presentation/MainScreen/MainScreen.dart';
+import 'package:habitup/Presentation/MainScreen/main_screen.dart';
 import 'package:habitup/Presentation/MainScreen/main_screen_bloc.dart';
 
 import '../Bloc/general_bloc.dart';
@@ -20,7 +19,7 @@ import '../Presentation/SplashScreenY/SplashScreen.dart';
 
 
 class Routes {
-  Route<dynamic>? OnGenerateRoute(RouteSettings settings) {
+  Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case "/onBoarding":
         return PageRouteBuilder(
@@ -38,7 +37,7 @@ class Routes {
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
                   create: (context) => GeneralBloc(),
-                  child: SplashScreen(),
+                  child: const SplashScreen(),
                 ));
 
       case "/LoginScreen":
@@ -72,7 +71,7 @@ class Routes {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) => BlocProvider(
             create: (context) => AvatorBloc(),
-            child: AvatorScreen(),
+            child: const AvatorScreen(),
           ),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(
@@ -85,7 +84,7 @@ class Routes {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) => BlocProvider(
             create: (context) => FeelingsSelectionBloc(),
-            child: FeelingSelection(),
+            child: const FeelingSelection(),
           ),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(
@@ -98,7 +97,7 @@ class Routes {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) => BlocProvider(
             create: (context) => MainScreenBloc(),
-            child: MainScreen(),
+            child:  MainScreen(),
           ),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(
@@ -108,5 +107,6 @@ class Routes {
           },
         );
     }
+    return null;
   }
 }

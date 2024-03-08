@@ -9,7 +9,9 @@ part 'main_screen_state.dart';
 class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
   MainScreenBloc() : super(MainScreenInitial()) {
     on<MainScreenEvent>((event, emit) {
-      // TODO: implement event handler
+     if(event is PageChangeEvent){
+       emit(MainScreenPageChangeState(page: event.Page));
+     }
     });
   }
 }
