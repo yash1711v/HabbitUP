@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<ThemeBloc>(context).add(updateEvent(theme: "DarkMode"));
+    BlocProvider.of<ThemeBloc>(context).add(updateEvent(theme: "LightTheme"));
     final brightness = MediaQueryData.fromWindow(WidgetsBinding.instance!.window).platformBrightness;
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {

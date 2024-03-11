@@ -5,12 +5,18 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../Presentation/MainScreen/Pages/Routine/routine_bloc.dart';
+class HorizontalCalendar extends StatefulWidget {
+  const HorizontalCalendar({Key? key}) : super(key: key);
 
-class HorizontalCalendar extends StatelessWidget {
-  HorizontalCalendar({super.key});
+  @override
+  _HorizontalCalendarState createState() => _HorizontalCalendarState();
+}
 
-
+class _HorizontalCalendarState extends State<HorizontalCalendar> {
   final ScrollController _scrollController = ScrollController();
+  DateTime selectedDate = DateTime.now();
+
+  final GlobalKey _rowKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +30,35 @@ class HorizontalCalendar extends StatelessWidget {
             return false;
           },
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Row(
+                  key: _rowKey,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 95,
+                      height: 18,
+                      child: Text(
+                        DateFormat('dd MMM, EEE').format(selectedDate),
+                        style:  TextStyle(
+                          color: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.color,
+                          fontSize: 14,
+                          fontFamily: 'DM Sans',
+                          fontWeight: FontWeight.w500,
+                          height: 0,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
               SizedBox(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
+                width: MediaQuery.of(context).size.width,
                 height: 100,
                 child: ListView.builder(
                   controller: _scrollController,
@@ -38,55 +66,35 @@ class HorizontalCalendar extends StatelessWidget {
                   itemCount: 30, // Number of days to display
                   itemBuilder: (context, index) {
                     DateTime date = DateTime.now().add(Duration(days: index));
-                    bool isToday = date.day == DateTime
-                        .now()
-                        .day;
+                    bool isToday = date.day == DateTime.now().day;
 
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                        left: 16.0,
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          _scrollToSelectedIndex(index);
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                isToday
-                                    ? Center(
-                                  child: Text(
-                                    'TODAY',
-                                    style: GoogleFonts.dmSans(
-                                      textStyle: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 26,
-                                        fontWeight: FontWeight.w500,
-                                        height: 0,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                                    : Center(
-                                  child: Text(
-                                    DateFormat.d().format(date),
-                                    style: GoogleFonts.dmSans(
-                                      textStyle: TextStyle(
-                                        color: Colors.white.withOpacity(0.5),
-                                        fontSize: 26,
-                                        fontFamily: 'DM Sans',
-                                        fontWeight: FontWeight.w400,
-                                        height: 0,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+
+
+                    return GestureDetector(
+
+                      onTap: () {
+                        setState(() {
+                          selectedDate = date;
+                        });
+
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20,right: 10),
+                        child: Text(
+                          isToday ? "TODAY" : DateFormat.d().format(date),
+                          style: GoogleFonts.dmSans(
+                            textStyle: TextStyle(
+                              color:  selectedDate.day==date.day?Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.color:Color(0x7F1F1F1F),
+                              fontSize: 26,
+                              fontFamily: 'DM Sans',
+                              fontWeight:
+                              selectedDate.day==date.day? FontWeight.w500 : FontWeight.w400,
+                              height: 0,
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     );
@@ -100,11 +108,4 @@ class HorizontalCalendar extends StatelessWidget {
     );
   }
 
-  void _scrollToSelectedIndex(int index) {
-    _scrollController.animateTo(
-      index * 90.0, // Adjust according to your item width
-      duration: const Duration(seconds: 1),
-      curve: Curves.easeInOut,
-    );
-  }
 }

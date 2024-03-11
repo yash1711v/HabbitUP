@@ -82,13 +82,9 @@ class RoutineScreen extends StatelessWidget {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 40),
-          child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 140,
-
-              child:  HorizontalCalendar()),
+        const Padding(
+          padding: EdgeInsets.only(top: 50),
+          child: HorizontalCalendar(),
         )
       ],
     );
