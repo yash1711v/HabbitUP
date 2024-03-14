@@ -22,23 +22,11 @@ class _SplashScreenState extends State<SplashScreen> {
          BlocProvider.of<GeneralBloc>(context).add(checkisAuthenticated(context));
 
        });
-        return Center(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.fromRGBO(46, 46, 46, 1),
-                Color.fromRGBO(35, 35, 35, 1),
-                Color.fromRGBO(0, 0, 0, 1),
-              ],
-            )),
-            child:
-                Lottie.asset('assets/LOGO@.json', height: 700, repeat: false),
-          ),
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child:
+              Lottie.asset('assets/Animations/SplashScreen.json', fit: BoxFit.fill, repeat: false),
         );
       },
     );

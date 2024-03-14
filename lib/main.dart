@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habitup/LocalStorage/SharedPref/Sharedpref.dart';
 
 import 'MyTheme/MyThemeData.dart';
 import 'MyTheme/theme_bloc.dart';
@@ -10,7 +11,10 @@ import 'Routes/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'firebase_options.dart';
-
+gettheme(BuildContext context) async {
+  String ThemeDate= await Sharedpref().getThemeData();
+  BlocProvider.of<ThemeBloc>(context).add(updateEvent(theme: ThemeDate));
+}
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -28,8 +32,8 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    BlocProvider.of<ThemeBloc>(context).add(updateEvent(theme: "LightTheme"));
+   Widget build(BuildContext context)  {
+    gettheme(context);
     final brightness = MediaQueryData.fromWindow(WidgetsBinding.instance!.window).platformBrightness;
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {

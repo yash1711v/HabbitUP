@@ -5,12 +5,15 @@ import 'package:habitup/Presentation/AvatorScreen/AvatorScreen.dart';
 import 'package:habitup/Presentation/AvatorScreen/avator_bloc.dart';
 import 'package:habitup/Presentation/MainScreen/main_screen.dart';
 import 'package:habitup/Presentation/MainScreen/main_screen_bloc.dart';
-
 import '../Bloc/general_bloc.dart';
 import '../Presentation/FeelingsSelection/FeelingSelection.dart';
 import '../Presentation/FeelingsSelection/feelings_selection_bloc.dart';
 import '../Presentation/LogInScreenY/LogInScreen.dart';
 import '../Presentation/LogInScreenY/login_bloc.dart';
+import '../Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/habbit_addision_ screen.dart';
+import '../Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/habit_adision_bloc.dart';
+import '../Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/add_habbit_screen.dart';
+import '../Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/add_habit_bloc.dart';
 import '../Presentation/OnBoardingY/ob_boarding_bloc.dart';
 import '../Presentation/OnBoardingY/onboardingscreen.dart';
 import '../Presentation/SignupScreens/SignUpScreen.dart';
@@ -98,6 +101,32 @@ class Routes {
           pageBuilder: (context, animation, secondaryAnimation) => BlocProvider(
             create: (context) => MainScreenBloc(),
             child:  MainScreen(),
+          ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
+        );
+        case "/AddHabitScreen":
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider(
+            create: (context) => AddHabitBloc(),
+            child:  AddHabitScreen(),
+          ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
+        );
+        case "/HabitAddisionScree":
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider(
+            create: (context) => HabitAdisionBloc(),
+            child:  HabbitAddisionScreen(),
           ),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(

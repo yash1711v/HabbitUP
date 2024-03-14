@@ -87,7 +87,7 @@ class _HorizontalCalendarState extends State<HorizontalCalendar> {
                               color:  selectedDate.day==date.day?Theme.of(context)
                                   .textTheme
                                   .titleMedium
-                                  ?.color:Color(0x7F1F1F1F),
+                                  ?.color:Colors.grey,
                               fontSize: 26,
                               fontFamily: 'DM Sans',
                               fontWeight:

@@ -119,6 +119,7 @@ class Sharedpref{
 
     return email;
   }
+
   //Setting and getting of  Password
   setPass(String value) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -185,6 +186,23 @@ class Sharedpref{
 
     return moodMap;
   }
+
+  //Saving Theme To local Storage As weel
+
+  setThemeData(String value) async {
+    print("Seeting Theme");
+    final SharedPreferences prefs=await SharedPreferences.getInstance();
+    prefs.setString("ThemeData", value);
+  }
+
+  getThemeData()async{
+    final SharedPreferences prefs=await SharedPreferences.getInstance();
+    String Theme=prefs.getString("ThemeData")??"DarkMode";
+    print("geting Theme ${Theme}");
+    return Theme;
+
+  }
+
 }
 
 

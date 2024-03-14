@@ -4,7 +4,7 @@ class MyAppTheme {
   static final ThemeData lightTheme = ThemeData(
     primaryColor: Colors.white,
 scaffoldBackgroundColor:  Colors.white,
-    progressIndicatorTheme: ProgressIndicatorThemeData(
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
       color: Colors.white,
         circularTrackColor: Colors.white
 
@@ -18,11 +18,12 @@ scaffoldBackgroundColor:  Colors.white,
       subtitle1: TextStyle(color: Colors.black,fontFamily: 'Varta'),
       subtitle2: TextStyle(color: Color(0xFFF0F0EA),fontFamily: 'Varta'),
     ),
+
     dialogBackgroundColor: Colors.black,
-    bottomSheetTheme: BottomSheetThemeData(
+    bottomSheetTheme: const BottomSheetThemeData(
       backgroundColor: Colors.white
     ),
-    buttonTheme: ButtonThemeData(
+    buttonTheme: const ButtonThemeData(
       minWidth: 327,
       height: 61,
       buttonColor: Color(0xFFFEF656),
@@ -55,21 +56,22 @@ scaffoldBackgroundColor:  Colors.white,
       border: InputBorder.none,
       focusedBorder: OutlineInputBorder(
         borderSide:
-        BorderSide(width: 1, color: Colors.white),
+        BorderSide(width: 1, color: Colors.transparent),
         //<-- SEE HERE
         borderRadius: BorderRadius.circular(10.0),
       ),
       errorBorder: InputBorder.none,
       disabledBorder: InputBorder.none,
       filled: true,
-      fillColor: Colors.black,
+      fillColor: Color(0xFFF0EFEA),
+        prefixIconColor: Color(0x7F1F1F1F),
       enabledBorder: OutlineInputBorder(
         borderSide:
-        BorderSide(width: 1, color: Colors.white),
+        BorderSide(width: 1, color: Colors.transparent),
         //<-- SEE HERE
         borderRadius: BorderRadius.circular(10.0),
       ),
-      hintStyle: TextStyle(color: Colors.white)
+      hintStyle: TextStyle(color: Color(0x7F1F1F1F))
     ),
 
 
@@ -130,18 +132,19 @@ scaffoldBackgroundColor:  Colors.white,
       border: InputBorder.none,
       focusedBorder: OutlineInputBorder(
         borderSide:
-        BorderSide(width: 1, color: Colors.white),
+        BorderSide(width: 1, color: Colors.transparent),
         //<-- SEE HERE
         borderRadius: BorderRadius.circular(10.0),
       ),
       errorBorder: InputBorder.none,
       disabledBorder: InputBorder.none,
       filled: true,
-      fillColor: Colors.white,
-      hintStyle: TextStyle(color: Colors.black),
+      fillColor: Color(0xFF292929),
+      hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
+      prefixIconColor: Colors.white.withOpacity(0.5),
       enabledBorder: OutlineInputBorder(
         borderSide:
-        BorderSide(width: 1, color: Colors.white),
+        BorderSide(width: 1, color: Colors.transparent),
         //<-- SEE HERE
         borderRadius: BorderRadius.circular(10.0),
       ),

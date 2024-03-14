@@ -48,6 +48,7 @@ dependencies:
   chips_choice: ^3.0.1
   stylish_bottom_bar: ^1.0.3
   scroll_to_index: ^3.0.1
+  anim_search_bar: ^2.0.3
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +79,7 @@ flutter:
      - assets/ImagesY/Mood/
      - assets/ImagesY/RoutineScreen/
      - assets/ImagesY/BottomNavigationIconImages/
+     - assets/ImagesY/RoutineScreen/AddhabbitIcons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -90,17 +92,16 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+     - family: 'DM Sans'
+       fonts:
+         - asset: assets/Fonts/DMSans-Italic-VariableFont_opsz,wght.ttf
+         - asset: assets/Fonts/DMSans-VariableFont_opsz,wght.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
