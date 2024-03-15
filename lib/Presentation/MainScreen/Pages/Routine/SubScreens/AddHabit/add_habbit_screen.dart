@@ -121,66 +121,68 @@ class AddHabitScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0, left: 38),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GestureDetector(
-                              onTap:(){
-                              BlocProvider.of<AddHabitBloc>(context).add(StayingFitClickedEvent(StayingFirOpened: !stayingFit));
-                              },
-                              child: Container(
-                                width: 320,
-                                height: 51,
-                                decoration: ShapeDecoration(
-                                  color: Theme.of(context)
-                                      .inputDecorationTheme
-                                      .fillColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15.0, ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                onTap:(){
+                                BlocProvider.of<AddHabitBloc>(context).add(StayingFitClickedEvent(StayingFirOpened: !stayingFit));
+                                },
+                                child: Container(
+                                  width: 320,
+                                  height: 51,
+                                  decoration: ShapeDecoration(
+                                    color: Theme.of(context)
+                                        .inputDecorationTheme
+                                        .fillColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
                                   ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(left: 10.0),
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Staying Fit',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontFamily: 'DM Sans',
-                                            fontWeight: FontWeight.w400,
-                                            height: 0,
+                                  child: Row(
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(left: 10.0),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            'Staying Fit',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontFamily: 'DM Sans',
+                                              fontWeight: FontWeight.w400,
+                                              height: 0,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 200.0, bottom: 1),
-                                      child: IconButton(
-                                        splashColor: Colors.transparent,
-                                          onPressed: () {
-                                            BlocProvider.of<AddHabitBloc>(context).add(StayingFitClickedEvent(StayingFirOpened: !stayingFit));
-                                          },
-                                          icon: SvgPicture.asset(
-                                            stayingFit == true
-                                                ? "assets/ImagesY/RoutineScreen/AddhabbitIcons/UPArrow.svg"
-                                                : "assets/ImagesY/RoutineScreen/AddhabbitIcons/DownArrow.svg",
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium
-                                                ?.color,
-                                          )),
-                                    )
-                                  ],
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 200.0, bottom: 1),
+                                        child: IconButton(
+                                          splashColor: Colors.transparent,
+                                            onPressed: () {
+                                              BlocProvider.of<AddHabitBloc>(context).add(StayingFitClickedEvent(StayingFirOpened: !stayingFit));
+                                            },
+                                            icon: SvgPicture.asset(
+                                              stayingFit == true
+                                                  ? "assets/ImagesY/RoutineScreen/AddhabbitIcons/UPArrow.svg"
+                                                  : "assets/ImagesY/RoutineScreen/AddhabbitIcons/DownArrow.svg",
+                                              color: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium
+                                                  ?.color,
+                                            )),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Visibility(
@@ -241,67 +243,69 @@ class AddHabitScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0, left: 38),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GestureDetector(
-                              onTap:(){
-                                BlocProvider.of<AddHabitBloc>(context).add(StressReliefClickedEvent(StressReliefOpend: !stressRelief));
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15.0,),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                onTap:(){
+                                  BlocProvider.of<AddHabitBloc>(context).add(StressReliefClickedEvent(StressReliefOpend: !stressRelief));
 
-                              },
-                              child: Container(
-                                width: 320,
-                                height: 51,
-                                decoration: ShapeDecoration(
-                                  color: Theme.of(context)
-                                      .inputDecorationTheme
-                                      .fillColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
+                                },
+                                child: Container(
+                                  width: 320,
+                                  height: 51,
+                                  decoration: ShapeDecoration(
+                                    color: Theme.of(context)
+                                        .inputDecorationTheme
+                                        .fillColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
                                   ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(left: 10.0),
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Stress Relief',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontFamily: 'DM Sans',
-                                            fontWeight: FontWeight.w400,
-                                            height: 0,
+                                  child: Row(
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(left: 10.0),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            'Stress Relief',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontFamily: 'DM Sans',
+                                              fontWeight: FontWeight.w400,
+                                              height: 0,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 190.0, bottom: 1),
-                                      child: IconButton(
-                                          onPressed: () {
-                                            BlocProvider.of<AddHabitBloc>(context).add(StressReliefClickedEvent(StressReliefOpend: !stressRelief));
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 189.0, bottom: 1),
+                                        child: IconButton(
+                                            onPressed: () {
+                                              BlocProvider.of<AddHabitBloc>(context).add(StressReliefClickedEvent(StressReliefOpend: !stressRelief));
 
-                                          },
-                                          icon: SvgPicture.asset(
-                                            stressRelief == true
-                                                ? "assets/ImagesY/RoutineScreen/AddhabbitIcons/UPArrow.svg"
-                                                : "assets/ImagesY/RoutineScreen/AddhabbitIcons/DownArrow.svg",
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium
-                                                ?.color,
-                                          )),
-                                    )
-                                  ],
+                                            },
+                                            icon: SvgPicture.asset(
+                                              stressRelief == true
+                                                  ? "assets/ImagesY/RoutineScreen/AddhabbitIcons/UPArrow.svg"
+                                                  : "assets/ImagesY/RoutineScreen/AddhabbitIcons/DownArrow.svg",
+                                              color: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium
+                                                  ?.color,
+                                            )),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Visibility(
@@ -357,67 +361,69 @@ class AddHabitScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0, left: 38),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GestureDetector(
-                              onTap:(){
-                                BlocProvider.of<AddHabitBloc>(context).add(HealthyLifeStyleClickedEvent(HealthyLifeStyleOpend: !healthyLifeStyle));
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15.0, ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                onTap:(){
+                                  BlocProvider.of<AddHabitBloc>(context).add(HealthyLifeStyleClickedEvent(HealthyLifeStyleOpend: !healthyLifeStyle));
 
-                              },
-                              child: Container(
-                                width: 320,
-                                height: 51,
-                                decoration: ShapeDecoration(
-                                  color: Theme.of(context)
-                                      .inputDecorationTheme
-                                      .fillColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
+                                },
+                                child: Container(
+                                  width: 320,
+                                  height: 51,
+                                  decoration: ShapeDecoration(
+                                    color: Theme.of(context)
+                                        .inputDecorationTheme
+                                        .fillColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
                                   ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(left: 10.0),
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Healthy Lifestyle',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontFamily: 'DM Sans',
-                                            fontWeight: FontWeight.w400,
-                                            height: 0,
+                                  child: Row(
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(left: 10.0),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            'Healthy Lifestyle',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontFamily: 'DM Sans',
+                                              fontWeight: FontWeight.w400,
+                                              height: 0,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 165.0, bottom: 1),
-                                      child: IconButton(
-                                          onPressed: () {
-                                            BlocProvider.of<AddHabitBloc>(context).add(HealthyLifeStyleClickedEvent(HealthyLifeStyleOpend: !healthyLifeStyle));
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 164.0, bottom: 1),
+                                        child: IconButton(
+                                            onPressed: () {
+                                              BlocProvider.of<AddHabitBloc>(context).add(HealthyLifeStyleClickedEvent(HealthyLifeStyleOpend: !healthyLifeStyle));
 
-                                          },
-                                          icon: SvgPicture.asset(
-                                            healthyLifeStyle == true
-                                                ? "assets/ImagesY/RoutineScreen/AddhabbitIcons/UPArrow.svg"
-                                                : "assets/ImagesY/RoutineScreen/AddhabbitIcons/DownArrow.svg",
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium
-                                                ?.color,
-                                          )),
-                                    )
-                                  ],
+                                            },
+                                            icon: SvgPicture.asset(
+                                              healthyLifeStyle == true
+                                                  ? "assets/ImagesY/RoutineScreen/AddhabbitIcons/UPArrow.svg"
+                                                  : "assets/ImagesY/RoutineScreen/AddhabbitIcons/DownArrow.svg",
+                                              color: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium
+                                                  ?.color,
+                                            )),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Visibility(
@@ -474,66 +480,68 @@ class AddHabitScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0, left: 38),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GestureDetector(
-                              onTap:(){
-                                BlocProvider.of<AddHabitBloc>(context).add(LovedOnesClickedEvent(LovedOnesOpend: !lovedOnes));
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15.0,),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                onTap:(){
+                                  BlocProvider.of<AddHabitBloc>(context).add(LovedOnesClickedEvent(LovedOnesOpend: !lovedOnes));
 
-                              },
-                              child: Container(
-                                width: 320,
-                                height: 51,
-                                decoration: ShapeDecoration(
-                                  color: Theme.of(context)
-                                      .inputDecorationTheme
-                                      .fillColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
+                                },
+                                child: Container(
+                                  width: 320,
+                                  height: 51,
+                                  decoration: ShapeDecoration(
+                                    color: Theme.of(context)
+                                        .inputDecorationTheme
+                                        .fillColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
                                   ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(left: 10.0),
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Loved Ones',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontFamily: 'DM Sans',
-                                            fontWeight: FontWeight.w400,
-                                            height: 0,
+                                  child: Row(
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(left: 10.0),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            'Loved Ones',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontFamily: 'DM Sans',
+                                              fontWeight: FontWeight.w400,
+                                              height: 0,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 190.0, bottom: 1),
-                                      child: IconButton(
-                                          onPressed: () {
-                                            BlocProvider.of<AddHabitBloc>(context).add(LovedOnesClickedEvent(LovedOnesOpend: !lovedOnes));
-                                          },
-                                          icon: SvgPicture.asset(
-                                            lovedOnes == true
-                                                ? "assets/ImagesY/RoutineScreen/AddhabbitIcons/UPArrow.svg"
-                                                : "assets/ImagesY/RoutineScreen/AddhabbitIcons/DownArrow.svg",
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium
-                                                ?.color,
-                                          )),
-                                    )
-                                  ],
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 190.0, bottom: 1),
+                                        child: IconButton(
+                                            onPressed: () {
+                                              BlocProvider.of<AddHabitBloc>(context).add(LovedOnesClickedEvent(LovedOnesOpend: !lovedOnes));
+                                            },
+                                            icon: SvgPicture.asset(
+                                              lovedOnes == true
+                                                  ? "assets/ImagesY/RoutineScreen/AddhabbitIcons/UPArrow.svg"
+                                                  : "assets/ImagesY/RoutineScreen/AddhabbitIcons/DownArrow.svg",
+                                              color: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium
+                                                  ?.color,
+                                            )),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Visibility(
@@ -590,67 +598,69 @@ class AddHabitScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0, left: 38),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GestureDetector(
-                              onTap:(){
-                                BlocProvider.of<AddHabitBloc>(context).add(PersonalFinanceEvent(PersonalFinanceOpened: !personalFinance));
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15.0, ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                onTap:(){
+                                  BlocProvider.of<AddHabitBloc>(context).add(PersonalFinanceEvent(PersonalFinanceOpened: !personalFinance));
 
-                              },
-                              child: Container(
-                                width: 320,
-                                height: 51,
-                                decoration: ShapeDecoration(
-                                  color: Theme.of(context)
-                                      .inputDecorationTheme
-                                      .fillColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
+                                },
+                                child: Container(
+                                  width: 320,
+                                  height: 51,
+                                  decoration: ShapeDecoration(
+                                    color: Theme.of(context)
+                                        .inputDecorationTheme
+                                        .fillColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
                                   ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(left: 10.0),
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Personal Finance',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontFamily: 'DM Sans',
-                                            fontWeight: FontWeight.w400,
-                                            height: 0,
+                                  child: Row(
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(left: 10.0),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            'Personal Finance',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontFamily: 'DM Sans',
+                                              fontWeight: FontWeight.w400,
+                                              height: 0,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 164.0, bottom: 1),
-                                      child: IconButton(
-                                          onPressed: () {
-                                            BlocProvider.of<AddHabitBloc>(context).add(PersonalFinanceEvent(PersonalFinanceOpened: !personalFinance));
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 156.0, bottom: 1),
+                                        child: IconButton(
+                                            onPressed: () {
+                                              BlocProvider.of<AddHabitBloc>(context).add(PersonalFinanceEvent(PersonalFinanceOpened: !personalFinance));
 
-                                          },
-                                          icon: SvgPicture.asset(
-                                            personalFinance == true
-                                                ? "assets/ImagesY/RoutineScreen/AddhabbitIcons/UPArrow.svg"
-                                                : "assets/ImagesY/RoutineScreen/AddhabbitIcons/DownArrow.svg",
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium
-                                                ?.color,
-                                          )),
-                                    )
-                                  ],
+                                            },
+                                            icon: SvgPicture.asset(
+                                              personalFinance == true
+                                                  ? "assets/ImagesY/RoutineScreen/AddhabbitIcons/UPArrow.svg"
+                                                  : "assets/ImagesY/RoutineScreen/AddhabbitIcons/DownArrow.svg",
+                                              color: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium
+                                                  ?.color,
+                                            )),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Visibility(
@@ -707,67 +717,68 @@ class AddHabitScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0, left: 38),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GestureDetector(
-                              onTap:(){
-                                BlocProvider.of<AddHabitBloc>(context).add(OthersEvent(OthersOpened: !Other));
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15.0,),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                onTap:(){
+                                  BlocProvider.of<AddHabitBloc>(context).add(OthersEvent(OthersOpened: !Other));
 
-                              },
-                              child: Container(
-                                width: 320,
-                                height: 51,
-                                decoration: ShapeDecoration(
-                                  color: Theme.of(context)
-                                      .inputDecorationTheme
-                                      .fillColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
+                                },
+                                child: Container(
+                                  width: 320,
+                                  height: 51,
+                                  decoration: ShapeDecoration(
+                                    color: Theme.of(context)
+                                        .inputDecorationTheme
+                                        .fillColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
                                   ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(left: 10.0),
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Other',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontFamily: 'DM Sans',
-                                            fontWeight: FontWeight.w400,
-                                            height: 0,
+                                  child: Row(
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(left: 10.0),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            'Other',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontFamily: 'DM Sans',
+                                              fontWeight: FontWeight.w400,
+                                              height: 0,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 225.0, bottom: 1),
-                                      child: IconButton(
-                                          onPressed: () {
-                                            BlocProvider.of<AddHabitBloc>(context).add(OthersEvent(OthersOpened: !Other));
-
-                                          },
-                                          icon: SvgPicture.asset(
-                                            Other == true
-                                                ? "assets/ImagesY/RoutineScreen/AddhabbitIcons/UPArrow.svg"
-                                                : "assets/ImagesY/RoutineScreen/AddhabbitIcons/DownArrow.svg",
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium
-                                                ?.color,
-                                          )),
-                                    )
-                                  ],
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 220.0, bottom: 1),
+                                        child: IconButton(
+                                            onPressed: () {
+                                              BlocProvider.of<AddHabitBloc>(context).add(OthersEvent(OthersOpened: !Other));
+                                            },
+                                            icon: SvgPicture.asset(
+                                              Other == true
+                                                  ? "assets/ImagesY/RoutineScreen/AddhabbitIcons/UPArrow.svg"
+                                                  : "assets/ImagesY/RoutineScreen/AddhabbitIcons/DownArrow.svg",
+                                              color: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium
+                                                  ?.color,
+                                            )),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Visibility(

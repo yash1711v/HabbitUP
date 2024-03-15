@@ -80,6 +80,9 @@ flutter:
      - assets/ImagesY/RoutineScreen/
      - assets/ImagesY/BottomNavigationIconImages/
      - assets/ImagesY/RoutineScreen/AddhabbitIcons/
+     - assets/ImagesY/RoutineScreen/AddhabbitIcons/StayingFitIcons/
+     - assets/ImagesY/RoutineScreen/AddhabbitIcons/StressRelief/
+     - assets/ImagesY/RoutineScreen/AddhabbitIcons/HealthyLifeStyle/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
