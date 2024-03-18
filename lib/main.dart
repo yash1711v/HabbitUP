@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habitup/CommonMethods/Methods.dart';
 import 'package:habitup/LocalStorage/SharedPref/Sharedpref.dart';
 
 import 'MyTheme/MyThemeData.dart';
@@ -21,7 +22,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  print(Methods().Habbits.toString());
   runApp(BlocProvider(
     create: (context) => ThemeBloc(),
     child: MyApp(),

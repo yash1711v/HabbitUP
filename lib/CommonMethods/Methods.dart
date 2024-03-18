@@ -373,6 +373,244 @@ class Methods {
             "assets/ImagesY/RoutineScreen/AddhabbitIcons/HealthyLifeStyle/Sleep_8_Hours_Icon.svg"
       },
     },
+    "Loved Ones": {
+      "Call a friend": {
+        "properties": [
+          "Repeats every day",
+          "Set a target (in mins.)",
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": "min",
+        "Icon":
+            "assets/ImagesY/RoutineScreen/AddhabbitIcons/LovedOnes/Call_a_Friend_icon.svg"
+      },
+      "Call Parents": {
+        "properties": [
+          "Repeats every day",
+          "Set a target (in mins.)",
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": "min",
+        "Icon":
+            "assets/ImagesY/RoutineScreen/AddhabbitIcons/LovedOnes/Call_parents_Icon.svg"
+      },
+      "Call sibling": {
+        "properties": [
+          "Repeats every day",
+          "Set a target (in mins.)",
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": "min",
+        "Icon":
+            "assets/ImagesY/RoutineScreen/AddhabbitIcons/LovedOnes/Call_parents_Icon.svg"
+      },
+      "Family time": {
+        "properties": [
+          "Repeats every day",
+          "Set a target (in mins.)",
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": "min",
+        "Icon":
+            "assets/ImagesY/RoutineScreen/AddhabbitIcons/LovedOnes/Family_time_icon.svg"
+      },
+      "Mini vacation": {
+        "properties": [
+          "Repeats every day",
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": " ",
+        "Icon":
+            "assets/ImagesY/RoutineScreen/AddhabbitIcons/LovedOnes/Mini_Vacation_Icon.svg"
+      },
+    },
+    "Personal Finance": {
+      "Track expenses": {
+        "properties": [
+          "Repeats every day",
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": " ",
+        "Icon":
+        "assets/ImagesY/RoutineScreen/AddhabbitIcons/PersonalFinance/Track_Personal_Expense_Icon.svg"
+      },
+      "Pay bills": {
+        "properties": [
+          "Repeats every day",
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": " ",
+        "Icon":
+        "assets/ImagesY/RoutineScreen/AddhabbitIcons/PersonalFinance/Pay_Bills_Icons.svg"
+      },
+      "Donate": {
+        "properties": [
+          "Repeats every day",
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": " ",
+        "Icon":
+        "assets/ImagesY/RoutineScreen/AddhabbitIcons/PersonalFinance/Donate_Icon.svg"
+      },
+      "Read finance news": {
+        "properties": [
+          "Repeats every day",
+          "Set a target (in mins.)",
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": "min",
+        "Icon":
+        "assets/ImagesY/RoutineScreen/AddhabbitIcons/PersonalFinance/Read_Finance_new_Icon.svg"
+      },
+      "No impulse shopping": {
+        "properties": [
+          "Repeats every day",
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": " ",
+        "Icon":
+        "assets/ImagesY/RoutineScreen/AddhabbitIcons/PersonalFinance/No_impluse_Shoping.svg"
+      },
+      "Limit dining out": {
+        "properties": [
+          "Repeats every day",
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": " ",
+        "Icon":
+        "assets/ImagesY/RoutineScreen/AddhabbitIcons/PersonalFinance/Limit_Dining_out_Icon.svg"
+      },
+      "Save 10% of income": {
+        "properties": [
+          "Repeats every day",
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": " ",
+        "Icon":
+        "assets/ImagesY/RoutineScreen/AddhabbitIcons/PersonalFinance/Save_10%_Of_Incone_Icon.svg"
+      },
+    },
+    "Others": {
+      "Study": {
+        "properties": [
+          "Repeats every day",
+          "Target study hours"
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": "Hours",
+        "Icon":
+        "assets/ImagesY/RoutineScreen/AddhabbitIcons/Others/Study_Icon.svg"
+      },
+      "Brush 2 times a day": {
+        "properties": [
+          "Repeats every day",
+          "No. of times to brush",
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": "Number",
+        "Icon":
+        "assets/ImagesY/RoutineScreen/AddhabbitIcons/Others/Brush_2_times_Icon.svg"
+      },
+      "Clean room": {
+        "properties": [
+          "Repeats every day",
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": " ",
+        "Icon":
+        "assets/ImagesY/RoutineScreen/AddhabbitIcons/Others/Clean_Room_Icon.svg"
+      },
+      "Engage in hobbies": {
+        "properties": [
+          "Repeats every day",
+          "Set a target (in mins.)",
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": "min",
+        "Icon":
+        "assets/ImagesY/RoutineScreen/AddhabbitIcons/Others/Engage_in_Hobbies_Icon.svg"
+      },
+      "Positive self talk": {
+        "properties": [
+          "Repeats every day",
+          "Set a target (in mins.)"
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": "min",
+        "Icon":
+        "assets/ImagesY/RoutineScreen/AddhabbitIcons/Others/Positive_Self_Talk_Icon.svg"
+      },
+      "Empty inbox": {
+        "properties": [
+          "Repeats every day",
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": " ",
+        "Icon":
+        "assets/ImagesY/RoutineScreen/AddhabbitIcons/Others/Empty_Inbox_Icon.svg"
+      },
+      "Make your bed": {
+        "properties": [
+          "Repeats every day",
+          "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": " ",
+        "Icon":
+        "assets/ImagesY/RoutineScreen/AddhabbitIcons/Others/Make_your_Bed_Icon.svg"
+      },
+
+      "Positive affirmations": {
+        "properties": [
+          "Repeats every day",
+          "Set a target (in mins.)"
+              "Time: All day",
+          "No Reminder",
+          "Morning Routine"
+        ],
+        "changableunits": "min",
+        "Icon":
+        "assets/ImagesY/RoutineScreen/AddhabbitIcons/Others/Positive_Affermation_icon.svg"
+      },
+
+    },
 
 
   };

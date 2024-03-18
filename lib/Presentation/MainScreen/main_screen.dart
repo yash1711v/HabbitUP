@@ -7,7 +7,8 @@ import 'package:habitup/Presentation/MainScreen/Pages/Progress/progress_screen.d
 import 'package:habitup/Presentation/MainScreen/Pages/Routine/routine_bloc.dart';
 import 'package:habitup/Presentation/MainScreen/main_screen_bloc.dart';
 
-import '../../Widgets/BottomSheet/bottom_sheet.dart';
+
+import '../../Widgets/BottomnavBar/bottom_Navbar.dart';
 import 'Pages/More/more_screen.dart';
 import 'Pages/Routine/routine_screen.dart';
 

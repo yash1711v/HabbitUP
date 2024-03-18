@@ -13,32 +13,42 @@ class SearchBartapState extends AddHabitState{
 
 class StayingFitState extends AddHabitState{
   final bool isStayingfitOpened;
-  StayingFitState({required this.isStayingfitOpened});
+  List<String> Habitnames=[];
+  List<String> HabitIcons=[];
+  StayingFitState({required this.isStayingfitOpened,required this.Habitnames,required this.HabitIcons});
 }
 
 class StressReliefState extends AddHabitState{
   final bool isStressReliefStateOpened;
-  StressReliefState({required this.isStressReliefStateOpened});
+  List<String> Habitnames=[];
+  List<String> HabitIcons=[];
+  StressReliefState({required this.isStressReliefStateOpened,required this.Habitnames,required this.HabitIcons});
 }
 
 class HealthyLifestyleState extends AddHabitState{
   final bool isHealthyLifeStyleOpened;
-
-  HealthyLifestyleState({required this.isHealthyLifeStyleOpened});
+  List<String> Habitnames=[];
+  List<String> HabitIcons=[];
+  HealthyLifestyleState({required this.isHealthyLifeStyleOpened,required this.Habitnames,required this.HabitIcons});
 }
 
 class LovedOnesState extends AddHabitState{
   final bool isLovedOnesOpened;
-
-  LovedOnesState({required this.isLovedOnesOpened});
+  List<String> Habitnames=[];
+  List<String> HabitIcons=[];
+  LovedOnesState({required this.isLovedOnesOpened,required this.Habitnames,required this.HabitIcons});
 }
 
 class PersonalFinanceState extends AddHabitState{
   final bool isPersonalFinanceOpened;
-  PersonalFinanceState({required this.isPersonalFinanceOpened});
+  List<String> Habitnames=[];
+  List<String> HabitIcons=[];
+  PersonalFinanceState({required this.isPersonalFinanceOpened,required this.Habitnames,required this.HabitIcons});
 }
 
 class OthersState extends AddHabitState{
   final bool isOthersOpened;
-  OthersState({required this.isOthersOpened});
+  List<String> Habitnames=[];
+  List<String> HabitIcons=[];
+  OthersState({required this.isOthersOpened,required this.Habitnames,required this.HabitIcons});
 }
