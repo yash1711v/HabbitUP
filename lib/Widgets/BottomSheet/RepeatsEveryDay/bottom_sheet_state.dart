@@ -20,6 +20,7 @@ final class RepeatCycleState extends BottomSheetState{
  bool setEndDate=false;
  int monthIndex=0;
  Set<int> onWhichDayif={};
+ Set<int> DatesForMonth={};
 
- RepeatCycleState({required this.repeat, this.whichOption = '',this.Frequency=false,this.numberPickervalue=0,this.setEndDate=false,this.monthIndex=0,required this.onWhichDayif});
+ RepeatCycleState({required this.repeat, this.whichOption = '',this.Frequency=false,this.numberPickervalue=0,this.setEndDate=false,this.monthIndex=0,required this.onWhichDayif,required this.DatesForMonth});
 }

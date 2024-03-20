@@ -18,5 +18,6 @@ class RepeatCycleEvent extends BottomSheetEvent{
  bool setEndDate=false;
  int monthIndex=DateTime.now().month;
  Set<int> onWhichDaysIfweeklu={};
-  RepeatCycleEvent({required this.repeat,this.whichOption = 'Daily',this.Frequency=false,this.numberPickervalue=0,this.setEndDate=false,this.monthIndex=3,required this.onWhichDaysIfweeklu});
+ Set<int> DatesForMonth={};
+  RepeatCycleEvent({required this.repeat,this.whichOption = 'Daily',this.Frequency=false,this.numberPickervalue=0,this.setEndDate=false,this.monthIndex=3,required this.onWhichDaysIfweeklu,required this.DatesForMonth});
 }

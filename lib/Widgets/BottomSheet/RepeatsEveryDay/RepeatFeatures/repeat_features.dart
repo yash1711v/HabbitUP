@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habitup/CommonMethods/Variable.dart';
@@ -34,6 +34,7 @@ class RepeastFeatures extends StatelessWidget {
           bool numberPicker = false;
           int numberPickerValue = 0;
           bool setendDate = false;
+
           if (state is RepeatCycleState) {
             repeatCycle = state.repeat;
             option = state.whichOption;
@@ -65,7 +66,31 @@ class RepeastFeatures extends StatelessWidget {
                                 ?.color,
                           )),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            print(datesOnwhichTheHabbitsAreSet);
+                            print(numberPickerValue);
+
+                            datesOnwhichTheHabbitsAreSet.forEach((key, value) {
+                              datesOnwhichTheHabbitsAreSet[key]?.clear();
+                            });
+                            if(option=="Daily"){
+                              datesOnwhichTheHabbitsAreSet.forEach((key, value) {
+                                datesOnwhichTheHabbitsAreSet[key]?.clear();
+                              });
+                              addDates(frequency: numberPickerValue, endDate: endDate);
+                            }if(option=="Weekly"){
+                              datesOnwhichTheHabbitsAreSet.forEach((key, value) {
+                                datesOnwhichTheHabbitsAreSet[key]?.clear();
+                              });
+                              addDatesforweek(frequency: numberPickerValue, endDate: endDate, daysOfWeek: DaysofWeek);
+                            }if(option=="Monthly"){
+                              datesOnwhichTheHabbitsAreSet.forEach((key, value) {
+                                datesOnwhichTheHabbitsAreSet[key]?.clear();
+                              });
+                              addDatesForMonthFrequency(frequency: numberPickerValue, endDate: endDate, daysOfMonth: DatesForMonth);
+                            }
+                            print(datesOnwhichTheHabbitsAreSet);
+                          },
                           child: const Text(
                             'Save',
                             style: TextStyle(
@@ -105,10 +130,13 @@ class RepeastFeatures extends StatelessWidget {
                       Switch(
                         value: repeatCycle,
                         onChanged: (value) {
+                          datesOnwhichTheHabbitsAreSet.forEach((key, value) {
+                            datesOnwhichTheHabbitsAreSet[key]?.clear();
+                          });
                           BlocProvider.of<BottomSheetBloc>(context).add(
                               RepeatCycleEvent(
                                   repeat: value,
-                                  onWhichDaysIfweeklu: DaysofWeek));
+                                  onWhichDaysIfweeklu: DaysofWeek, DatesForMonth: DatesForMonth));
                         },
                         activeColor: Colors.transparent,
                         thumbColor:
@@ -158,7 +186,7 @@ class RepeastFeatures extends StatelessWidget {
                                   repeat: true,
                                   whichOption: "Daily",
                                   onWhichDaysIfweeklu:
-                                  DaysofWeek));
+                                  DaysofWeek, DatesForMonth: DatesForMonth));
                             }
                                 : () {},
                             child: Container(
@@ -208,7 +236,7 @@ class RepeastFeatures extends StatelessWidget {
                                   repeat: true,
                                   whichOption: "Weekly",
                                   onWhichDaysIfweeklu:
-                                  DaysofWeek));
+                                  DaysofWeek, DatesForMonth: DatesForMonth));
                             }
                                 : () {},
                             child: Container(
@@ -258,7 +286,7 @@ class RepeastFeatures extends StatelessWidget {
                                   repeat: true,
                                   whichOption: "Monthly",
                                   onWhichDaysIfweeklu:
-                                  DaysofWeek));
+                                  DaysofWeek, DatesForMonth: DatesForMonth));
                             }
                                 : () {},
                             child: Container(
@@ -344,7 +372,7 @@ class RepeastFeatures extends StatelessWidget {
                                                 whichOption: option,
                                                 Frequency: false,
                                                 onWhichDaysIfweeklu:
-                                                DaysofWeek));
+                                                DaysofWeek, DatesForMonth: DatesForMonth));
                                           },
                                           child: Container(
                                             width: 50,
@@ -372,6 +400,56 @@ class RepeastFeatures extends StatelessWidget {
                               ),
                             ],
                           )),
+                      Visibility(
+                        visible: option=="Monthly",
+                        child: Container(
+                        width: MediaQuery.of(context).size.width-30,
+                        height: 170,
+                        child: GridView.builder(
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 10, // 7 columns for 7 days
+                                mainAxisExtent: 45),
+                            itemCount: 31,
+                            itemBuilder: (context, index){
+                              return GestureDetector(
+                                onTap: (){
+                                   if(DatesForMonth.contains(index+1)){
+                                     DatesForMonth.remove(index+1);
+                                   }else{
+                                     DatesForMonth.add(index +1);
+                                   }
+                                   print(DatesForMonth);
+                                   BlocProvider.of<BottomSheetBloc>(context).add(RepeatCycleEvent(repeat: repeatCycle, onWhichDaysIfweeklu: DaysofWeek, DatesForMonth: DatesForMonth,whichOption: option,Frequency: numberPicker,numberPickervalue: numberPickerValue,setEndDate: setendDate,));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  child: Container(
+                                    decoration: ShapeDecoration(
+                                        color: DatesForMonth.contains(index+1)
+                                            ? const Color(0xFF9D6BCE)
+                                            : Colors.transparent,
+                                        shape: const OvalBorder(eccentricity: 0)),
+                                    child: Center(
+                                      child: Text(
+                                        '${index + 1}',
+                                        style: TextStyle(
+                                          color: Theme.of(context).textTheme.displayLarge?.color,
+                                          // Example text color
+                                          fontSize: 12,
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w400,
+                                          height: 0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                      )),),
                       Padding(
                         padding: const EdgeInsets.only(left: 25.0),
                         child: Row(
@@ -404,7 +482,7 @@ class RepeastFeatures extends StatelessWidget {
                                       whichOption: option,
                                       Frequency: !numberPicker,
                                       onWhichDaysIfweeklu:
-                                      DaysofWeek));
+                                      DaysofWeek, DatesForMonth: DatesForMonth));
                                 }
                                     : () {},
                                 child: Row(
@@ -455,10 +533,13 @@ class RepeastFeatures extends StatelessWidget {
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  const Text(
+                                   Text(
                                     'Every',
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge
+                                          ?.color,
                                       fontSize: 16,
                                       fontFamily: 'DM Sans',
                                       fontWeight: FontWeight.w500,
@@ -483,9 +564,10 @@ class RepeastFeatures extends StatelessWidget {
                                     ),
                                     haptics: true,
                                     minValue: 0,
-                                    maxValue: 31,
+                                    maxValue: option == "Weekly"?5:option == "Monthly"?12:31,
                                     value: numberPickerValue,
                                     onChanged: (int value) {
+
                                       BlocProvider.of<BottomSheetBloc>(
                                           context)
                                           .add(RepeatCycleEvent(
@@ -494,13 +576,20 @@ class RepeastFeatures extends StatelessWidget {
                                           Frequency: numberPicker,
                                           numberPickervalue: value,
                                           onWhichDaysIfweeklu:
-                                          DaysofWeek));
+                                          DaysofWeek, DatesForMonth: DatesForMonth));
+
+
+                                       print(datesOnwhichTheHabbitsAreSet);
+
                                     },
                                   ),
                                   Text(
                                     whichOption(optionName: option),
-                                    style: const TextStyle(
-                                      color: Colors.white,
+                                    style:  TextStyle(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge
+                                          ?.color,
                                       fontSize: 16,
                                       fontFamily: 'DM Sans',
                                       fontWeight: FontWeight.w500,
@@ -556,7 +645,7 @@ class RepeastFeatures extends StatelessWidget {
                                   Frequency: numberPicker,
                                   numberPickervalue: numberPickerValue,
                                   setEndDate: value,
-                                  onWhichDaysIfweeklu: DaysofWeek,
+                                  onWhichDaysIfweeklu: DaysofWeek, DatesForMonth: DatesForMonth,
                                 ));
                               },
                               activeColor: Colors.transparent,
@@ -677,7 +766,7 @@ class RepeastFeatures extends StatelessWidget {
                                           setEndDate: setendDate,
                                           monthIndex: value,
                                           onWhichDaysIfweeklu:
-                                          DaysofWeek));
+                                          DaysofWeek, DatesForMonth: DatesForMonth));
                                     },
                                     itemBuilder: (context, index) {
                                       return MonthlyGridForEndDate(
