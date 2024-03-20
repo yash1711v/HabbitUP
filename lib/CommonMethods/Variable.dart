@@ -22,4 +22,7 @@ late Map<String,Set<int>>datesOnwhichTheHabbitsAreSet={
 
 Set<int> DatesForMonth={};
 
+late bool setEndDate=false;
+late int frequencyNumber=0;
+
 String endDate="31-12-2024";

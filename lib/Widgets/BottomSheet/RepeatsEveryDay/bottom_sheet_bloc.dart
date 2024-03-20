@@ -22,7 +22,7 @@ class BottomSheetBloc extends Bloc<BottomSheetEvent, BottomSheetState> {
             numberPickervalue: event.numberPickervalue,
             setEndDate: event.setEndDate,
             monthIndex: event.monthIndex,
-            onWhichDayif: event.onWhichDaysIfweeklu, DatesForMonth: event.DatesForMonth));
+            onWhichDayif: event.onWhichDaysIfweeklu, DatesForMonth: event.DatesForMonth,endDate: event.endDate));
       }
     });
   }
