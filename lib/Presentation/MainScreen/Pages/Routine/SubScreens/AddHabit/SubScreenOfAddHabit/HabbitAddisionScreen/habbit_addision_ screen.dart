@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:habitup/CommonMethods/Variable.dart';
 import 'package:habitup/Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/habit_adision_bloc.dart';
 import 'package:habitup/Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/add_habbit_screen.dart';
-import 'package:habitup/Widgets/BottomSheet/bottom_sheet_bloc.dart';
+import 'package:habitup/Widgets/BottomSheet/RepeatsEveryDay/bottom_sheet_bloc.dart';
 
 import '../../../../../../../../CommonMethods/Methods.dart';
-import '../../../../../../../../Widgets/BottomSheet/bottom_sheet.dart';
+import '../../../../../../../../Widgets/BottomSheet/RepeatsEveryDay/bottom_sheet.dart';
 
 class HabbitAddisionScreen extends StatelessWidget {
   const HabbitAddisionScreen({super.key});

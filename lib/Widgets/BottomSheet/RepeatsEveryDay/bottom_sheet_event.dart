@@ -5,9 +5,10 @@ sealed class BottomSheetEvent {}
 
 class MothChangeEvent extends BottomSheetEvent{
   int monthIndex;
-
-  MothChangeEvent({required this.monthIndex});
+  Map<String,Set<int>> Datesare={};
+  MothChangeEvent({required this.monthIndex,required this.Datesare});
 }
+
 
 class RepeatCycleEvent extends BottomSheetEvent{
  bool repeat;
@@ -16,5 +17,6 @@ class RepeatCycleEvent extends BottomSheetEvent{
  int numberPickervalue=0;
  bool setEndDate=false;
  int monthIndex=DateTime.now().month;
-  RepeatCycleEvent({required this.repeat,this.whichOption = 'Daily',this.Frequency=false,this.numberPickervalue=0,this.setEndDate=false,this.monthIndex=3});
+ Set<int> onWhichDaysIfweeklu={};
+  RepeatCycleEvent({required this.repeat,this.whichOption = 'Daily',this.Frequency=false,this.numberPickervalue=0,this.setEndDate=false,this.monthIndex=3,required this.onWhichDaysIfweeklu});
 }
