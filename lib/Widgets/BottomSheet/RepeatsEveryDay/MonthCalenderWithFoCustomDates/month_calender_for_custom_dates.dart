@@ -104,7 +104,7 @@ class MonthlyGridView extends StatelessWidget {
   }
 }
 
-String whichOption({required String optionName}) {
+String whichOption2({required String optionName}) {
   if (optionName == "Daily") {
     return "Day";
   } else if (optionName == "Weekly") {

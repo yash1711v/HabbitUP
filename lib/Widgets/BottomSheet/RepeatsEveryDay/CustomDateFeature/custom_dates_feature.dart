@@ -133,7 +133,7 @@ class CustomDateFeature extends StatelessWidget {
                   curve: Curves.easeIn);
             },
             child: Text(
-              'Repeats every day',
+              '${whichText(frequencyNumber,whichOption)}',
               style: TextStyle(
                 color: Theme.of(context).textTheme.displayLarge?.color,
                 fontSize: 16,
@@ -150,4 +150,20 @@ class CustomDateFeature extends StatelessWidget {
       ],
     );
   }
+}
+whichText(int frequency,String whichoption,){
+  if(whichoption.isNotEmpty && whichoption!=null){
+     if(whichoption=="Daily"){
+       return "Repeats every $frequency Day";
+     }
+     if(whichoption=="Weekly"){
+       return "Repeats every $frequency Week";
+     }
+     if(whichoption=="Monthly"){
+       return "Repeats every $frequency Month";
+     }
+
+     return "Allow Repetition";
+  }
+  return "Allow Repetition";
 }

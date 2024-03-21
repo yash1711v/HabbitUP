@@ -53,7 +53,7 @@ class MonthlyGridForEndDate extends StatelessWidget {
               final dayOfMonth = index - firstDayIndex + 1;
               return GestureDetector(
                 onTap: () {
-                  endDate = formatDate(dayOfMonth, currentMonth, 2024);
+                  endDate = formatDate(dayOfMonth, monthIndex+1, 2024);
                   print(endDate);
                   BlocProvider.of<BottomSheetBloc>(context)
                       .add(RepeatCycleEvent(
@@ -61,8 +61,9 @@ class MonthlyGridForEndDate extends StatelessWidget {
                     onWhichDaysIfweeklu: DaysofWeek,
                     DatesForMonth: DatesForMonth,
                     setEndDate: true,
-
+                    monthIndex: monthIndex+1,
                     endDate: endDate,
+                    whichOption: whichOption,
                     Frequency: true,
                     numberPickervalue: frequencyNumber,
 
@@ -77,7 +78,7 @@ class MonthlyGridForEndDate extends StatelessWidget {
                       bottom: 4.0, left: 15, right: 15, top: 4),
                   child: Container(
                     decoration: ShapeDecoration(
-                        color: endDate == formatDate(dayOfMonth, currentMonth, 2024)
+                        color: endDate == formatDate(dayOfMonth, monthIndex+1 , 2024)
                             ? const Color(0xFF9D6BCE)
                             : Colors.transparent,
                         shape: const OvalBorder(eccentricity: 0.1)),

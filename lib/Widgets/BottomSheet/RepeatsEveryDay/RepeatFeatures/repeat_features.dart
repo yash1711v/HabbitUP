@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habitup/CommonMethods/Variable.dart';
+import 'package:habitup/Widgets/BottomSheet/RepeatsEveryDay/CustomDateFeature/custom_dates_feature.dart';
 import 'package:habitup/Widgets/BottomSheet/RepeatsEveryDay/MonthCalenderWithFoCustomDates/month_calender_for_custom_dates.dart';
 import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
 
+import '../../../../Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/habit_adision_bloc.dart';
 import '../MonthCalenderForEndDate/month_calender_for_end_date.dart';
 import '../bottom_sheet_bloc.dart';
 
@@ -12,11 +14,16 @@ class RepeastFeatures extends StatelessWidget {
   final PageController pageController2;
   final PageController pageController;
   final List<String> daysOfWeek;
+  int index;
+  BuildContext habitAddisionContext;
   RepeastFeatures(
       {super.key,
       required this.pageController2,
       required this.pageController,
-      required this.daysOfWeek});
+      required this.daysOfWeek,
+        required this. index,
+        required this.habitAddisionContext
+      });
   final List<String> daysOfWeekOnlyOneChar = [
     'M',
     'T',
@@ -76,7 +83,10 @@ class RepeastFeatures extends StatelessWidget {
                             datesOnwhichTheHabbitsAreSet[key]?.clear();
                           });
                           addDates(
-                              frequency: frequencyNumber, endDate: endDate);
+                              frequency: frequencyNumber, endDate: setendDate?endDate:"31-12-2024");
+                          pageController2.previousPage(
+                              duration: const Duration(milliseconds: 10),
+                              curve: Curves.easeOut);
                         }
                         if (option == "Weekly") {
                           datesOnwhichTheHabbitsAreSet.forEach((key, value) {
@@ -84,8 +94,11 @@ class RepeastFeatures extends StatelessWidget {
                           });
                           addDatesforweek(
                               frequency: frequencyNumber,
-                              endDate: endDate,
+                              endDate: setendDate?endDate:"31-12-2024",
                               daysOfWeek: DaysofWeek);
+                          pageController2.previousPage(
+                              duration: const Duration(milliseconds: 10),
+                              curve: Curves.easeOut);
                         }
                         if (option == "Monthly") {
                           datesOnwhichTheHabbitsAreSet.forEach((key, value) {
@@ -93,9 +106,15 @@ class RepeastFeatures extends StatelessWidget {
                           });
                           addDatesForMonthFrequency(
                               frequency: frequencyNumber,
-                              endDate: endDate,
+                              endDate: setendDate?endDate:"31-12-2024",
                               daysOfMonth: DatesForMonth);
+                          pageController2.previousPage(
+                              duration: const Duration(milliseconds: 10),
+                              curve: Curves.easeOut);
                         }
+                        Properties[index]=whichText(frequencyNumber, whichOption);
+                        BlocProvider.of<HabitAdisionBloc>(habitAddisionContext).add(SelectedColorEvent(SelectedIndex: SelectedIndex,properties: Properties));
+
                         print(datesOnwhichTheHabbitsAreSet);
                       },
                       child: const Text(
@@ -183,6 +202,7 @@ class RepeastFeatures extends StatelessWidget {
                       GestureDetector(
                         onTap: repeatCycle
                             ? () {
+                            whichOption="Daily";
                                 BlocProvider.of<BottomSheetBloc>(context).add(
                                     RepeatCycleEvent(
                                         repeat: true,
@@ -231,6 +251,7 @@ class RepeastFeatures extends StatelessWidget {
                       GestureDetector(
                         onTap: repeatCycle
                             ? () {
+                          whichOption="Weekly";
                                 BlocProvider.of<BottomSheetBloc>(context).add(
                                     RepeatCycleEvent(
                                         repeat: true,
@@ -279,6 +300,7 @@ class RepeastFeatures extends StatelessWidget {
                       GestureDetector(
                         onTap: repeatCycle
                             ? () {
+                          whichOption="Monthly";
                                 BlocProvider.of<BottomSheetBloc>(context).add(
                                     RepeatCycleEvent(
                                         repeat: true,
@@ -490,7 +512,7 @@ class RepeastFeatures extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(
-                                  'Every ${whichOption(optionName: option)}',
+                                  'Every ${whichOption2(optionName: option)}',
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
                                     color: Theme.of(context)
@@ -576,6 +598,7 @@ class RepeastFeatures extends StatelessWidget {
                                       RepeatCycleEvent(
                                           repeat: true,
                                           whichOption: option,
+                                          monthIndex: monthIndex,
                                           Frequency: numberPicker,
                                           setEndDate: setendDate,
                                           endDate: endDate,
@@ -587,7 +610,7 @@ class RepeastFeatures extends StatelessWidget {
                                 },
                               ),
                               Text(
-                                whichOption(optionName: option),
+                                whichOption2(optionName: option),
                                 style: TextStyle(
                                   color: Theme.of(context)
                                       .textTheme
@@ -696,6 +719,9 @@ class RepeastFeatures extends StatelessWidget {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
+                                      monthIndex=int.parse(
+                                          (pageController.page!)
+                                              .toStringAsFixed(0));
                                       BlocProvider.of<BottomSheetBloc>(context)
                                           .add(RepeatCycleEvent(
                                         repeat: true,
@@ -708,9 +734,6 @@ class RepeastFeatures extends StatelessWidget {
                                         monthIndex: int.parse(
                                             (pageController.page!)
                                                 .toStringAsFixed(0)),
-
-
-
                                       ));
                                       pageController.previousPage(
                                           duration:
@@ -742,6 +765,9 @@ class RepeastFeatures extends StatelessWidget {
                                   ),
                                   GestureDetector(
                                     onTap: () {
+                                      monthIndex= int.parse(
+                                          (pageController.page! + 1)
+                                              .toStringAsFixed(0));
                                       BlocProvider.of<BottomSheetBloc>(context)
                                           .add(RepeatCycleEvent(
                                         repeat: true,
@@ -785,6 +811,7 @@ class RepeastFeatures extends StatelessWidget {
                                 controller: pageController,
                                 itemCount: 12,
                                 onPageChanged: (value) {
+                                  monthIndex=value + 1;
                                   BlocProvider.of<BottomSheetBloc>(context).add(
                                       RepeatCycleEvent(
                                           repeat: true,
@@ -801,7 +828,7 @@ class RepeastFeatures extends StatelessWidget {
                                       BottomSheetState>(
                                     builder: (context, state) {
                                       return MonthlyGridForEndDate(
-                                        monthIndex: index,
+                                        monthIndex: monthIndex-1,
                                       );
                                     },
                                   );

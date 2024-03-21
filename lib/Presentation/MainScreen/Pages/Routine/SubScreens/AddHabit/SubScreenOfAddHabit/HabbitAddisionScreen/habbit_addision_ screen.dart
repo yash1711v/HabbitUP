@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:habitup/CommonMethods/Variable.dart';
 import 'package:habitup/Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/habit_adision_bloc.dart';
-import 'package:habitup/Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/add_habbit_screen.dart';
+import 'package:habitup/Widgets/BottomSheet/Duration/duration_bloc.dart';
+import 'package:habitup/Widgets/BottomSheet/Duration/duration_of_habit.dart';
+import 'package:habitup/Widgets/BottomSheet/Reminder/reminder.dart';
+import 'package:habitup/Widgets/BottomSheet/Reminder/reminder_bloc.dart';
 import 'package:habitup/Widgets/BottomSheet/RepeatsEveryDay/bottom_sheet_bloc.dart';
-
 import '../../../../../../../../CommonMethods/Methods.dart';
 import '../../../../../../../../Widgets/BottomSheet/RepeatsEveryDay/bottom_sheet.dart';
 
@@ -14,10 +16,12 @@ class HabbitAddisionScreen extends StatelessWidget {
   const HabbitAddisionScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context2) {
     return BlocBuilder<HabitAdisionBloc, HabitAdisionState>(
       builder: (context, state) {
-        int SelectedIndex = SelectedColorIndex;
+
+        String SelectedHabitname=selectedHabit;
+        String habitIcon=SelectedHabitIcon;
         List<Color> colors = [
           const Color(0xFF9D6BCE),
           const Color(0xFFF36C00),
@@ -85,13 +89,13 @@ class HabbitAddisionScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 30, bottom: 5),
                 child: Center(
                     child: SvgPicture.asset(
-                  SelectedHabitIcon,
+                  habitIcon,
                   color: colors[SelectedIndex],
                 )),
               ),
               Text(
-                selectedHabit,
-                style: TextStyle(
+                SelectedHabitname,
+                style: const TextStyle(
                   fontSize: 26,
                   fontFamily: 'DM Sans',
                   fontWeight: FontWeight.w500,
@@ -111,7 +115,7 @@ class HabbitAddisionScreen extends StatelessWidget {
                         child: GestureDetector(
                           onTap: () {
                             BlocProvider.of<HabitAdisionBloc>(context)
-                                .add(SelectedColorEvent(SelectedIndex: index));
+                                .add(SelectedColorEvent(SelectedIndex: index, properties: Properties));
                           },
                           child: Container(
                             width: 30,
@@ -144,8 +148,7 @@ class HabbitAddisionScreen extends StatelessWidget {
                         .length, // Assuming you have 5 containers
                     itemBuilder: (context, index) {
                       // Determine the decoration based on the index
-                      List<String> Properties = Methods().Habbits[
-                          SelectedCatagory]![selectedHabit]!['properties'];
+
                       Decoration decoration;
                       if (index == 0) {
                         decoration = BoxDecoration(
@@ -188,18 +191,59 @@ class HabbitAddisionScreen extends StatelessWidget {
                                     builder: (BuildContext context) {
                                       return BlocProvider(
                                         create: (context) => BottomSheetBloc(),
-                                        child: BottomSheetCustom(),
+                                        child: BottomSheetCustom(index: index, habitAddisionContext: context2,),
                                       );
                                     });
                               } else if (index == 1) {
+
                               } else if (index == 2) {
+                                showModalBottomSheet(
+                                   enableDrag: false,
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return BlocProvider(
+                                        create: (context) => DurationBloc(),
+                                        child: DurationOfHabit(index: index, habitAddisionContext: context2,),
+                                      );
+                                    });
                               } else if (index == 3) {
-                              } else if (index == 4) {}
+                                showModalBottomSheet(
+                                    enableDrag: false,
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return BlocProvider(
+                                        create: (context) => ReminderBloc(),
+                                        child: Reminder(index: index, habitAddisionContext: context2,),
+                                      );
+                                    });
+                              } else if (index == 4) {
+
+                              }
                             } else if (Properties.length == 4) {
                               if (index == 0) {
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return BlocProvider(
+                                        create: (context) => BottomSheetBloc(),
+                                        child: BottomSheetCustom(index: index, habitAddisionContext: context2,),
+                                      );
+                                    });
                               } else if (index == 1) {
+                                showModalBottomSheet(
+                                    enableDrag: false,
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return BlocProvider(
+                                        create: (context) => DurationBloc(),
+                                        child: DurationOfHabit(index: index, habitAddisionContext: context2,),
+                                      );
+                                    });
                               } else if (index == 2) {
-                              } else if (index == 3) {}
+
+                              } else if (index == 3) {
+
+                              }
                             }
                           },
                           child: Container(
@@ -235,8 +279,8 @@ class HabbitAddisionScreen extends StatelessWidget {
                                       const SizedBox(width: 85),
                                       if (Properties.length == 5)
                                         index == 1
-                                            ? Padding(
-                                                padding: const EdgeInsets.only(
+                                            ? const Padding(
+                                                padding: EdgeInsets.only(
                                                     left: 3.0),
                                                 child: Center(
                                                     child: Text(

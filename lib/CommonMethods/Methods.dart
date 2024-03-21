@@ -612,6 +612,6 @@ class Methods {
 
     },
 
-
   };
+
 }

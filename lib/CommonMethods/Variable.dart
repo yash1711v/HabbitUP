@@ -1,4 +1,10 @@
-import 'package:intl/intl.dart';
+import 'Methods.dart';
+//--------------------habit adisionscreen Variables
+List<String> Properties = Methods().Habbits[
+SelectedCatagory]![selectedHabit]!['properties'];
+int SelectedIndex = SelectedColorIndex;
+
+//--------------------------Repeats Every Day Habit--------------------------------
 
 late Set<int> DaysofWeek={0};
 late String selectedHabit;
@@ -19,10 +25,34 @@ late Map<String,Set<int>>datesOnwhichTheHabbitsAreSet={
   "November":{},
   "December":{},
 };
-
+int monthIndex=0;
 Set<int> DatesForMonth={};
-
 late bool setEndDate=false;
 late int frequencyNumber=0;
+String whichOption="";
+String endDate="";
 
-String endDate="31-12-2024";
+
+
+//-----------------------------Duration of habbit variables---------------------
+bool durationOfHabit=false;
+
+String time="All Day";
+
+String startTime="";
+ String endTime="";
+
+ bool setEndTime=false;
+
+ //---------------------------set Reminder  variables --------------------------
+
+bool SetReminder=false;
+
+String ReminderAt="";
+
+bool MultipleReminders=false;
+
+Set<String> Reminders={};
+
+DateTime addedTime=DateTime.now();
+

@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:habitup/CommonMethods/Variable.dart';
+import '../../../../../../CommonMethods/Methods.dart';
 import 'add_habit_bloc.dart';
 
 class AddHabitScreen extends StatelessWidget {
@@ -272,6 +273,8 @@ class AddHabitScreen extends StatelessWidget {
                                           SelectedHabitIcon=HabitIcons[index];
                                           SelectedCatagory="Staying fit";
                                           SelectedColorIndex=1;
+                                          Properties = Methods().Habbits[
+                                          SelectedCatagory]![selectedHabit]!['properties'];
                                           Navigator.of(context2).pushNamed("/HabitAddisionScree",);
                                         },
                                         child: Container(
@@ -493,6 +496,8 @@ class AddHabitScreen extends StatelessWidget {
                                               SelectedHabitIcon=HabitIcons[index];
                                               SelectedCatagory="Stress Relief";
                                               SelectedColorIndex=0;
+                                              Properties = Methods().Habbits[
+                                              SelectedCatagory]![selectedHabit]!['properties'];
                                               Navigator.of(context2).pushNamed("/HabitAddisionScree",);
                                             },
                                             child: Container(
