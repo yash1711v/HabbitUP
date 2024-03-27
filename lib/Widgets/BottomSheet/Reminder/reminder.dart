@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:habitup/CommonMethods/Variable.dart';
 import 'package:habitup/Widgets/BottomSheet/Reminder/reminder_bloc.dart';
 import 'package:intl/intl.dart';
@@ -57,23 +59,32 @@ class Reminder extends StatelessWidget {
                                 Theme.of(context).textTheme.displayLarge?.color,
                           )),
                       AnimatedOpacity(
-                        duration: Duration(milliseconds: 700),
+                        duration: const Duration(milliseconds: 700),
                         opacity: SetReminder ? 1 : 0,
                         child: Visibility(
                           visible: SetReminder,
                           child: TextButton(
                               onPressed: () {
+                                if (Reminders.length < 1) {
+                                  Reminders.add(ReminderAt);
+                                }
                                 Navigator.of(context).pop();
+
                                 time = Reminders.length > 1
                                     ? "Reminders: Multiple"
                                     : "Reminder: ${Reminders.first}";
                                 print("$time");
                                 Properties[index] = "$time";
+
                                 BlocProvider.of<HabitAdisionBloc>(
                                         habitAddisionContext)
                                     .add(SelectedColorEvent(
-                                        SelectedIndex: SelectedIndex,
-                                        properties: Properties));
+                                  SelectedIndex: SelectedIndex,
+                                  properties: Properties,
+                                  name: selectedHabit,
+                                  icon: SelectedHabitIcon,
+                                  target: target,
+                                ));
                               },
                               child: const Text(
                                 'Save',
@@ -143,7 +154,7 @@ class Reminder extends StatelessWidget {
                   ),
                 ),
                 AnimatedOpacity(
-                  duration: Duration(milliseconds: 700),
+                  duration: const Duration(milliseconds: 700),
                   opacity: SetReminder ? 1 : 0,
                   child: Visibility(
                     visible: SetReminder,
@@ -156,6 +167,7 @@ class Reminder extends StatelessWidget {
                             time: addedTime,
                             is24HourMode: false,
                             onTimeChange: (time) {
+                              addedTime = time;
                               String formattedTime =
                                   DateFormat('hh:mm a').format(time);
                               ReminderAt = formattedTime.trim();
@@ -211,87 +223,167 @@ class Reminder extends StatelessWidget {
                               ),
                               IconButton(
                                 onPressed: () {
-                                  Reminders.add(ReminderAt);
-                                  print(Reminders);
-                                  // Get the current date
+                                  if (Reminders.length >= 5) {
+                                    // final snackBar = SnackBar(
+                                    //   content: Text('This is a snack bar'),
+                                    //   duration: Duration(seconds: 3), // Adjust the duration as needed
+                                    //   action: SnackBarAction(
+                                    //     label: 'Undo',
+                                    //     onPressed: () {
+                                    //       // Perform some action here when the user presses the action button
+                                    //     },
+                                    //   ),
+                                    // );
+                                    //
+                                    // // Show the SnackBar
+                                    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  } else {
+                                    Reminders.add(ReminderAt);
 
-                                  DateTime reminderTime =
-                                      DateFormat("hh:mm a").parse(ReminderAt);
+                                    DateTime reminderTime =
+                                        DateFormat("hh:mm a").parse(ReminderAt);
 
 // Get the current date
-                                  DateTime currentDate = DateTime.now();
+                                    DateTime currentDate = DateTime.now();
 
 // Extract the current year and month
-                                  int currentYear = currentDate.year;
-                                  int currentMonth = currentDate.month;
+                                    int currentYear = currentDate.year;
+                                    int currentMonth = currentDate.month;
 
 // Create a new DateTime object with the current date, month, and the time from the parsed DateTime
-                                  addedTime = DateTime(
-                                    currentYear,
-                                    currentMonth,
-                                    currentDate.day, // Use current day
-                                    reminderTime.hour,
-                                    reminderTime.minute + 10,
-                                  );
+                                    addedTime = DateTime(
+                                      currentYear,
+                                      currentMonth,
+                                      currentDate.day, // Use current day
+                                      reminderTime.hour,
+                                      reminderTime.minute + 10,
+                                    );
 
 // Format the DateTime object into a string in "hh:mm a" format
-                                  String formattedTime =
-                                      DateFormat("hh:mm a").format(addedTime);
+                                    String formattedTime =
+                                        DateFormat("hh:mm a").format(addedTime);
 
-                                  print(formattedTime);
-                                  BlocProvider.of<ReminderBloc>(context).add(
-                                      ReminderEvents(
-                                          SetReminder: SetReminder,
-                                          Reminders: Reminders,
-                                          time: DateFormat("hh:mm a")
-                                              .parse(formattedTime)));
+                                    print(formattedTime);
+                                    BlocProvider.of<ReminderBloc>(context).add(
+                                        ReminderEvents(
+                                            SetReminder: SetReminder,
+                                            Reminders: Reminders,
+                                            time: DateFormat("hh:mm a")
+                                                .parse(formattedTime)));
+                                  }
+                                  print(Reminders);
+                                  // Get the current date
                                 },
-                                icon: Icon(Icons.add_circle_rounded),
-                                color: Color(0xFFFEF656),
+                                icon: const Icon(Icons.add_circle_rounded),
+                                color: const Color(0xFF9D6BCE),
                               )
                             ],
                           ),
                         ),
+                        AnimatedOpacity(
+                          opacity: Reminders.length >= 1 ? 1 : 0,
+                          duration: const Duration(milliseconds: 700),
+                          child: Visibility(
+                              visible: Reminders.length >= 1,
+                              child: GridView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 15,
+                                ),
+                                shrinkWrap: true, // Adjust padding as needed
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount:
+                                            4, // Number of items per row
+                                        crossAxisSpacing:
+                                            5, // Horizontal space between items
+                                        mainAxisSpacing: 10,
+                                        mainAxisExtent:
+                                            40 // Vertical space between items
+                                        ),
+                                itemCount: Reminders.length,
+                                itemBuilder: (context, index) {
+                                  return Center(
+                                    child: Stack(children: [
+                                      Container(
+                                        width: 100,
+                                        decoration: ShapeDecoration(
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2
+                                              ?.color,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(31),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            Reminders.elementAt(index),
+                                            style: GoogleFonts.dmSans(
+                                              textStyle: TextStyle(
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle1
+                                                    ?.color,
+                                                fontSize: 12,
+                                                fontFamily: 'DM Sans',
+                                                fontWeight: FontWeight.w500,
+                                                height:
+                                                    1, // Adjusted for proper line height, if needed
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          GestureDetector(
+                                              onTap: () {
+                                                print("Hello");
+                                                String reminder =
+                                                    Reminders.elementAt(index);
+                                                Reminders.remove(reminder);
+                                                BlocProvider.of<ReminderBloc>(
+                                                        context)
+                                                    .add(ReminderEvents(
+                                                        SetReminder:
+                                                            SetReminder,
+                                                        Reminders: Reminders,
+                                                        time: addedTime));
+                                              },
+                                              child: Icon(
+                                                Icons.cancel_rounded,
+                                                color: Colors.red,
+                                                size: 20,
+                                              )),
+                                        ],
+                                      )
+                                    ]),
+                                  );
+                                },
+                              )),
+                        ),
+                        if (Reminders.length >= 5)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Text(
+                              "You can't add more than 5 reminders",
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 12,
+                                  fontFamily: 'DM Sans',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1),
+                            ),
+                          ),
                       ],
                     ),
                   ),
                 ),
-                AnimatedOpacity(
-                  opacity: Reminders.length > 1 ? 1 : 0,
-                  duration: Duration(milliseconds: 700),
-                  child: Visibility(
-                    visible: Reminders.length > 1 ,
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 6, // 7 columns for 7 days
-                          mainAxisExtent: 38,
-                        crossAxisSpacing: 5
-
-                      ),
-
-                      itemCount: Reminders.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                          decoration: ShapeDecoration(
-                            color: Color(0xFF292929),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(200),
-                            ),
-                          ),
-                          child: Text(
-                            "${Reminders.elementAt(index)}"
-                          ),
-                        );
-                      },
-
-                    ),
-                  ),
-                ),
-                SizedBox(
+                const SizedBox(
                   height: 55,
                 )
               ],

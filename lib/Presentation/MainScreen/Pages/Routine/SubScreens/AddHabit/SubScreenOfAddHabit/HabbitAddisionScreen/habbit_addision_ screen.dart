@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:habitup/CommonMethods/Variable.dart';
@@ -9,19 +10,29 @@ import 'package:habitup/Widgets/BottomSheet/Duration/duration_of_habit.dart';
 import 'package:habitup/Widgets/BottomSheet/Reminder/reminder.dart';
 import 'package:habitup/Widgets/BottomSheet/Reminder/reminder_bloc.dart';
 import 'package:habitup/Widgets/BottomSheet/RepeatsEveryDay/bottom_sheet_bloc.dart';
+import '../../../../../../../../CommonMethods/InputValidator.dart';
 import '../../../../../../../../CommonMethods/Methods.dart';
+import '../../../../../../../../ScheduleNotifications/notification_scheduler.dart';
+import '../../../../../../../../Widgets/BottomSheet/IconChangeBottomSheet/icon_change_bottomsheet.dart';
 import '../../../../../../../../Widgets/BottomSheet/RepeatsEveryDay/bottom_sheet.dart';
+import '../../../../../../../../Widgets/BottomSheet/TagBottomSheet/tag_bottom_sheet.dart';
+import '../../../../../../../../Widgets/CustomDialogBox.dart';
 
 class HabbitAddisionScreen extends StatelessWidget {
   const HabbitAddisionScreen({super.key});
 
   @override
   Widget build(BuildContext context2) {
+    late TextEditingController controller =
+        TextEditingController(text: selectedHabit);
+    late TextEditingController Unit =
+        TextEditingController(text: Methods().Habbits[
+        SelectedCatagory]![selectedHabit]!["changableunits"]);
     return BlocBuilder<HabitAdisionBloc, HabitAdisionState>(
       builder: (context, state) {
-
-        String SelectedHabitname=selectedHabit;
-        String habitIcon=SelectedHabitIcon;
+        String SelectedHabitname = selectedHabit;
+        String habitIcon = SelectedHabitIcon;
+        // Target of the habit
         List<Color> colors = [
           const Color(0xFF9D6BCE),
           const Color(0xFFF36C00),
@@ -51,8 +62,14 @@ class HabbitAddisionScreen extends StatelessWidget {
           isSelected =
               List.generate(12, (index) => index == state.index ? true : false);
           SelectedIndex = state.index;
+          selectedHabit= state.name;
+          SelectedHabitIcon= state.icon;
+          SelectedHabitname = state.name;
+          target=state.target;
+          habitIcon = state.icon;
         }
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             leading: Padding(
@@ -62,14 +79,16 @@ class HabbitAddisionScreen extends StatelessWidget {
                   Navigator.of(context).pop();
                 },
                 icon: const Icon(Icons.close),
-                color: Theme.of(context).textTheme.bodyText2?.color,
+                color: Theme.of(context).textTheme.bodyMedium?.color,
               ),
             ),
             actions: [
               Padding(
                   padding: const EdgeInsets.only(right: 10, left: 10),
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      NotificationScheduler.scheduleNotifications(datesOnwhichTheHabbitsAreSet, Reminders);
+                    },
                     child: Text(
                       "Save",
                       style: TextStyle(
@@ -87,19 +106,64 @@ class HabbitAddisionScreen extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 30, bottom: 5),
-                child: Center(
-                    child: SvgPicture.asset(
-                  habitIcon,
-                  color: colors[SelectedIndex],
-                )),
+                child: GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return IconChangeBottomSheet(
+                            callback: (String) {
+                              habitIcon = String;
+                              BlocProvider.of<HabitAdisionBloc>(context2)
+                                  .add(SelectedColorEvent(
+                                SelectedIndex: SelectedIndex,
+                                properties: Properties,
+                                name: controller.text,
+                                icon: habitIcon,
+                              ));
+                            },
+                          );
+                        });
+                  },
+                  child: Center(
+                      child: SvgPicture.asset(
+                    habitIcon,
+                    color: colors[SelectedIndex],
+                  )),
+                ),
               ),
-              Text(
-                SelectedHabitname,
-                style: const TextStyle(
-                  fontSize: 26,
-                  fontFamily: 'DM Sans',
-                  fontWeight: FontWeight.w500,
-                  height: 0,
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context2,
+                    builder: (context2) {
+                      return BlocProvider(
+                        create: (context2) => HabitAdisionBloc(),
+                        child: CustomDialogBox(
+                          title: "Enter The Habit name",
+                          content: controller,
+                          onClosePressed: () {
+                            BlocProvider.of<HabitAdisionBloc>(context).add(
+                                SelectedColorEvent(
+                                    SelectedIndex: SelectedIndex,
+                                    properties: Properties,
+                                    name: controller.text,
+                                    icon: habitIcon));
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ); // Show the dialog
+                    },
+                  );
+                },
+                child: Text(
+                  SelectedHabitname,
+                  style: const TextStyle(
+                    fontSize: 26,
+                    fontFamily: 'DM Sans',
+                    fontWeight: FontWeight.w500,
+                    height: 0,
+                  ),
                 ),
               ),
               Padding(
@@ -114,8 +178,12 @@ class HabbitAddisionScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 13, right: 13),
                         child: GestureDetector(
                           onTap: () {
-                            BlocProvider.of<HabitAdisionBloc>(context)
-                                .add(SelectedColorEvent(SelectedIndex: index, properties: Properties));
+                            BlocProvider.of<HabitAdisionBloc>(context).add(
+                                SelectedColorEvent(
+                                    SelectedIndex: index,
+                                    properties: Properties,
+                                    name: controller.text,
+                                    icon: habitIcon));
                           },
                           child: Container(
                             width: 30,
@@ -191,19 +259,48 @@ class HabbitAddisionScreen extends StatelessWidget {
                                     builder: (BuildContext context) {
                                       return BlocProvider(
                                         create: (context) => BottomSheetBloc(),
-                                        child: BottomSheetCustom(index: index, habitAddisionContext: context2,),
+                                        child: BottomSheetCustom(
+                                          index: index,
+                                          habitAddisionContext: context2,
+                                        ),
                                       );
                                     });
                               } else if (index == 1) {
+                                showDialog(
+                                  context: context2,
+                                  builder: (context2) {
+                                    return BlocProvider(
+                                      create: (context2) => HabitAdisionBloc(),
+                                      child: CustomDialogBox(
+                                        title: "${Properties[index]}",
+                                        content: Unit,
+                                        onClosePressed: () {
+                                          BlocProvider.of<HabitAdisionBloc>(context).add(
+                                              SelectedColorEvent(
+                                                  SelectedIndex: SelectedIndex,
+                                                  properties: Properties,
+                                                  name: SelectedHabitname,
+                                                  icon: habitIcon,
+                                              target:InputValidator.validateInput( Unit.text, unit: Methods().Habbits[
+                                              SelectedCatagory]![selectedHabit]!["changableunits"])));
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ); // Show the dialog
+                                  },
+                                );
 
                               } else if (index == 2) {
                                 showModalBottomSheet(
-                                   enableDrag: false,
+                                    enableDrag: false,
                                     context: context,
                                     builder: (BuildContext context) {
                                       return BlocProvider(
                                         create: (context) => DurationBloc(),
-                                        child: DurationOfHabit(index: index, habitAddisionContext: context2,),
+                                        child: DurationOfHabit(
+                                          index: index,
+                                          habitAddisionContext: context2,
+                                        ),
                                       );
                                     });
                               } else if (index == 3) {
@@ -213,11 +310,22 @@ class HabbitAddisionScreen extends StatelessWidget {
                                     builder: (BuildContext context) {
                                       return BlocProvider(
                                         create: (context) => ReminderBloc(),
-                                        child: Reminder(index: index, habitAddisionContext: context2,),
+                                        child: Reminder(
+                                          index: index,
+                                          habitAddisionContext: context2,
+                                        ),
                                       );
                                     });
                               } else if (index == 4) {
-
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return TagBottomSheet(
+                                        onClosePressed: () {  },
+                                        indexProperties: index,
+                                        habitAddisionContext: context2,
+                                      );
+                                    });
                               }
                             } else if (Properties.length == 4) {
                               if (index == 0) {
@@ -226,7 +334,10 @@ class HabbitAddisionScreen extends StatelessWidget {
                                     builder: (BuildContext context) {
                                       return BlocProvider(
                                         create: (context) => BottomSheetBloc(),
-                                        child: BottomSheetCustom(index: index, habitAddisionContext: context2,),
+                                        child: BottomSheetCustom(
+                                          index: index,
+                                          habitAddisionContext: context2,
+                                        ),
                                       );
                                     });
                               } else if (index == 1) {
@@ -236,12 +347,33 @@ class HabbitAddisionScreen extends StatelessWidget {
                                     builder: (BuildContext context) {
                                       return BlocProvider(
                                         create: (context) => DurationBloc(),
-                                        child: DurationOfHabit(index: index, habitAddisionContext: context2,),
+                                        child: DurationOfHabit(
+                                          index: index,
+                                          habitAddisionContext: context2,
+                                        ),
                                       );
                                     });
                               } else if (index == 2) {
-
+                                showModalBottomSheet(
+                                    enableDrag: false,
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return BlocProvider(
+                                        create: (context) => ReminderBloc(),
+                                        child: Reminder(
+                                          index: index,
+                                          habitAddisionContext: context2,
+                                        ),
+                                      );
+                                    });
                               } else if (index == 3) {
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return TagBottomSheet(onClosePressed: () {  }, indexProperties: index,
+                                        habitAddisionContext: context2,
+                                      );
+                                    });
 
                               }
                             }
@@ -279,13 +411,13 @@ class HabbitAddisionScreen extends StatelessWidget {
                                       const SizedBox(width: 85),
                                       if (Properties.length == 5)
                                         index == 1
-                                            ? const Padding(
-                                                padding: EdgeInsets.only(
-                                                    left: 3.0),
+                                            ?  Padding(
+                                                padding:
+                                                    EdgeInsets.only(left: 3.0),
                                                 child: Center(
                                                     child: Text(
-                                                  "30",
-                                                  style: TextStyle(
+                                                  target,
+                                                  style: const TextStyle(
                                                     fontFamily: 'DM Sans',
                                                     fontWeight: FontWeight.w500,
                                                   ),

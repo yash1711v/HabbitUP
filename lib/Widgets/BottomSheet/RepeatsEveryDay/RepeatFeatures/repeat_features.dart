@@ -113,7 +113,11 @@ class RepeastFeatures extends StatelessWidget {
                               curve: Curves.easeOut);
                         }
                         Properties[index]=whichText(frequencyNumber, whichOption);
-                        BlocProvider.of<HabitAdisionBloc>(habitAddisionContext).add(SelectedColorEvent(SelectedIndex: SelectedIndex,properties: Properties));
+                        BlocProvider.of<HabitAdisionBloc>(habitAddisionContext).add(SelectedColorEvent(SelectedIndex: SelectedIndex,properties: Properties,
+                          name: selectedHabit,
+                          icon: SelectedHabitIcon,
+                          target: target,
+                        ));
 
                         print(datesOnwhichTheHabbitsAreSet);
                       },

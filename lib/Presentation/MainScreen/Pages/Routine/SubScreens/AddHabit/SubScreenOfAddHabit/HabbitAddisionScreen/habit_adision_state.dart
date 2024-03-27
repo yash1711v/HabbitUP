@@ -7,6 +7,8 @@ class HabitAdisionInitial extends HabitAdisionState {}
 
 class SelectedColorState extends HabitAdisionState{
   int index;
-
-  SelectedColorState({required this.index});
+String name;
+String icon;
+  String target;
+  SelectedColorState({required this.index,this.name="",this.icon="",this.target=""});
 }

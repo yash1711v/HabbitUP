@@ -12,6 +12,8 @@ import 'Routes/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'firebase_options.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 gettheme(BuildContext context) async {
   String ThemeDate= await Sharedpref().getThemeData();
   BlocProvider.of<ThemeBloc>(context).add(updateEvent(theme: ThemeDate));
@@ -22,7 +24,8 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  print(Methods().Habbits.toString());
+  tz.initializeTimeZones();
+  tz.setLocalLocation(tz.getLocation('Asia/Kolkata'));
   runApp(BlocProvider(
     create: (context) => ThemeBloc(),
     child: MyApp(),

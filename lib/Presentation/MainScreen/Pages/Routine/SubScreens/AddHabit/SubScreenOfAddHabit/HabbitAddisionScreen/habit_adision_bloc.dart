@@ -11,7 +11,7 @@ class HabitAdisionBloc extends Bloc<HabitAdisionEvent, HabitAdisionState> {
     on<HabitAdisionEvent>((event, emit) {
       // TODO: implement event handler
       if(event is SelectedColorEvent){
-        emit(SelectedColorState(index: event.SelectedIndex));
+        emit(SelectedColorState(index: event.SelectedIndex,name: event.name,icon: event.icon,target: event.target));
       }
     });
   }

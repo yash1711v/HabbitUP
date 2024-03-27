@@ -59,10 +59,14 @@ class DurationOfHabit extends StatelessWidget {
                           child: TextButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
-                                time="$startTime-$endTime";
+                                time="$startTime-${adjustTime(startTime, endTime)}";
                                 print("$time");
                                 Properties[index]="Time: $time";
-                                BlocProvider.of<HabitAdisionBloc>(habitAddisionContext).add(SelectedColorEvent(SelectedIndex: SelectedIndex,properties: Properties));
+                                BlocProvider.of<HabitAdisionBloc>(habitAddisionContext).add(SelectedColorEvent(SelectedIndex: SelectedIndex,properties: Properties,
+                                  name: selectedHabit,
+                                  icon: SelectedHabitIcon,
+                                    target: target,
+                                ));
                               },
                               child: const Text(
                                 'Save',
@@ -262,4 +266,19 @@ class DurationOfHabit extends StatelessWidget {
       ),
     );
   }
+}
+String adjustTime(String startTime, String endTime) {
+  DateFormat format = DateFormat('h:mm a');
+  if (endTime.isEmpty) {
+    // Parsing startTime to DateTime
+    DateTime startDateTime = format.parse(startTime);
+
+    // Adding 30 minutes to startDateTime
+    DateTime adjustedTime = startDateTime.add(Duration(minutes: int.parse(target)));
+
+    // Formatting adjusted time back to 'h:mm a' format
+    return format.format(adjustedTime);
+  }
+  // Return the endTime if it's not empty
+  return endTime;
 }
