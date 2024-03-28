@@ -116,7 +116,7 @@ class RepeastFeatures extends StatelessWidget {
                         BlocProvider.of<HabitAdisionBloc>(habitAddisionContext).add(SelectedColorEvent(SelectedIndex: SelectedIndex,properties: Properties,
                           name: selectedHabit,
                           icon: SelectedHabitIcon,
-                          target: target,
+                          target: target, Subtasks: Subtasks,
                         ));
 
                         print(datesOnwhichTheHabbitsAreSet);

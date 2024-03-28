@@ -5,11 +5,12 @@ class CustomDialogBox extends StatelessWidget {
   final String title;
   final TextEditingController content;
   final VoidCallback onClosePressed;
-
+  final String ButtonteText;
   CustomDialogBox({
     required this.title,
     required this.content,
     required this.onClosePressed,
+    required this.ButtonteText,
   });
 
   @override
@@ -45,7 +46,7 @@ class CustomDialogBox extends StatelessWidget {
             SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: onClosePressed,
-              child: Text('ok'),
+              child: Text(ButtonteText),
             ),
           ],
         ),

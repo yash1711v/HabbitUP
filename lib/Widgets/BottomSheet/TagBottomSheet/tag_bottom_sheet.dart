@@ -94,7 +94,7 @@ class _TagBottomSheetState extends State<TagBottomSheet> {
                               properties: Properties,
                               name: selectedHabit,
                               icon: SelectedHabitIcon,
-                              target: target,
+                              target: target, Subtasks: Subtasks,
                             ));
                           },
                           child: Row(
@@ -157,7 +157,7 @@ class _TagBottomSheetState extends State<TagBottomSheet> {
                                         properties: Properties,
                                         name: selectedHabit,
                                         icon: SelectedHabitIcon,
-                                        target: target,
+                                        target: target, Subtasks: Subtasks,
                                       ));
                                     },
                                     child: Text(Tags[index])),
@@ -188,8 +188,10 @@ class _TagBottomSheetState extends State<TagBottomSheet> {
                     TextButton(
                         onPressed: () {
                           setState(() {
-                            Tags.add(controller.text);
-                          });
+                            if(controller.text.isNotEmpty) {
+                                Tags.add(controller.text);
+                              }
+                            });
                           _pageController.previousPage(duration: const Duration(milliseconds: 700), curve: Curves.easeIn);
 
                         },

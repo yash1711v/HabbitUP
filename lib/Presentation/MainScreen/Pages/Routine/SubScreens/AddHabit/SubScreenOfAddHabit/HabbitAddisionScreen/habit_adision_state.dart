@@ -10,5 +10,6 @@ class SelectedColorState extends HabitAdisionState{
 String name;
 String icon;
   String target;
-  SelectedColorState({required this.index,this.name="",this.icon="",this.target=""});
+  Set<String> Subtasks={};
+  SelectedColorState({required this.index,this.name="",this.icon="",this.target="",required this.Subtasks});
 }

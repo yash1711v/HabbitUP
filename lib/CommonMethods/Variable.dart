@@ -67,3 +67,12 @@ List<String> Tags=[
   "Others",
 ];
 int SelectedIndexfortags=0;
+
+Set<String> Subtasks={};
+
+
+//----------------------------------------------------------------- this is to save the Habit in the Map for user--------------------------------
+Map<String,dynamic> UserHabit={
+
+
+};

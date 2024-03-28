@@ -83,7 +83,7 @@ class Reminder extends StatelessWidget {
                                   properties: Properties,
                                   name: selectedHabit,
                                   icon: SelectedHabitIcon,
-                                  target: target,
+                                  target: target, Subtasks: Subtasks,
                                 ));
                               },
                               child: const Text(

@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../CommonMethods/Variable.dart';
 
 class Sharedpref{
 
@@ -202,6 +205,31 @@ class Sharedpref{
     return Theme;
 
   }
+
+
+  void saveData(Map<String, dynamic> data) async {
+    print(data[SelectedCatagory][0][selectedHabit]['Reminders']);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+
+    String jsonData = jsonEncode(data);
+    prefs.setString('data', jsonData);
+  }
+
+  Future<Map<String, dynamic>> loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? jsonData = prefs.getString('data');
+    if (jsonData != null) {
+      Map<String, dynamic> decodedData = jsonDecode(jsonData);
+
+
+      return decodedData;
+    }
+    return {};
+  }
+
+
+
 
 }
 

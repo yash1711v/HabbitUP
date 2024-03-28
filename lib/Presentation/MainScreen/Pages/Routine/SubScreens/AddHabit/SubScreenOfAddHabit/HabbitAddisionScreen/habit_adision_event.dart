@@ -9,5 +9,6 @@ class SelectedColorEvent extends HabitAdisionEvent{
   String name;
   String icon;
   String target;
-  SelectedColorEvent({required this.SelectedIndex,required this.properties,this.name="",this.icon="",this.target=""});
+  Set<String> Subtasks={};
+  SelectedColorEvent({required this.SelectedIndex,required this.properties,this.name="",this.icon="",this.target="",required this.Subtasks});
 }

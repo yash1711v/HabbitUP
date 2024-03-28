@@ -6,10 +6,12 @@ class CustomDialogBox extends StatefulWidget {
   final FocusNode focusNode;
   final Function(String) callback;
 
+
    CustomDialogBox({
     Key? key,
     required this.focusNode,
     required this.callback, required this.textEditingController,
+
   }) : super(key: key);
 
   @override
@@ -44,7 +46,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
             widget.callback(widget.textEditingController.text);
             Navigator.of(context).pop();
           },
-          child: Text('OK'),
+          child: Text("ok"),
         ),
       ],
     );

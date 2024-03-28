@@ -275,6 +275,7 @@ class AddHabitScreen extends StatelessWidget {
                                           SelectedColorIndex=1;
                                           Properties = Methods().Habbits[
                                           SelectedCatagory]![selectedHabit]!['properties'];
+                                          print(Properties);
                                           Navigator.of(context2).pushNamed("/HabitAddisionScree",);
                                         },
                                         child: Container(
@@ -498,6 +499,7 @@ class AddHabitScreen extends StatelessWidget {
                                               SelectedColorIndex=0;
                                               Properties = Methods().Habbits[
                                               SelectedCatagory]![selectedHabit]!['properties'];
+                                              print(Properties);
                                               Navigator.of(context2).pushNamed("/HabitAddisionScree",);
                                             },
                                             child: Container(
@@ -721,6 +723,8 @@ class AddHabitScreen extends StatelessWidget {
                                               SelectedHabitIcon=HabitIcons[index];
                                               SelectedCatagory="Healthy LifeStyle";
                                               SelectedColorIndex=3;
+                                              Properties = Methods().Habbits[
+                                              SelectedCatagory]![selectedHabit]!['properties'];
                                               Navigator.of(context2).pushNamed("/HabitAddisionScree",
                                               );
                                             },
@@ -944,6 +948,8 @@ class AddHabitScreen extends StatelessWidget {
                                               SelectedHabitIcon=HabitIcons[index];
                                               SelectedCatagory="Loved Ones";
                                               SelectedColorIndex=6;
+                                              Properties = Methods().Habbits[
+                                              SelectedCatagory]![selectedHabit]!['properties'];
                                               Navigator.of(context2).pushNamed("/HabitAddisionScree",
                                               );
                                             },
@@ -1167,6 +1173,8 @@ class AddHabitScreen extends StatelessWidget {
                                               SelectedHabitIcon=HabitIcons[index];
                                               SelectedCatagory="Personal Finance";
                                               SelectedColorIndex=2;
+                                              Properties = Methods().Habbits[
+                                              SelectedCatagory]![selectedHabit]!['properties'];
                                               Navigator.of(context2).pushNamed("/HabitAddisionScree",
                                               );
                                             },
@@ -1388,6 +1396,8 @@ class AddHabitScreen extends StatelessWidget {
                                               SelectedHabitIcon=HabitIcons[index];
                                               SelectedCatagory="Others";
                                               SelectedColorIndex=4;
+                                              Properties = Methods().Habbits[
+                                              SelectedCatagory]![selectedHabit]!['properties'];
                                               Navigator.of(context2).pushNamed("/HabitAddisionScree",
                                               );
                                             },
