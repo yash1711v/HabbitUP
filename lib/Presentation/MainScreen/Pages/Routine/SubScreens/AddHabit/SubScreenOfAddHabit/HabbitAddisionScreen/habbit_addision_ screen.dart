@@ -19,6 +19,7 @@ import '../../../../../../../../Widgets/BottomSheet/IconChangeBottomSheet/icon_c
 import '../../../../../../../../Widgets/BottomSheet/RepeatsEveryDay/bottom_sheet.dart';
 import '../../../../../../../../Widgets/BottomSheet/TagBottomSheet/tag_bottom_sheet.dart';
 import '../../../../../../../../Widgets/CustomDialogBox.dart';
+import '../../../../../Progress/progress_bloc.dart';
 import '../../../../routine_bloc.dart';
 import '../../../stacking_cards.dart';
 
@@ -139,9 +140,9 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                             ),
                             content: Text("Habit With This Name Already Exist Please Change The Tame OR Change The Habit",style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color,),)));
                       }else{
-                        if(datesOnwhichTheHabbitsAreSet.isNotEmpty && Reminders.isNotEmpty){
+                        if(datesOnwhichTheHabbitsAreSet.isNotEmpty ){
                           UserHabit.putIfAbsent(SelectedCatagory, () => []);
-                          print(datesOnwhichTheHabbitsAreSet);
+
                           datesOnwhichTheHabbitsAreSet.forEach((key, value) {
                             datesOnwhichTheHabbitsAreList[key]=datesOnwhichTheHabbitsAreSet[key]!.toList();
 
@@ -167,6 +168,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                         });
                         }
                         else{
+                          print("if dates doesn't exist");
                           addDates(
                             frequency: 1,
                             endDate: endDate.isNotEmpty?endDate:"31-12-${DateTime.now().year}",
@@ -225,8 +227,10 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                             state: whichState,
                             selectedDate: selectedDate);
                       });
-                      BlocProvider.of<RoutineBloc>(contextRoutineScreen).add(ListchangeEvent(fancyCards: fancyCards,state: whichState));
-                     // Navigator.pushNamed(context, '/MainScreen');
+                      BlocProvider.of<RoutineBloc>(contextRoutineScreen).add(ListchangeEvent(fancyCards: fancyCards,state: whichState, habits: UserHabit));
+                     Navigator.pushNamed(context, '/MainScreen');
+                      // BlocProvider.of<ProgressBloc>(contextProgress).add(Progresschangeevent(UserHabit));
+
                     },
                     child: Text(
                       "Save",

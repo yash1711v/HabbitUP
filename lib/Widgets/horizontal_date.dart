@@ -73,7 +73,7 @@ class _HorizontalCalendarState extends State<HorizontalCalendar> {
                   });
 
 
-                  BlocProvider.of<RoutineBloc>(widget.contextRoutineScreen).add(ListchangeEvent(fancyCards: fancyCards,state: widget.whichState));
+                  BlocProvider.of<RoutineBloc>(widget.contextRoutineScreen).add(ListchangeEvent(fancyCards: fancyCards,state: widget.whichState, habits: UserHabit));
 
                 },
                 child: Padding(

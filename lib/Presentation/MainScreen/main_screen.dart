@@ -13,9 +13,14 @@ import 'Pages/More/more_screen.dart';
 import 'Pages/Routine/routine_screen.dart';
 
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   MainScreen({super.key});
 
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
   final PageController pageController = PageController();
 
   @override
@@ -26,8 +31,8 @@ class MainScreen extends StatelessWidget {
         builder: (context, state) {
 
           if(state is MainScreenPageChangeState){
-            pageController.animateToPage(state.page, duration: const Duration(milliseconds: 700), curve: Curves.bounceOut);
-            // pageController.jumpToPage(state.page);
+            // pageController.animateToPage(state.page, duration: const Duration(milliseconds: 700), curve: Curves.bounceOut);
+            pageController.jumpToPage(state.page);
           }
           return PageView(
             physics: const NeverScrollableScrollPhysics(),

@@ -95,6 +95,7 @@ Map<String,dynamic> UserHabit={
 
 };
 late BuildContext contextRoutineScreen;
+late BuildContext contextProgress;
 
  List<Widget> fancyCards = generateHabitCards(userHabit: UserHabit, state: '', selectedDate: selectedDate);
 

@@ -12,7 +12,7 @@ class RoutineBloc extends Bloc<RoutineEvent, RoutineState> {
     on<RoutineEvent>((event, emit) {
        if(event is ListchangeEvent){
          try {
-           emit(ListchangeState(fancyCards: event.fancyCards,state: event.state));
+           emit(ListchangeState(fancyCards: event.fancyCards,state: event.state, habits: event.habits));
          }catch(e){
            print(e);
          }

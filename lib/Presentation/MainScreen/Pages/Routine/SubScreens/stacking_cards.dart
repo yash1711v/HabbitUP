@@ -1,7 +1,5 @@
-import 'dart:async';
-import 'dart:ui';
-import 'dart:ui';
 
+import 'dart:ui';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +14,7 @@ import 'package:stacked_card_carousel/stacked_card_carousel.dart';
 
 import '../../../../../CommonMethods/Variable.dart';
 import '../../../../../LocalStorage/SharedPref/Sharedpref.dart';
+import '../../Progress/progress_bloc.dart';
 
 class StackingCard extends StatefulWidget {
   final DateTime date;
@@ -26,17 +25,17 @@ class StackingCard extends StatefulWidget {
 }
 
 class _StackingCardState extends State<StackingCard> {
+  PageController controller=PageController();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RoutineBloc, RoutineState>(
       builder: (context, state) {
-        print("state ${state}");
         if (state is ListchangeState) {
-          print("state ${state is ListchangeState}");
           fancyCards = state.fancyCards;
         }
         return fancyCards.isNotEmpty
             ? StackedCardCarousel(
+          pageController: controller,
                 initialOffset: -00,
                 type: StackedCardCarouselType.cardsStack,
                 spaceBetweenItems: 150,
@@ -100,7 +99,7 @@ class _FancyCardState extends State<FancyCard> {
               height: 155,
               decoration: ShapeDecoration(
                 color: widget.color,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(35))),
               ),
               child: Column(
@@ -232,7 +231,7 @@ class _FancyCardState extends State<FancyCard> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           Center(
@@ -242,14 +241,9 @@ class _FancyCardState extends State<FancyCard> {
                                         int.parse(target)) {
                                       int v = widget.value+1;
 
-
+                                       print( UserHabit[widget.category][widget.index]
+                                       [widget.Habitname]['Progress']);
                                       setState(() {
-                                        UserHabit[widget.category][widget.index]
-                                                [widget.Habitname]['Progress']
-                                            .putIfAbsent(
-                                                DateFormat('dd-MM-yyyy')
-                                                    .format(selectedDate),
-                                                () => 0);
                                         UserHabit[widget.category][widget.index]
                                                 [widget.Habitname]['Progress']
                                             .update(
@@ -266,7 +260,8 @@ class _FancyCardState extends State<FancyCard> {
                                       BlocProvider.of<RoutineBloc>(contextRoutineScreen)
                                           .add(ListchangeEvent(
                                           fancyCards: fancyCards,
-                                          state: whichState));
+                                          state: whichState, habits: UserHabit));
+                                      BlocProvider.of<ProgressBloc>(contextProgress).add(Progresschangeevent(UserHabit));
                                       Sharedpref().saveData(UserHabit);
                                     } else if (val == int.parse(target)) {
                                       UserHabit[widget.category][widget.index]
@@ -291,11 +286,15 @@ class _FancyCardState extends State<FancyCard> {
                                       BlocProvider.of<RoutineBloc>(contextRoutineScreen)
                                           .add(ListchangeEvent(
                                           fancyCards: fancyCards,
-                                          state: whichState));
+                                          state: whichState,
+                                          habits: UserHabit
+                                      ));
                                     }
                                   },
                                   child: SvgPicture.asset(
-                                      'assets/ImagesY/RoutineScreen/Addition.svg'))),
+                                      'assets/ImagesY/RoutineScreen/Addition.svg',
+                                  color:  Theme.of(context).scaffoldBackgroundColor,
+                                  ))),
                           Padding(
                             padding:
                                 const EdgeInsets.only(top: 15.0, bottom: 10),
@@ -308,8 +307,8 @@ class _FancyCardState extends State<FancyCard> {
                                   child: Text(
                                       textAlign: TextAlign.center,
                                       '${widget.value}/$target\nmin',
-                                      style: const TextStyle(
-                                        color: Color(0xFF1F1F1F),
+                                      style:  TextStyle(
+                                        color:  Theme.of(context).scaffoldBackgroundColor,
                                         fontSize: 16,
                                         fontFamily: 'DM Sans',
                                         fontWeight: FontWeight.w500,
@@ -324,7 +323,7 @@ class _FancyCardState extends State<FancyCard> {
                               child: GestureDetector(
                                   onTap: () {
                                     if (val != 0) {
-                                      int? v = 0;
+                                      int v = 0;
 
                                         v = widget.value-1;
 
@@ -352,7 +351,10 @@ class _FancyCardState extends State<FancyCard> {
                                       BlocProvider.of<RoutineBloc>(contextRoutineScreen)
                                           .add(ListchangeEvent(
                                           fancyCards: fancyCards,
-                                          state: whichState));
+                                          state: whichState,
+                                          habits: UserHabit
+                                      ));
+                                      BlocProvider.of<ProgressBloc>(contextProgress).add(Progresschangeevent(UserHabit));
                                       Sharedpref().saveData(UserHabit);
                                       setState(() {
                                         UserHabit[widget.category][widget.index]
@@ -378,7 +380,9 @@ class _FancyCardState extends State<FancyCard> {
                                     }
                                   },
                                   child: SvgPicture.asset(
-                                      'assets/ImagesY/RoutineScreen/Subtract.svg'))),
+                                      'assets/ImagesY/RoutineScreen/Subtract.svg',
+                                  color:  Theme.of(context).scaffoldBackgroundColor,
+                                  ))),
                           SizedBox(
                             height: 50,
                           ),
@@ -521,7 +525,8 @@ class _FancyCardState extends State<FancyCard> {
                               BlocProvider.of<RoutineBloc>(contextRoutineScreen)
                                   .add(ListchangeEvent(
                                       fancyCards: fancyCards,
-                                      state: whichState));
+                                      state: whichState, habits: UserHabit));
+                              BlocProvider.of<ProgressBloc>(contextProgress).add(Progresschangeevent(UserHabit));
 
                               Sharedpref().saveData(UserHabit);
                               await Sharedpref().loadData().then((value) {
@@ -608,15 +613,11 @@ List<Widget> generateHabitCards(
     required String state,
     required DateTime selectedDate}) {
   List<Widget> habitCards = [];
-  print(userHabit);
   userHabit.forEach((category, habits) {
     List<String> Subtasks = [];
     habits.forEach((habit) {
-      print(habit);
       habit.forEach((key1, value1) {
-        print(key1);
         value1['Subtasks'].forEach((element) {
-          print(element);
           Subtasks.clear();
           Subtasks.add(element.toString());
         });
@@ -629,7 +630,6 @@ List<Widget> generateHabitCards(
               i++) {
             if (value1['dates'][DateFormat('MMMM').format(selectedDate)][i] ==
                 selectedDate.day) {
-              print(value1['Completed']);
               if (state == "Done") {
                 if (value1['Completed'] != {} && value1['Completed'] != null) {
                   if (value1['Completed']
@@ -692,7 +692,8 @@ List<Widget> generateHabitCards(
                       done: value1['Completed'][DateFormat('dd-MM-yyyy').format(selectedDate)], value:   value1['Progress'][DateFormat('dd-MM-yyyy').format(selectedDate)],
                   ));
                 }
-              } else {
+              }
+              else {
                 if (value1['Completed'] != {} && value1['Completed'] != null) {
                   if (value1['Completed']
                           [DateFormat('dd-MM-yyyy').format(selectedDate)] ==
@@ -713,7 +714,7 @@ List<Widget> generateHabitCards(
                         target: value1['target'],
                         category: category,
                         index: i,
-                        
+
                           done: value1['Completed'][DateFormat('dd-MM-yyyy').format(selectedDate)],
                         value:   value1['Progress'][DateFormat('dd-MM-yyyy').format(selectedDate)],
                       ));

@@ -38,7 +38,7 @@ class _RoutineScreenState extends State<RoutineScreen> {
     contextRoutineScreen= context;
     Future.delayed(Duration(milliseconds: 10)).then((value) {
       BlocProvider.of<RoutineBloc>(context).add(
-          ListchangeEvent(fancyCards: fancyCards, state: whichState));
+          ListchangeEvent(fancyCards: fancyCards, state: whichState, habits: UserHabit));
     });
 
   }
@@ -165,20 +165,23 @@ class _RoutineScreenState extends State<RoutineScreen> {
                           fancyCards = generateHabitCards(userHabit: UserHabit, state: whichState, selectedDate: selectedDate);
                           BlocProvider.of<RoutineBloc>(context).add(
                               ListchangeEvent(
-                                  fancyCards: fancyCards, state: "All"));
+                                  fancyCards: fancyCards, state: "All", habits: UserHabit));
                         },
                         child: Text(
                           "All",
                           style: whichState == "All"
                               ? TextStyle(
-                                  color: Colors.white,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.color,
                                   fontSize: 14,
                                   fontFamily: 'DM Sans',
                                   fontWeight: FontWeight.w400,
                                   height: 0,
                                 )
                               : TextStyle(
-                                  color: Colors.white.withOpacity(0.5),
+                                  color: Colors.grey,
                                   fontSize: 14,
                                   fontFamily: 'DM Sans',
                                   fontWeight: FontWeight.w400,
@@ -193,20 +196,23 @@ class _RoutineScreenState extends State<RoutineScreen> {
                             fancyCards = generateHabitCards(userHabit: UserHabit, state: whichState, selectedDate: selectedDate);
                             BlocProvider.of<RoutineBloc>(context).add(
                                 ListchangeEvent(
-                                    fancyCards: fancyCards, state: "Active"));
+                                    fancyCards: fancyCards, state: "Active", habits: UserHabit));
                           },
                           child: Text(
                             "Active",
                             style: whichState == "Active"
                                 ? TextStyle(
-                                    color: Colors.white,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.color,
                                     fontSize: 14,
                                     fontFamily: 'DM Sans',
                                     fontWeight: FontWeight.w400,
                                     height: 0,
                                   )
                                 : TextStyle(
-                                    color: Colors.white.withOpacity(0.5),
+                                    color: Colors.grey,
                                     fontSize: 14,
                                     fontFamily: 'DM Sans',
                                     fontWeight: FontWeight.w400,
@@ -220,20 +226,23 @@ class _RoutineScreenState extends State<RoutineScreen> {
                           fancyCards = generateHabitCards(userHabit: UserHabit, state: whichState, selectedDate: selectedDate);
                           BlocProvider.of<RoutineBloc>(context).add(
                               ListchangeEvent(
-                                  fancyCards: fancyCards, state: "Done"));
+                                  fancyCards: fancyCards, state: "Done", habits: UserHabit));
                         },
                         child: Text(
                           "Done",
                           style: whichState == "Done"
                               ? TextStyle(
-                                  color: Colors.white,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.color,
                                   fontSize: 14,
                                   fontFamily: 'DM Sans',
                                   fontWeight: FontWeight.w400,
                                   height: 0,
                                 )
                               : TextStyle(
-                                  color: Colors.white.withOpacity(0.5),
+                                  color: Colors.grey,
                                   fontSize: 14,
                                   fontFamily: 'DM Sans',
                                   fontWeight: FontWeight.w400,

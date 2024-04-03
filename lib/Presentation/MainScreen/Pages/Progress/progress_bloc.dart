@@ -10,6 +10,9 @@ class ProgressBloc extends Bloc<ProgressEvent, ProgressState> {
   ProgressBloc() : super(ProgressInitial()) {
     on<ProgressEvent>((event, emit) {
       // TODO: implement event handler
+      if(event is Progresschangeevent){
+        emit(Progressstate(habits: event.habits));
+      }
     });
   }
 }

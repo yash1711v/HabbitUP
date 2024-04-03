@@ -8,5 +8,6 @@ class RoutineInitial extends RoutineState {}
 class ListchangeState extends RoutineState {
   late List<Widget> fancyCards;
   String state;
-  ListchangeState({required this.fancyCards,this.state="All"});
+  Map<String,dynamic> habits;
+  ListchangeState({required this.fancyCards,this.state="All",required this.habits});
 }

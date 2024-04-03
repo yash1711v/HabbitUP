@@ -212,54 +212,8 @@ class AddHabitScreen extends StatelessWidget {
                               physics: NeverScrollableScrollPhysics(),
                             child: Row(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 58.0),
-                                  child: GestureDetector(
-                                    onTap:(){
-                                     },
-                                    child: Container(
-                                      width: 123,
-                                      height: 80,
-                                      decoration: ShapeDecoration(
-                                        color: const Color(0xFFF36C00),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(15),
-                                        ),
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 9.0),
-                                            child: SvgPicture.asset(
-                                                "assets/ImagesY/RoutineScreen/AddhabbitIcons/AddIcon.svg"),
-                                          ),
-                                          const Padding(
-                                            padding: EdgeInsets.only(top: 8.0,bottom: 9),
-                                            child: SizedBox(
-                                              width: 75,
-                                              height: 31,
-                                              child: Text(
-                                                'Add a new habit',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Color(0xFF1F1F1F),
-                                                  fontSize: 12,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w700,
-                                                  height: 0,
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width-182,
+                                  width: MediaQuery.of(context).size.width,
                                   height: 81,
                                   child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
@@ -321,18 +275,7 @@ class AddHabitScreen extends StatelessWidget {
                                                       ),
                                                       Padding(
                                                         padding: const EdgeInsets.only(bottom: 12.0,right: 5),
-                                                        child: Container(
-                                                          width: 24,
-                                                          height: 24,
-                                                          decoration: ShapeDecoration(
-                                                            color: Theme.of(context)
-                                                                .textTheme
-                                                                .bodyText1
-                                                                ?.color,
-                                                            shape: const OvalBorder(),
-                                                          ),
-                                                          child: SvgPicture.asset(HabitIcons[index],width: 10,height: 10,),
-                                                        ),
+                                                        child: SvgPicture.asset(HabitIcons[index],width: 24,height: 24,),
                                                       )
                                                     ],
                                                   ),
@@ -440,50 +383,8 @@ class AddHabitScreen extends StatelessWidget {
                             physics: NeverScrollableScrollPhysics(),
                             child: Row(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 58.0),
-                                  child: Container(
-                                    width: 123,
-                                    height: 80,
-                                    decoration: ShapeDecoration(
-                                      color: const Color(0xFF9E6ACE),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 9.0),
-                                          child: SvgPicture.asset(
-                                              "assets/ImagesY/RoutineScreen/AddhabbitIcons/AddIcon.svg"),
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.only(top: 8.0,bottom: 9),
-                                          child: SizedBox(
-                                            width: 75,
-                                            height: 31,
-                                            child: Text(
-                                              'Add a new habit',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Color(0xFF1F1F1F),
-                                                fontSize: 12,
-                                                fontFamily: 'Inter',
-                                                fontWeight: FontWeight.w700,
-                                                height: 0,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width-182,
+                                  width: MediaQuery.of(context).size.width,
                                   height: 81,
                                   child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
@@ -503,7 +404,7 @@ class AddHabitScreen extends StatelessWidget {
                                               Navigator.of(context2).pushNamed("/HabitAddisionScree",);
                                             },
                                             child: Container(
-                                              width: 123,
+                                              width: 130,
                                               height: 80,
                                               clipBehavior: Clip.antiAlias,
                                               decoration: ShapeDecoration(
@@ -545,25 +446,14 @@ class AddHabitScreen extends StatelessWidget {
                                                           ),
                                                           Padding(
                                                             padding: const EdgeInsets.only(bottom: 12.0,right: 5),
-                                                            child: Container(
-                                                              width: 24,
-                                                              height: 24,
-                                                              decoration: ShapeDecoration(
-                                                                color: Theme.of(context)
-                                                                    .textTheme
-                                                                    .bodyText1
-                                                                    ?.color,
-                                                                shape: const OvalBorder(),
-                                                              ),
-                                                              child: SvgPicture.asset(HabitIcons[index],width: 10,height: 10,),
-                                                            ),
+                                                            child: SvgPicture.asset(HabitIcons[index],width: 24,height: 24,),
                                                           )
                                                         ],
                                                       ),
                                                       Padding(
                                                         padding: const EdgeInsets.only(top: 13.0),
                                                         child: Container(
-                                                          width: 123,
+                                                          width: 130,
                                                           height: 15,
                                                           decoration: const ShapeDecoration(
                                                             color: Color(0xFF9D6BCE),
@@ -665,51 +555,8 @@ class AddHabitScreen extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 58.0),
-                                  child: Container(
-                                    width: 123,
-                                    height: 80,
-                                    decoration: ShapeDecoration(
-                                      color: const Color(0xFF01BBF6),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 9.0),
-                                          child: SvgPicture.asset(
-                                              "assets/ImagesY/RoutineScreen/AddhabbitIcons/AddIcon.svg"),
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.only(top: 8.0,bottom: 9),
-                                          child: SizedBox(
-                                            width: 75,
-                                            height: 31,
-                                            child: Text(
-                                              'Add a new habit',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Color(0xFF1F1F1F),
-                                                fontSize: 12,
-                                                fontFamily: 'Inter',
-                                                fontWeight: FontWeight.w700,
-                                                height: 0,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-
-                                ),
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width-182,
+                                  width: MediaQuery.of(context).size.width,
                                   height: 81,
                                   child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
@@ -771,18 +618,7 @@ class AddHabitScreen extends StatelessWidget {
                                                           ),
                                                           Padding(
                                                             padding: const EdgeInsets.only(bottom: 12.0,right: 5),
-                                                            child: Container(
-                                                              width: 24,
-                                                              height: 24,
-                                                              decoration: ShapeDecoration(
-                                                                color: Theme.of(context)
-                                                                    .textTheme
-                                                                    .bodyText1
-                                                                    ?.color,
-                                                                shape: const OvalBorder(),
-                                                              ),
-                                                              child: SvgPicture.asset(HabitIcons[index],width: 10,height: 10,),
-                                                            ),
+                                                            child: SvgPicture.asset(HabitIcons[index],width: 24,height: 24,),
                                                           )
                                                         ],
                                                       ),
@@ -890,51 +726,8 @@ class AddHabitScreen extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 58.0),
-                                  child: Container(
-                                    width: 123,
-                                    height: 80,
-                                    decoration: ShapeDecoration(
-                                      color: const Color(0xFFFE8596),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 9.0),
-                                          child: SvgPicture.asset(
-                                              "assets/ImagesY/RoutineScreen/AddhabbitIcons/AddIcon.svg"),
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.only(top: 8.0,bottom: 9),
-                                          child: SizedBox(
-                                            width: 75,
-                                            height: 31,
-                                            child: Text(
-                                              'Add a new habit',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Color(0xFF1F1F1F),
-                                                fontSize: 12,
-                                                fontFamily: 'Inter',
-                                                fontWeight: FontWeight.w700,
-                                                height: 0,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-
-                                      ],
-                                    ),
-                                  ),
-                                ),
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width-182,
+                                  width: MediaQuery.of(context).size.width,
                                   height: 81,
                                   child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
@@ -996,18 +789,7 @@ class AddHabitScreen extends StatelessWidget {
                                                           ),
                                                           Padding(
                                                             padding: const EdgeInsets.only(bottom: 12.0,right: 5),
-                                                            child: Container(
-                                                              width: 24,
-                                                              height: 24,
-                                                              decoration: ShapeDecoration(
-                                                                color: Theme.of(context)
-                                                                    .textTheme
-                                                                    .bodyText1
-                                                                    ?.color,
-                                                                shape: const OvalBorder(),
-                                                              ),
-                                                              child: SvgPicture.asset(HabitIcons[index],width: 10,height: 10,),
-                                                            ),
+                                                            child: SvgPicture.asset(HabitIcons[index],width: 24,height: 24,),
                                                           )
                                                         ],
                                                       ),
@@ -1116,50 +898,8 @@ class AddHabitScreen extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 58.0),
-                                  child: Container(
-                                    width: 123,
-                                    height: 80,
-                                    decoration: ShapeDecoration(
-                                      color: const Color(0xFFA8E32C),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 9.0),
-                                          child: SvgPicture.asset(
-                                              "assets/ImagesY/RoutineScreen/AddhabbitIcons/AddIcon.svg"),
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.only(top: 8.0,bottom: 9),
-                                          child: SizedBox(
-                                            width: 75,
-                                            height: 31,
-                                            child: Text(
-                                              'Add a new habit',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Color(0xFF1F1F1F),
-                                                fontSize: 12,
-                                                fontFamily: 'Inter',
-                                                fontWeight: FontWeight.w700,
-                                                height: 0,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width-182,
+                                  width: MediaQuery.of(context).size.width,
                                   height: 81,
                                   child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
@@ -1221,18 +961,7 @@ class AddHabitScreen extends StatelessWidget {
                                                           ),
                                                           Padding(
                                                             padding: const EdgeInsets.only(bottom: 12.0,right: 5),
-                                                            child: Container(
-                                                              width: 24,
-                                                              height: 24,
-                                                              decoration: ShapeDecoration(
-                                                                color: Theme.of(context)
-                                                                    .textTheme
-                                                                    .bodyText1
-                                                                    ?.color,
-                                                                shape: const OvalBorder(),
-                                                              ),
-                                                              child: SvgPicture.asset(HabitIcons[index],width: 10,height: 10,),
-                                                            ),
+                                                            child: SvgPicture.asset(HabitIcons[index],width: 24,height: 24,),
                                                           )
                                                         ],
                                                       ),
@@ -1334,55 +1063,13 @@ class AddHabitScreen extends StatelessWidget {
                         visible: Other,
                         child: Padding(
                           padding: const EdgeInsets.only(
-                              top: 11.0,),
+                              top: 11.0,left: 10,right: 10),
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 58.0),
-                                  child: Container(
-                                    width: 123,
-                                    height: 80,
-                                    decoration: ShapeDecoration(
-                                      color: const Color(0xFFD03C91),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 9.0),
-                                          child: SvgPicture.asset(
-                                              "assets/ImagesY/RoutineScreen/AddhabbitIcons/AddIcon.svg"),
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.only(top: 8.0,bottom: 9),
-                                          child: SizedBox(
-                                            width: 75,
-                                            height: 31,
-                                            child: Text(
-                                              'Add a new habit',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Color(0xFF1F1F1F),
-                                                fontSize: 12,
-                                                fontFamily: 'Inter',
-                                                fontWeight: FontWeight.w700,
-                                                height: 0,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width-182,
+                                  width: MediaQuery.of(context).size.width,
                                   height: 81,
                                   child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
@@ -1444,18 +1131,7 @@ class AddHabitScreen extends StatelessWidget {
                                                           ),
                                                           Padding(
                                                             padding: const EdgeInsets.only(bottom: 12.0,right: 5),
-                                                            child: Container(
-                                                              width: 24,
-                                                              height: 24,
-                                                              decoration: ShapeDecoration(
-                                                                color: Theme.of(context)
-                                                                    .textTheme
-                                                                    .bodyText1
-                                                                    ?.color,
-                                                                shape: const OvalBorder(),
-                                                              ),
-                                                              child: SvgPicture.asset(HabitIcons[index],width: 10,height: 10,),
-                                                            ),
+                                                            child: SvgPicture.asset(HabitIcons[index],width: 24,height: 24,),
                                                           )
                                                         ],
                                                       ),
