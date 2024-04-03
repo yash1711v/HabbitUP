@@ -60,6 +60,7 @@ class DurationOfHabit extends StatelessWidget {
                               onPressed: () {
                                 Navigator.of(context).pop();
                                 time="$startTime-${adjustTime(startTime, endTime)}";
+                                endTime=adjustTime(startTime, endTime);
                                 print("$time");
                                 Properties[index]="Time: $time";
                                 BlocProvider.of<HabitAdisionBloc>(habitAddisionContext).add(SelectedColorEvent(SelectedIndex: SelectedIndex,properties: Properties,

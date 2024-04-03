@@ -208,7 +208,7 @@ class Sharedpref{
 
 
   void saveData(Map<String, dynamic> data) async {
-    print(data[SelectedCatagory][0][selectedHabit]['Reminders']);
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
 

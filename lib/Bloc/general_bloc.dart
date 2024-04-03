@@ -18,8 +18,8 @@ class GeneralBloc extends Bloc<GeneralEvent, GeneralState> {
       bool DetailsDone=await Sharedpref().getDetails()??false;
       int Date= await Sharedpref().getFeelingsDate();
      if(isOnboarding){
-       if( (uid!=null && uid.isNotEmpty) || Guest){
-         print("${(uid!=null && uid.isNotEmpty)} ${Guest}");
+       if( ( uid.isNotEmpty) || Guest){
+         print("${(uid.isNotEmpty)} ${Guest}");
          if(DetailsDone){
            if(Date!=DateTime.now().day){
              Navigator.of(event.context).pushReplacementNamed("/FeelingsSelection");
@@ -31,7 +31,7 @@ class GeneralBloc extends Bloc<GeneralEvent, GeneralState> {
            Navigator.of(event.context).pushReplacementNamed("/AvatarScreen");
          }
        }else {
-         print("${(uid!=null && uid.isNotEmpty)} ${Guest}");
+         print("${( uid.isNotEmpty)} ${Guest}");
          Navigator.of(event.context).pushReplacementNamed("/SignupScreen");
         }
       }else{

@@ -52,6 +52,7 @@ dependencies:
   numberpicker: ^2.1.2
   flutter_time_picker_spinner: ^2.0.0
   flutter_local_notifications: ^17.0.0
+  stacked_card_carousel: ^0.0.4
 
 dev_dependencies:
   flutter_test:

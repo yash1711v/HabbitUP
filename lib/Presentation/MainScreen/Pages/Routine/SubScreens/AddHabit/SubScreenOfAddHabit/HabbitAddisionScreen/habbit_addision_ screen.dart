@@ -11,6 +11,7 @@ import 'package:habitup/Widgets/BottomSheet/Duration/duration_of_habit.dart';
 import 'package:habitup/Widgets/BottomSheet/Reminder/reminder.dart';
 import 'package:habitup/Widgets/BottomSheet/Reminder/reminder_bloc.dart';
 import 'package:habitup/Widgets/BottomSheet/RepeatsEveryDay/bottom_sheet_bloc.dart';
+import 'package:intl/intl.dart';
 import '../../../../../../../../CommonMethods/InputValidator.dart';
 import '../../../../../../../../CommonMethods/Methods.dart';
 import '../../../../../../../../ScheduleNotifications/notification_scheduler.dart';
@@ -18,6 +19,8 @@ import '../../../../../../../../Widgets/BottomSheet/IconChangeBottomSheet/icon_c
 import '../../../../../../../../Widgets/BottomSheet/RepeatsEveryDay/bottom_sheet.dart';
 import '../../../../../../../../Widgets/BottomSheet/TagBottomSheet/tag_bottom_sheet.dart';
 import '../../../../../../../../Widgets/CustomDialogBox.dart';
+import '../../../../routine_bloc.dart';
+import '../../../stacking_cards.dart';
 
 class HabbitAddisionScreen extends StatefulWidget {
   const HabbitAddisionScreen({super.key});
@@ -31,7 +34,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
   @override
   Widget build(BuildContext context2) {
     late TextEditingController controller =
-        TextEditingController(text: selectedHabit);
+        TextEditingController(text: SelectedHabitname);
     late TextEditingController SubtaskController =
         TextEditingController();
     late TextEditingController Unit = TextEditingController(
@@ -126,30 +129,44 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                   padding: const EdgeInsets.only(right: 10, left: 10),
                   child: TextButton(
                     onPressed: () async {
+                      if(doesHabitExist(UserHabit[SelectedCatagory]==null?[]:UserHabit[SelectedCatagory], "$SelectedHabitname")==true){
+                        ScaffoldMessenger.of(context).showSnackBar(   SnackBar(
 
+                            backgroundColor: Theme.of(context).inputDecorationTheme.fillColor,
+                            shape: const RoundedRectangleBorder(
+                              // side: BorderSide(width: borderWidth, color: borderColor),
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                            ),
+                            content: Text("Habit With This Name Already Exist Please Change The Tame OR Change The Habit",style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color,),)));
+                      }else{
+                        if(datesOnwhichTheHabbitsAreSet.isNotEmpty && Reminders.isNotEmpty){
+                          UserHabit.putIfAbsent(SelectedCatagory, () => []);
+                          print(datesOnwhichTheHabbitsAreSet);
+                          datesOnwhichTheHabbitsAreSet.forEach((key, value) {
+                            datesOnwhichTheHabbitsAreList[key]=datesOnwhichTheHabbitsAreSet[key]!.toList();
 
-                     if(datesOnwhichTheHabbitsAreSet.isNotEmpty && Reminders.isNotEmpty){
-                       UserHabit.putIfAbsent(SelectedCatagory, () => []);
-                       print(datesOnwhichTheHabbitsAreSet);
-                       datesOnwhichTheHabbitsAreSet.forEach((key, value) {
-                         datesOnwhichTheHabbitsAreList[key]=datesOnwhichTheHabbitsAreSet[key]!.toList();
-
-                       });
-                       reminder=Reminders.toList();
-                       UserHabit[SelectedCatagory].add({
-                         selectedHabit: {
-                           "colors": colorsforsaving[SelectedColorIndex],
-                           "icon": habitIcon,
-                           "dates": datesOnwhichTheHabbitsAreList, // Convert set to list
-                           "Subtasks": Subtasks.toList(),
-                           "target": target,
-                           "Reminders": reminder, // Convert set to list
-                           "Completed": [],
-                           "Progress": [],
-                           "changableunits": Methods().Habbits[SelectedCatagory]![selectedHabit]!['changableunits'],
-                         }
-                       });
-                     }else{
+                          });
+                          reminder=Reminders.toList();
+                        setState(() {
+                          UserHabit[SelectedCatagory].add({
+                            SelectedHabitname: {
+                              "colors": colorsforsaving[SelectedColorIndex],
+                              "icon": habitIcon,
+                              "dates": datesOnwhichTheHabbitsAreList, // Convert set to list
+                              "Subtasks": Subtasks.toList(),
+                              "target": target,
+                              "Reminders": reminder, // Convert set to list
+                              "Completed": generateDateMap(),
+                              "Progress": generateDateMapProgress(),
+                              "startTime":startTime,
+                              "endTime":endTime,
+                              "Hastag":Tags[SelectedIndexfortags],
+                              "changableunits": Methods().Habbits[SelectedCatagory]![selectedHabit]!['changableunits'],
+                            }
+                          });
+                        });
+                        }
+                        else{
                           addDates(
                             frequency: 1,
                             endDate: endDate.isNotEmpty?endDate:"31-12-${DateTime.now().year}",
@@ -160,25 +177,56 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
 
                           });
                           reminder=Reminders.toList();
-                          UserHabit[SelectedCatagory].add({
-                            selectedHabit: {
-                              "colors": colorsforsaving[SelectedColorIndex],
-                              "icon": habitIcon,
-                              "dates": datesOnwhichTheHabbitsAreList, // Convert set to list
-                              "Subtasks": Subtasks.toList(),
-                              "target": target,
-                              "Reminders":reminder, // Convert set to list
-                              "Completed": [],
-                              "Progress": [],
-                              "changableunits": Methods().Habbits[SelectedCatagory]![selectedHabit]!['changableunits'],
-                            }
+                          setState(() {
+                            UserHabit[SelectedCatagory].add({
+                              SelectedHabitname: {
+                                "colors": colorsforsaving[SelectedColorIndex],
+                                "icon": habitIcon,
+                                "dates": datesOnwhichTheHabbitsAreList, // Convert set to list
+                                "Subtasks": Subtasks.toList(),
+                                "target": target,
+                                "Reminders": reminder, // Convert set to list
+                                "Completed": generateDateMap(),
+                                "Progress": generateDateMapProgress(),
+                                "startTime":startTime.isNotEmpty?startTime:"0000",
+                                "endTime":endTime.isNotEmpty?endTime:"0000",
+                                "Hastag":Tags[SelectedIndexfortags],
+                                "changableunits": Methods().Habbits[SelectedCatagory]![selectedHabit]!['changableunits'],
+                              }
+                            });
                           });
+                        }
                       }
+                      setState(() {
+                        fancyCards= generateHabitCards(
+                            userHabit: UserHabit,
+                            state: whichState,
+                            selectedDate: selectedDate);
+                      });
 
-                     Sharedpref().saveData(UserHabit);
+
+                      Sharedpref().saveData(UserHabit);
                      await Sharedpref().loadData().then((value) {
-                       print(value.length);
+                       value.forEach((key, value2) {
+                         value2.forEach((element) {
+                           element.forEach((key3,value3) {
+
+                             value3.forEach((key4, value4) {
+                                print('key $key4: \n value $value4');});
+
+                            });
+                         });
+                       });
                      });
+
+                      setState(() {
+                        fancyCards= generateHabitCards(
+                            userHabit: UserHabit,
+                            state: whichState,
+                            selectedDate: selectedDate);
+                      });
+                      BlocProvider.of<RoutineBloc>(contextRoutineScreen).add(ListchangeEvent(fancyCards: fancyCards,state: whichState));
+                     // Navigator.pushNamed(context, '/MainScreen');
                     },
                     child: Text(
                       "Save",
@@ -723,4 +771,50 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
       },
     );
   }
+}
+bool doesHabitExist(List<dynamic> habitsList, String habitName) {
+  // Iterate over the list of habits
+  for (var habit in habitsList) {
+    // Assuming each habit is a Map and has a 'name' or similar key
+    if (habit is Map && habit.containsKey(habitName)) {
+      return true; // Found the habit with the given name
+    }
+  }
+  return false; // Did not find the habit
+}
+Map<String, bool> generateDateMap() {
+  // Initialize an empty map
+  Map<String, bool> dateMap = {};
+
+  // Get today's date
+  DateTime now = DateTime.now();
+  // Get the end of the current year
+  DateTime endOfYear = DateTime(now.year, 12, 31);
+
+  // Loop from today to the end of the year
+  for (DateTime date = now; date.isBefore(endOfYear) || date.isAtSameMomentAs(endOfYear); date = date.add(Duration(days: 1))) {
+    // Format the date and add it to the map with a value of false
+    String formattedDate = DateFormat('dd-MM-yyyy').format(date);
+    dateMap[formattedDate] = false;
+  }
+
+  return dateMap;
+}
+Map<String, int> generateDateMapProgress() {
+  // Initialize an empty map
+  Map<String, int> dateMap = {};
+
+  // Get today's date
+  DateTime now = DateTime.now();
+  // Get the end of the current year
+  DateTime endOfYear = DateTime(now.year, 12, 31);
+
+  // Loop from today to the end of the year
+  for (DateTime date = now; date.isBefore(endOfYear) || date.isAtSameMomentAs(endOfYear); date = date.add(Duration(days: 1))) {
+    // Format the date and add it to the map with a value of false
+    String formattedDate = DateFormat('dd-MM-yyyy').format(date);
+    dateMap[formattedDate] = 0;
+  }
+
+  return dateMap;
 }

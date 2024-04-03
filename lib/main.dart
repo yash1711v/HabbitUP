@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habitup/CommonMethods/Methods.dart';
 import 'package:habitup/LocalStorage/SharedPref/Sharedpref.dart';
 
+import 'CommonMethods/Variable.dart';
 import 'MyTheme/MyThemeData.dart';
 import 'MyTheme/theme_bloc.dart';
 import 'MyTheme/theme_event.dart';
@@ -27,6 +28,10 @@ Future<void> main() async {
   );
   tz.initializeTimeZones();
   tz.setLocalLocation(tz.getLocation('Asia/Kolkata'));
+  await Sharedpref().loadData().then((value) {
+    print(value.length);
+    UserHabit=value;
+  });
   runApp(BlocProvider(
     create: (context) => ThemeBloc(),
     child: MyApp(),

@@ -1,4 +1,21 @@
+import 'package:flutter/cupertino.dart';
+
+import '../Presentation/MainScreen/Pages/Routine/SubScreens/stacking_cards.dart';
 import 'Methods.dart';
+
+
+
+
+
+
+
+
+//----------------------------Routine Screen Variables--------------------------
+DateTime selectedDate = DateTime.now();
+
+
+
+
 //--------------------habit adisionscreen Variables
 List<String> Properties = Methods().Habbits[
 SelectedCatagory]![selectedHabit]!['properties'];
@@ -11,6 +28,7 @@ late String selectedHabit;
 late String SelectedHabitIcon;
 late String SelectedCatagory;
 late int SelectedColorIndex=0;
+
 late Map<String,Set<int>>datesOnwhichTheHabbitsAreSet={
   "January":{},
   "February":{},
@@ -76,3 +94,8 @@ Map<String,dynamic> UserHabit={
 
 
 };
+late BuildContext contextRoutineScreen;
+
+ List<Widget> fancyCards = generateHabitCards(userHabit: UserHabit, state: '', selectedDate: selectedDate);
+
+String whichState = "All";
