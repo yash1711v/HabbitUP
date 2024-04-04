@@ -130,7 +130,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                   padding: const EdgeInsets.only(right: 10, left: 10),
                   child: TextButton(
                     onPressed: () async {
-                      if(doesHabitExist(UserHabit[SelectedCatagory]==null?[]:UserHabit[SelectedCatagory], "$SelectedHabitname")==true){
+                      if(doesHabitExist(userhabitScreenController.UserHabit.value[SelectedCatagory]==null?[]:userhabitScreenController.UserHabit.value[SelectedCatagory], "$SelectedHabitname")==true){
                         ScaffoldMessenger.of(context).showSnackBar(   SnackBar(
 
                             backgroundColor: Theme.of(context).inputDecorationTheme.fillColor,
@@ -140,8 +140,9 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                             ),
                             content: Text("Habit With This Name Already Exist Please Change The Tame OR Change The Habit",style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color,),)));
                       }else{
-                        if(datesOnwhichTheHabbitsAreSet.isNotEmpty ){
-                          UserHabit.putIfAbsent(SelectedCatagory, () => []);
+                        if(checkIfAnyHabitsSet(datesOnwhichTheHabbitsAreSet)){
+                          print("if dates exist");
+                          userhabitScreenController.UserHabit.value.putIfAbsent(SelectedCatagory, () => []);
 
                           datesOnwhichTheHabbitsAreSet.forEach((key, value) {
                             datesOnwhichTheHabbitsAreList[key]=datesOnwhichTheHabbitsAreSet[key]!.toList();
@@ -149,7 +150,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                           });
                           reminder=Reminders.toList();
                         setState(() {
-                          UserHabit[SelectedCatagory].add({
+                          userhabitScreenController.UserHabit.value[SelectedCatagory].add({
                             SelectedHabitname: {
                               "colors": colorsforsaving[SelectedColorIndex],
                               "icon": habitIcon,
@@ -159,8 +160,8 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                               "Reminders": reminder, // Convert set to list
                               "Completed": generateDateMap(),
                               "Progress": generateDateMapProgress(),
-                              "startTime":startTime,
-                              "endTime":endTime,
+                              "startTime":startTime.isNotEmpty?startTime:"0000",
+                              "endTime":endTime.isNotEmpty?endTime:"0000",
                               "Hastag":Tags[SelectedIndexfortags],
                               "changableunits": Methods().Habbits[SelectedCatagory]![selectedHabit]!['changableunits'],
                             }
@@ -173,14 +174,14 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                             frequency: 1,
                             endDate: endDate.isNotEmpty?endDate:"31-12-${DateTime.now().year}",
                           );
-                          UserHabit.putIfAbsent(SelectedCatagory, () => []);
+                          userhabitScreenController.UserHabit.value.putIfAbsent(SelectedCatagory, () => []);
                           datesOnwhichTheHabbitsAreSet.forEach((key, value) {
                             datesOnwhichTheHabbitsAreList[key]=datesOnwhichTheHabbitsAreSet[key]!.toList();
 
                           });
                           reminder=Reminders.toList();
                           setState(() {
-                            UserHabit[SelectedCatagory].add({
+                            userhabitScreenController.UserHabit.value[SelectedCatagory].add({
                               SelectedHabitname: {
                                 "colors": colorsforsaving[SelectedColorIndex],
                                 "icon": habitIcon,
@@ -199,15 +200,15 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                           });
                         }
                       }
-                      setState(() {
-                        fancyCards= generateHabitCards(
-                            userHabit: UserHabit,
-                            state: whichState,
-                            selectedDate: selectedDate);
-                      });
+                      // setState(() {
+                      //   fancyCards= generateHabitCards(
+                      //       userHabit: userhabitScreenController.UserHabit.value,
+                      //       state: whichState,
+                      //       selectedDate: selectedDate);
+                      // });
 
 
-                      Sharedpref().saveData(UserHabit);
+                      Sharedpref().saveData(userhabitScreenController.UserHabit.value);
                      await Sharedpref().loadData().then((value) {
                        value.forEach((key, value2) {
                          value2.forEach((element) {
@@ -221,15 +222,9 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                        });
                      });
 
-                      setState(() {
-                        fancyCards= generateHabitCards(
-                            userHabit: UserHabit,
-                            state: whichState,
-                            selectedDate: selectedDate);
-                      });
-                      BlocProvider.of<RoutineBloc>(contextRoutineScreen).add(ListchangeEvent(fancyCards: fancyCards,state: whichState, habits: UserHabit));
+                      BlocProvider.of<RoutineBloc>(contextRoutineScreen).add(ListchangeEvent(fancyCards: fancyCards,state: whichState, habits: userhabitScreenController.UserHabit.value));
                      Navigator.pushNamed(context, '/MainScreen');
-                      // BlocProvider.of<ProgressBloc>(contextProgress).add(Progresschangeevent(UserHabit));
+                      BlocProvider.of<ProgressBloc>(contextProgress).add(Progresschangeevent(userhabitScreenController.UserHabit.value));
 
                     },
                     child: Text(
@@ -320,11 +315,15 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                           padding: const EdgeInsets.only(left: 13, right: 13),
                           child: GestureDetector(
                             onTap: () {
+                              setState(() {
+                                SelectedColorIndex = index;
+                              });
                               BlocProvider.of<HabitAdisionBloc>(context).add(
                                   SelectedColorEvent(
                                       SelectedIndex: index,
                                       properties: Properties,
                                       name: controller.text,
+                                      target: target,
                                       icon: habitIcon, Subtasks: Subtasks));
                             },
                             child: Container(
@@ -821,4 +820,12 @@ Map<String, int> generateDateMapProgress() {
   }
 
   return dateMap;
+}
+bool checkIfAnyHabitsSet(Map<String,Set<int>> habitsMap) {
+  for (var entry in habitsMap.entries) {
+    if (entry.value.isNotEmpty) {
+      return true; // Found a month with at least one habit set, return true
+    }
+  }
+  return false; // No habits found in any month, return false
 }

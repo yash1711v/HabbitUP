@@ -69,11 +69,11 @@ class _HorizontalCalendarState extends State<HorizontalCalendar> {
                   setState(() {
                     fancyCards.clear();
                     selectedDate = date;
-                    fancyCards=generateHabitCards(userHabit: UserHabit, state: whichState, selectedDate: selectedDate);
+                    fancyCards=generateHabitCards(userHabit: userhabitScreenController.UserHabit.value, state: whichState, selectedDate: selectedDate);
                   });
 
 
-                  BlocProvider.of<RoutineBloc>(widget.contextRoutineScreen).add(ListchangeEvent(fancyCards: fancyCards,state: widget.whichState, habits: UserHabit));
+                  BlocProvider.of<RoutineBloc>(widget.contextRoutineScreen).add(ListchangeEvent(fancyCards: fancyCards,state: widget.whichState, habits: userhabitScreenController.UserHabit.value));
 
                 },
                 child: Padding(

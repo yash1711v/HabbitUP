@@ -8,6 +8,7 @@ import 'package:habitup/Presentation/MainScreen/Pages/Routine/routine_bloc.dart'
 import 'package:habitup/Presentation/MainScreen/main_screen_bloc.dart';
 
 
+import '../../CommonMethods/Variable.dart';
 import '../../Widgets/BottomnavBar/bottom_Navbar.dart';
 import 'Pages/More/more_screen.dart';
 import 'Pages/Routine/routine_screen.dart';
@@ -32,11 +33,20 @@ class _MainScreenState extends State<MainScreen> {
 
           if(state is MainScreenPageChangeState){
             // pageController.animateToPage(state.page, duration: const Duration(milliseconds: 700), curve: Curves.bounceOut);
+
             pageController.jumpToPage(state.page);
+            Future.delayed(Duration(milliseconds: 8)).then((value) {
+              if(state.page==1){
+                BlocProvider.of<ProgressBloc>(contextProgress).add(Progresschangeevent(userhabitScreenController.UserHabit.value));
+
+              }
+            });
+
           }
           return PageView(
             physics: const NeverScrollableScrollPhysics(),
            onPageChanged: (value){
+
              HapticFeedback.lightImpact();
            },
             controller: pageController,

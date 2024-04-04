@@ -1,4 +1,10 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 import '../Presentation/MainScreen/Pages/Routine/SubScreens/stacking_cards.dart';
 import 'Methods.dart';
@@ -57,8 +63,8 @@ bool durationOfHabit=false;
 
 String time="All Day";
 
-String startTime="";
- String endTime="";
+String startTime="0000";
+ String endTime="0000";
 
  bool setEndTime=false;
 String target="30";
@@ -90,13 +96,14 @@ Set<String> Subtasks={};
 
 
 //----------------------------------------------------------------- this is to save the Habit in the Map for user--------------------------------
-Map<String,dynamic> UserHabit={
+class UserhabitScreenController extends GetxController{
+  RxMap<String,dynamic> UserHabit=RxMap<String,dynamic>();
+}
 
-
-};
 late BuildContext contextRoutineScreen;
 late BuildContext contextProgress;
-
- List<Widget> fancyCards = generateHabitCards(userHabit: UserHabit, state: '', selectedDate: selectedDate);
+final UserhabitScreenController userhabitScreenController = Get.find<UserhabitScreenController>();
+ List<Widget> fancyCards = generateHabitCards(userHabit: userhabitScreenController.UserHabit.value, state: '', selectedDate: selectedDate);
 
 String whichState = "All";
+

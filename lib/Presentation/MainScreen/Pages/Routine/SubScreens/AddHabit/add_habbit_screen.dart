@@ -224,9 +224,11 @@ class AddHabitScreen extends StatelessWidget {
                                       child: GestureDetector(
                                         onTap: (){
                                           selectedHabit=Habitnames[index];
-                                          SelectedHabitIcon=HabitIcons[index];
                                           SelectedCatagory="Staying fit";
                                           SelectedColorIndex=1;
+                                          target="30";
+                                          SelectedHabitIcon=Methods().Habbits[
+                                          SelectedCatagory]![selectedHabit]!['Icon'];
                                           Properties = Methods().Habbits[
                                           SelectedCatagory]![selectedHabit]!['properties'];
                                           print(Properties);
@@ -395,9 +397,11 @@ class AddHabitScreen extends StatelessWidget {
                                           child: GestureDetector(
                                             onTap: (){
                                               selectedHabit=Habitnames[index];
-                                              SelectedHabitIcon=HabitIcons[index];
                                               SelectedCatagory="Stress Relief";
                                               SelectedColorIndex=0;
+                                              target="30";
+                                              SelectedHabitIcon=Methods().Habbits[
+                                              SelectedCatagory]![selectedHabit]!['Icon'];
                                               Properties = Methods().Habbits[
                                               SelectedCatagory]![selectedHabit]!['properties'];
                                               print(Properties);
@@ -567,8 +571,11 @@ class AddHabitScreen extends StatelessWidget {
                                           child: GestureDetector(
                                             onTap: (){
                                               selectedHabit=Habitnames[index];
-                                              SelectedHabitIcon=HabitIcons[index];
+
                                               SelectedCatagory="Healthy LifeStyle";
+                                              target="30";
+                                              SelectedHabitIcon=Methods().Habbits[
+                                              SelectedCatagory]![selectedHabit]!['Icon'];
                                               SelectedColorIndex=3;
                                               Properties = Methods().Habbits[
                                               SelectedCatagory]![selectedHabit]!['properties'];
@@ -738,8 +745,11 @@ class AddHabitScreen extends StatelessWidget {
                                           child: GestureDetector(
                                             onTap: (){
                                               selectedHabit=Habitnames[index];
-                                              SelectedHabitIcon=HabitIcons[index];
+
                                               SelectedCatagory="Loved Ones";
+                                              target="30";
+                                              SelectedHabitIcon=Methods().Habbits[
+                                              SelectedCatagory]![selectedHabit]!['Icon'];
                                               SelectedColorIndex=6;
                                               Properties = Methods().Habbits[
                                               SelectedCatagory]![selectedHabit]!['properties'];
@@ -910,8 +920,11 @@ class AddHabitScreen extends StatelessWidget {
                                           child: GestureDetector(
                                             onTap: (){
                                               selectedHabit=Habitnames[index];
-                                              SelectedHabitIcon=HabitIcons[index];
+
                                               SelectedCatagory="Personal Finance";
+                                              target="30";
+                                              SelectedHabitIcon=Methods().Habbits[
+                                              SelectedCatagory]![selectedHabit]!['Icon'];
                                               SelectedColorIndex=2;
                                               Properties = Methods().Habbits[
                                               SelectedCatagory]![selectedHabit]!['properties'];
@@ -1080,8 +1093,11 @@ class AddHabitScreen extends StatelessWidget {
                                           child: GestureDetector(
                                             onTap: (){
                                               selectedHabit=Habitnames[index];
-                                              SelectedHabitIcon=HabitIcons[index];
+
                                               SelectedCatagory="Others";
+                                              target="30";
+                                              SelectedHabitIcon=Methods().Habbits[
+                                              SelectedCatagory]![selectedHabit]!['Icon'];
                                               SelectedColorIndex=4;
                                               Properties = Methods().Habbits[
                                               SelectedCatagory]![selectedHabit]!['properties'];

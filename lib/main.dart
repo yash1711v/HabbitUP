@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:habitup/CommonMethods/Methods.dart';
 import 'package:habitup/LocalStorage/SharedPref/Sharedpref.dart';
 
@@ -21,6 +22,7 @@ gettheme(BuildContext context) async {
 }
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Get.put(UserhabitScreenController());
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   await Firebase.initializeApp(
@@ -30,7 +32,7 @@ Future<void> main() async {
   tz.setLocalLocation(tz.getLocation('Asia/Kolkata'));
   await Sharedpref().loadData().then((value) {
     print(value.length);
-    UserHabit=value;
+    userhabitScreenController.UserHabit.value=value;
   });
   runApp(BlocProvider(
     create: (context) => ThemeBloc(),

@@ -12,8 +12,8 @@ import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'dart:math' as Math;
 
-
 import '../Routine/SubScreens/stacking_cards.dart';
+
 class ProgressScreen extends StatefulWidget {
   const ProgressScreen({super.key});
 
@@ -26,12 +26,17 @@ class _ProgressScreenState extends State<ProgressScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("hello");
-    BlocProvider.of<ProgressBloc>(context).add(Progresschangeevent(UserHabit));
+    print(userhabitScreenController.UserHabit.value);
+    BlocProvider.of<ProgressBloc>(context)
+        .add(Progresschangeevent(userhabitScreenController.UserHabit.value));
   }
+
   @override
   Widget build(BuildContext context) {
-    contextProgress=context;
+    print("hello");
+    contextProgress = context;
+    BlocProvider.of<ProgressBloc>(context)
+        .add(Progresschangeevent(userhabitScreenController.UserHabit.value));
 
     return Column(
       children: [
@@ -56,17 +61,21 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 60.0),
-              child: Text(
-                '0%',
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.titleMedium?.color,
-                  fontSize: 40,
-                  fontFamily: 'DM Sans',
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+            BlocBuilder<ProgressBloc, ProgressState>(
+              builder: (context, state) {
+                return Padding(
+                  padding: const EdgeInsets.only(left: 60.0),
+                  child: Text(
+                    '0%',
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.titleMedium?.color,
+                      fontSize: 40,
+                      fontFamily: 'DM Sans',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                );
+              },
             )
           ],
         ),
@@ -75,7 +84,6 @@ class _ProgressScreenState extends State<ProgressScreen> {
           child: Column(
             children: [
               SingleChildScrollView(
-
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -86,18 +94,31 @@ class _ProgressScreenState extends State<ProgressScreen> {
                       child: BlocBuilder<ProgressBloc, ProgressState>(
                         builder: (contextRoutineScreen, state) {
                           Map<String, dynamic> Habits = {};
-                            if(state is Progressstate){
-                              print('listChangestate is active');
-                              Habits=TotalNumberOfmethods(state.habits);
-                            }
+                          Set<String> nameOfHabits = {};
+                          if (state is Progressstate) {
+                            Habits = TotalNumberOfmethods(
+                                userhabitScreenController.UserHabit.value);
+
+                            nameOfHabits = Habitsname().toSet();
+                            print(nameOfHabits);
+                            print(Habits['Eat fruits']);
+                          }
                           return ListView.builder(
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
-                            itemCount: Habits.length <= 0 ? 10 : Habits.length,
+                            itemCount: TotalNumberOfmethods(
+                                            userhabitScreenController
+                                                .UserHabit.value)
+                                        .length <=
+                                    0
+                                ? 10
+                                : TotalNumberOfmethods(userhabitScreenController
+                                        .UserHabit.value)
+                                    .length,
                             itemBuilder: (BuildContext context, int index) {
                               return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Habits.length <= 0
                                       ? AnimatedContainer(
                                           width: 70,
@@ -114,14 +135,17 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                               ),
                                             ),
                                           ),
-                                          duration: const Duration(milliseconds: 700),
+                                          duration:
+                                              const Duration(milliseconds: 700),
                                         )
                                       : AnimatedContainer(
                                           width: 70,
                                           height: 150,
                                           clipBehavior: Clip.antiAlias,
                                           decoration: ShapeDecoration(
-                                            color: convertToColor(Habits[nameOfHabits[index]]['colors']),
+                                            color: convertToColor(Habits[
+                                                nameOfHabits.elementAt(
+                                                    index)]['colors']),
                                             shape: const RoundedRectangleBorder(
                                               borderRadius: BorderRadius.only(
                                                 topLeft: Radius.circular(32),
@@ -129,7 +153,8 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                               ),
                                             ),
                                           ),
-                                          duration: const Duration(milliseconds: 700),
+                                          duration:
+                                              const Duration(milliseconds: 700),
                                           child: Column(
                                             children: [
                                               Padding(
@@ -142,7 +167,16 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                                   animation: false,
                                                   animateFromLastPercent: false,
                                                   lineWidth: 5.0,
-                                                  percent: calculateProgressPercentage(Habits[nameOfHabits[index]]['Progress']['03-04-2024'], Habits[nameOfHabits[index]]['target']),
+                                                  percent: calculateProgressPercentage(
+                                                      TotalNumberOfmethods(userhabitScreenController.UserHabit.value)[nameOfHabits.elementAt(index)]
+                                                              ['Progress'][
+                                                          DateFormat('dd-MM-yyyy').format(
+                                                              selectedDate)],
+                                                      TotalNumberOfmethods(
+                                                          userhabitScreenController
+                                                              .UserHabit
+                                                              .value)[nameOfHabits
+                                                          .elementAt(index)]['target']),
                                                   backgroundColor: Colors.grey,
                                                   center: Container(
                                                     width: 40,
@@ -158,26 +192,33 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                                     ),
                                                     child: Center(
                                                         child: SvgPicture.asset(
-                                                      Habits[nameOfHabits[index]]
-                                                          ['icon'],
+                                                      TotalNumberOfmethods(
+                                                          userhabitScreenController
+                                                              .UserHabit
+                                                              .value)[nameOfHabits
+                                                          .elementAt(
+                                                              index)]['icon'],
                                                       height: 20,
                                                       width: 20,
                                                       color: Theme.of(context)
                                                           .scaffoldBackgroundColor,
                                                     )),
                                                   ),
-                                                  progressColor: Theme.of(context)
+                                                  progressColor: Theme.of(
+                                                          context)
                                                       .scaffoldBackgroundColor,
                                                 ),
                                               ),
                                               Padding(
-                                                padding: const EdgeInsets.only(top: 10.0),
+                                                padding: const EdgeInsets.only(
+                                                    top: 10.0),
                                                 child: SizedBox(
                                                   width: 55,
                                                   child: FittedBox(
                                                     fit: BoxFit.fitWidth,
                                                     child: Text(
-                                                      nameOfHabits[index],
+                                                      nameOfHabits
+                                                          .elementAt(index),
                                                       style: TextStyle(
                                                         color: Theme.of(context)
                                                             .textTheme
@@ -185,16 +226,23 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                                             ?.color,
                                                         fontSize: 10,
                                                         fontFamily: 'DM Sans',
-                                                        fontWeight: FontWeight.w500,
+                                                        fontWeight:
+                                                            FontWeight.w500,
                                                         height: 0,
                                                       ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
-
-                                               Text(
-                                                 calculateStreak(Habits[nameOfHabits[index]]['Progress']).toString() + ' days',
+                                              Text(
+                                                calculateStreak(TotalNumberOfmethods(
+                                                            userhabitScreenController
+                                                                .UserHabit
+                                                                .value)[nameOfHabits
+                                                            .elementAt(
+                                                                index)]['Progress'])
+                                                        .toString() +
+                                                    ' days',
                                                 style: TextStyle(
                                                   color: Theme.of(context)
                                                       .textTheme
@@ -205,7 +253,8 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                                   fontWeight: FontWeight.w500,
                                                   height: 0,
                                                 ),
-                                               )],
+                                              )
+                                            ],
                                           ),
                                         ));
                             },
@@ -260,7 +309,7 @@ TotalNumberOfmethods(Map<String, dynamic> userhabits) {
 }
 
 List<String> Habitsname() {
-  UserHabit.forEach((key, value) {
+  userhabitScreenController.UserHabit.value.forEach((key, value) {
     value.forEach((element) {
       element.forEach((key, value) {
         nameOfHabits.add(key);
@@ -270,21 +319,21 @@ List<String> Habitsname() {
   return nameOfHabits;
 }
 
-
-
-
 int calculateStreak(Map<String, dynamic> dateValues) {
   if (dateValues.isEmpty) return 0; // Return 0 if the map is empty
 
   var streak = 0;
   var maxStreak = 0;
   DateTime? lastDate;
-  var consecutiveCount = 0; // Tracks the count of consecutive days with non-zero values
+  var consecutiveCount =
+      0; // Tracks the count of consecutive days with non-zero values
   DateFormat dateFormat = DateFormat("dd-MM-yyyy"); // Define the date format
 
   // Initialize streak based on the first entry if it meets the criteria
   var firstEntryValue = dateValues.entries.first.value;
-  int firstValue = firstEntryValue is int ? firstEntryValue : int.tryParse(firstEntryValue.toString()) ?? 0;
+  int firstValue = firstEntryValue is int
+      ? firstEntryValue
+      : int.tryParse(firstEntryValue.toString()) ?? 0;
   if (firstValue > 0) {
     streak = 1;
     consecutiveCount = 1;
@@ -300,7 +349,9 @@ int calculateStreak(Map<String, dynamic> dateValues) {
       continue;
     }
 
-    int value = entry.value is int ? entry.value : int.tryParse(entry.value.toString()) ?? 0;
+    int value = entry.value is int
+        ? entry.value
+        : int.tryParse(entry.value.toString()) ?? 0;
 
     if (lastDate != null) {
       if (currentDate.difference(lastDate).inDays == 1) {
@@ -338,13 +389,14 @@ int calculateStreak(Map<String, dynamic> dateValues) {
   return maxStreak;
 }
 
-
 double calculateProgressPercentage(int progress, String target) {
-  print('progress : $progress and target : ${int.parse(target.isNotEmpty && target!=null?target:"0")}${progress/ int.parse(target.isNotEmpty && target!=null?target:'0')}');
-  if (int.parse(target.isNotEmpty && target!=null?target:'0') == 0) {
+  print(
+      'progress : $progress and target : ${int.parse(target.isNotEmpty && target != null ? target : "0")}${progress / int.parse(target.isNotEmpty && target != null ? target : '0')}');
+  if (int.parse(target.isNotEmpty && target != null ? target : '0') == 0) {
     // Prevent division by zero
     return 0;
   }
   print('progress: ${progress / int.parse(target)}, target: $target)');
-  return progress / int.parse(target.isNotEmpty && target!=null?target:'0');
+  return progress /
+      int.parse(target.isNotEmpty && target != null ? target : '0');
 }

@@ -54,6 +54,7 @@ dependencies:
   flutter_local_notifications: ^17.0.0
   stacked_card_carousel: ^0.0.4
   percent_indicator: ^4.2.3
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:

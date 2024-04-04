@@ -30,7 +30,7 @@ class _RoutineScreenState extends State<RoutineScreen> {
     // TODO: implement initState
     super.initState();
     fancyCards = generateHabitCards(
-        userHabit: UserHabit,
+        userHabit: userhabitScreenController.UserHabit.value,
         state: whichState,
         selectedDate: selectedDate);
 
@@ -38,7 +38,7 @@ class _RoutineScreenState extends State<RoutineScreen> {
     contextRoutineScreen= context;
     Future.delayed(Duration(milliseconds: 10)).then((value) {
       BlocProvider.of<RoutineBloc>(context).add(
-          ListchangeEvent(fancyCards: fancyCards, state: whichState, habits: UserHabit));
+          ListchangeEvent(fancyCards: fancyCards, state: whichState, habits: userhabitScreenController.UserHabit.value));
     });
 
   }
@@ -162,10 +162,10 @@ class _RoutineScreenState extends State<RoutineScreen> {
                     GestureDetector(
                         onTap: () {
                           whichState= "All";
-                          fancyCards = generateHabitCards(userHabit: UserHabit, state: whichState, selectedDate: selectedDate);
+                          fancyCards = generateHabitCards(userHabit: userhabitScreenController.UserHabit.value, state: whichState, selectedDate: selectedDate);
                           BlocProvider.of<RoutineBloc>(context).add(
                               ListchangeEvent(
-                                  fancyCards: fancyCards, state: "All", habits: UserHabit));
+                                  fancyCards: fancyCards, state: "All", habits: userhabitScreenController.UserHabit.value));
                         },
                         child: Text(
                           "All",
@@ -193,10 +193,10 @@ class _RoutineScreenState extends State<RoutineScreen> {
                       child: GestureDetector(
                           onTap: () {
                             whichState= "Active";
-                            fancyCards = generateHabitCards(userHabit: UserHabit, state: whichState, selectedDate: selectedDate);
+                            fancyCards = generateHabitCards(userHabit: userhabitScreenController.UserHabit.value, state: whichState, selectedDate: selectedDate);
                             BlocProvider.of<RoutineBloc>(context).add(
                                 ListchangeEvent(
-                                    fancyCards: fancyCards, state: "Active", habits: UserHabit));
+                                    fancyCards: fancyCards, state: "Active", habits: userhabitScreenController.UserHabit.value));
                           },
                           child: Text(
                             "Active",
@@ -223,10 +223,10 @@ class _RoutineScreenState extends State<RoutineScreen> {
                     GestureDetector(
                         onTap: () {
                           whichState= "Done";
-                          fancyCards = generateHabitCards(userHabit: UserHabit, state: whichState, selectedDate: selectedDate);
+                          fancyCards = generateHabitCards(userHabit: userhabitScreenController.UserHabit.value, state: whichState, selectedDate: selectedDate);
                           BlocProvider.of<RoutineBloc>(context).add(
                               ListchangeEvent(
-                                  fancyCards: fancyCards, state: "Done", habits: UserHabit));
+                                  fancyCards: fancyCards, state: "Done", habits: userhabitScreenController.UserHabit.value));
                         },
                         child: Text(
                           "Done",

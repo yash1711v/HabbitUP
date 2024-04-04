@@ -154,7 +154,7 @@ class Methods {
           "No Reminder",
           "Morning Routine"
         ],
-        "changableunits": "Number",
+        "changableunits": "Pages",
         "Icon":
             "assets/ImagesY/RoutineScreen/AddhabbitIcons/StressRelief/Read_A_book_Icon.svg"
       },

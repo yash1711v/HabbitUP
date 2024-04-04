@@ -1,4 +1,3 @@
-
 import 'dart:ui';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,7 +24,7 @@ class StackingCard extends StatefulWidget {
 }
 
 class _StackingCardState extends State<StackingCard> {
-  PageController controller=PageController();
+  PageController controller = PageController();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RoutineBloc, RoutineState>(
@@ -35,7 +34,7 @@ class _StackingCardState extends State<StackingCard> {
         }
         return fancyCards.isNotEmpty
             ? StackedCardCarousel(
-          pageController: controller,
+                pageController: controller,
                 initialOffset: -00,
                 type: StackedCardCarouselType.cardsStack,
                 spaceBetweenItems: 150,
@@ -63,7 +62,9 @@ class FancyCard extends StatefulWidget {
     required this.units,
     required this.target,
     required this.category,
-    required this.index, required this.done, required this.value,
+    required this.index,
+    required this.done,
+    required this.value,
   });
 
   final String Habitname;
@@ -85,7 +86,7 @@ class FancyCard extends StatefulWidget {
 }
 
 class _FancyCardState extends State<FancyCard> {
-  Map<String,int>val=generateDateMapProgress();
+  Map<String, int> val = generateDateMapProgress();
 
   @override
   Widget build(BuildContext context) {
@@ -237,63 +238,110 @@ class _FancyCardState extends State<FancyCard> {
                           Center(
                               child: GestureDetector(
                                   onTap: () {
-                                    if (widget.value! <
-                                        int.parse(target)) {
-                                      int v = widget.value+1;
+                                    if (widget.value! < int.parse(target)) {
+                                      int v = widget.value + 1;
 
-                                       print( UserHabit[widget.category][widget.index]
-                                       [widget.Habitname]['Progress']);
-                                      setState(() {
-                                        UserHabit[widget.category][widget.index]
-                                                [widget.Habitname]['Progress']
-                                            .update(
-                                                DateFormat('dd-MM-yyyy')
-                                                    .format(selectedDate),
-                                                (value) => v);
-                                      });
-                                      setState(() {
-                                        fancyCards = generateHabitCards(
-                                            userHabit: UserHabit,
-                                            state: whichState,
-                                            selectedDate: selectedDate);
-                                      });
-                                      BlocProvider.of<RoutineBloc>(contextRoutineScreen)
-                                          .add(ListchangeEvent(
-                                          fancyCards: fancyCards,
-                                          state: whichState, habits: UserHabit));
-                                      BlocProvider.of<ProgressBloc>(contextProgress).add(Progresschangeevent(UserHabit));
-                                      Sharedpref().saveData(UserHabit);
-                                    } else if (val == int.parse(target)) {
-                                      UserHabit[widget.category][widget.index]
-                                              [widget.Habitname]['Progress']
-                                          .putIfAbsent(
-                                              DateFormat('dd-MM-yyyy')
-                                                  .format(selectedDate),
-                                              () => 0);
-                                      UserHabit[widget.category][widget.index]
-                                              [widget.Habitname]['Progress']
-                                          .update(
-                                              DateFormat('dd-MM-yyyy')
-                                                  .format(selectedDate),
-                                              (value) => int.parse(target));
+                                      print(widget.index);
 
-                                      setState(() {
-                                        fancyCards = generateHabitCards(
-                                            userHabit: UserHabit,
-                                            state: whichState,
-                                            selectedDate: selectedDate);
-                                      });
-                                      BlocProvider.of<RoutineBloc>(contextRoutineScreen)
-                                          .add(ListchangeEvent(
-                                          fancyCards: fancyCards,
-                                          state: whichState,
-                                          habits: UserHabit
-                                      ));
+                                      for (int i = 0;
+                                          i <
+                                              userhabitScreenController
+                                                  .UserHabit
+                                                  .value[widget.category]
+                                                  .length;
+                                          i++) {
+                                        if (userhabitScreenController
+                                            .UserHabit.value[widget.category][i]
+                                            .containsKey(widget.Habitname)) {
+                                          print("contains");
+
+                                          setState(() {
+                                            userhabitScreenController
+                                                .UserHabit
+                                                .value[widget.category][i]
+                                                    [widget.Habitname]
+                                                    ['Progress']
+                                                .update(
+                                                    DateFormat('dd-MM-yyyy')
+                                                        .format(selectedDate),
+                                                    (value) => v);
+                                          });
+                                          setState(() {
+                                            fancyCards = generateHabitCards(
+                                                userHabit:
+                                                    userhabitScreenController
+                                                        .UserHabit.value,
+                                                state: whichState,
+                                                selectedDate: selectedDate);
+                                          });
+                                          BlocProvider.of<RoutineBloc>(
+                                                  contextRoutineScreen)
+                                              .add(ListchangeEvent(
+                                                  fancyCards: fancyCards,
+                                                  state: whichState,
+                                                  habits:
+                                                      userhabitScreenController
+                                                          .UserHabit.value));
+                                          BlocProvider.of<ProgressBloc>(
+                                                  contextProgress)
+                                              .add(Progresschangeevent(
+                                                  userhabitScreenController
+                                                      .UserHabit.value));
+                                          Sharedpref().saveData(
+                                              userhabitScreenController
+                                                  .UserHabit.value);
+                                        } else if (val == int.parse(target)) {
+                                          userhabitScreenController
+                                              .UserHabit
+                                              .value[widget.category][i]
+                                                  [widget.Habitname]['Progress']
+                                              .putIfAbsent(
+                                                  DateFormat('dd-MM-yyyy')
+                                                      .format(selectedDate),
+                                                  () => 0);
+                                          userhabitScreenController
+                                              .UserHabit
+                                              .value[widget.category][i]
+                                                  [widget.Habitname]['Progress']
+                                              .update(
+                                                  DateFormat('dd-MM-yyyy')
+                                                      .format(selectedDate),
+                                                  (value) => int.parse(target));
+
+                                          userhabitScreenController
+                                              .UserHabit
+                                              .value[widget.category][i]
+                                                  [widget.Habitname]
+                                                  ['Completed']
+                                              .update(
+                                                  DateFormat('dd-MM-yyyy')
+                                                      .format(selectedDate),
+                                                  (value) => true);
+
+                                          setState(() {
+                                            fancyCards = generateHabitCards(
+                                                userHabit:
+                                                    userhabitScreenController
+                                                        .UserHabit.value,
+                                                state: whichState,
+                                                selectedDate: selectedDate);
+                                          });
+                                          BlocProvider.of<RoutineBloc>(
+                                                  contextRoutineScreen)
+                                              .add(ListchangeEvent(
+                                                  fancyCards: fancyCards,
+                                                  state: whichState,
+                                                  habits:
+                                                      userhabitScreenController
+                                                          .UserHabit.value));
+                                        }
+                                      }
                                     }
                                   },
                                   child: SvgPicture.asset(
-                                      'assets/ImagesY/RoutineScreen/Addition.svg',
-                                  color:  Theme.of(context).scaffoldBackgroundColor,
+                                    'assets/ImagesY/RoutineScreen/Addition.svg',
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor,
                                   ))),
                           Padding(
                             padding:
@@ -307,8 +355,9 @@ class _FancyCardState extends State<FancyCard> {
                                   child: Text(
                                       textAlign: TextAlign.center,
                                       '${widget.value}/$target\nmin',
-                                      style:  TextStyle(
-                                        color:  Theme.of(context).scaffoldBackgroundColor,
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .scaffoldBackgroundColor,
                                         fontSize: 16,
                                         fontFamily: 'DM Sans',
                                         fontWeight: FontWeight.w500,
@@ -325,63 +374,100 @@ class _FancyCardState extends State<FancyCard> {
                                     if (val != 0) {
                                       int v = 0;
 
-                                        v = widget.value-1;
-
-
-                                      setState(() {
-                                        UserHabit[widget.category][widget.index]
-                                        [widget.Habitname]['Progress']
-                                            .putIfAbsent(
-                                            DateFormat('dd-MM-yyyy')
-                                                .format(selectedDate),
-                                                () => 0);
-                                        UserHabit[widget.category][widget.index]
-                                        [widget.Habitname]['Progress']
-                                            .update(
-                                            DateFormat('dd-MM-yyyy')
-                                                .format(selectedDate),
-                                                (value) => v);
-                                      });
-                                      setState(() {
-                                        fancyCards = generateHabitCards(
-                                            userHabit: UserHabit,
-                                            state: whichState,
-                                            selectedDate: selectedDate);
-                                      });
-                                      BlocProvider.of<RoutineBloc>(contextRoutineScreen)
-                                          .add(ListchangeEvent(
-                                          fancyCards: fancyCards,
-                                          state: whichState,
-                                          habits: UserHabit
-                                      ));
-                                      BlocProvider.of<ProgressBloc>(contextProgress).add(Progresschangeevent(UserHabit));
-                                      Sharedpref().saveData(UserHabit);
-                                      setState(() {
-                                        UserHabit[widget.category][widget.index]
-                                                [widget.Habitname]['Progress']
-                                            .putIfAbsent(
+                                      v = widget.value - 1<0?0:widget.value - 1;
+                                      for (int i = 0;
+                                          i <
+                                              userhabitScreenController
+                                                  .UserHabit
+                                                  .value[widget.category]
+                                                  .length;
+                                          i++) {
+                                        if (userhabitScreenController
+                                            .UserHabit.value[widget.category][i]
+                                            .containsKey(widget.Habitname)) {
+                                          setState(() {
+                                            userhabitScreenController
+                                                .UserHabit
+                                                .value[widget.category]
+                                            [i][widget.Habitname]
+                                            ['Progress']
+                                                .putIfAbsent(
                                                 DateFormat('dd-MM-yyyy')
                                                     .format(selectedDate),
-                                                () => 0);
-                                        UserHabit[widget.category][widget.index]
-                                                [widget.Habitname]['Progress']
-                                            .update(
+                                                    () => 0);
+                                            userhabitScreenController
+                                                .UserHabit
+                                                .value[widget.category]
+                                            [i][widget.Habitname]
+                                            ['Progress']
+                                                .update(
                                                 DateFormat('dd-MM-yyyy')
                                                     .format(selectedDate),
-                                                (value) => v);
+                                                    (value) => v);
+                                          });
+                                          setState(() {
+                                            fancyCards = generateHabitCards(
+                                                userHabit: userhabitScreenController
+                                                    .UserHabit.value,
+                                                state: whichState,
+                                                selectedDate: selectedDate);
+                                          });
+                                          BlocProvider.of<RoutineBloc>(
+                                              contextRoutineScreen)
+                                              .add(ListchangeEvent(
+                                              fancyCards: fancyCards,
+                                              state: whichState,
+                                              habits: userhabitScreenController
+                                                  .UserHabit.value));
+                                          BlocProvider.of<ProgressBloc>(
+                                              contextProgress)
+                                              .add(Progresschangeevent(
+                                              userhabitScreenController
+                                                  .UserHabit.value));
+                                          Sharedpref().saveData(
+                                              userhabitScreenController
+                                                  .UserHabit.value);
+                                          setState(() {
+                                            userhabitScreenController
+                                                .UserHabit
+                                                .value[widget.category]
+                                            [i][widget.Habitname]
+                                            ['Progress']
+                                                .putIfAbsent(
+                                                DateFormat('dd-MM-yyyy')
+                                                    .format(selectedDate),
+                                                    () => 0);
+                                            userhabitScreenController
+                                                .UserHabit
+                                                .value[widget.category]
+                                            [i][widget.Habitname]
+                                            ['Progress']
+                                                .update(
+                                                DateFormat('dd-MM-yyyy')
+                                                    .format(selectedDate),
+                                                    (value) => v);
 
-                                        Sharedpref().saveData(UserHabit);
-                                        print(UserHabit[widget.category]
-                                                    [widget.index]
-                                                [widget.Habitname]["Progress"][
+                                            Sharedpref().saveData(
+                                                userhabitScreenController
+                                                    .UserHabit.value);
+                                            print(userhabitScreenController
+                                                .UserHabit
+                                                .value[widget.category]
+                                            [i]
+                                            [widget.Habitname]["Progress"][
                                             DateFormat('dd-MM-yyyy')
                                                 .format(selectedDate)]);
-                                      });
+                                          });
+                                        }
+                                      }
+
+
                                     }
                                   },
                                   child: SvgPicture.asset(
-                                      'assets/ImagesY/RoutineScreen/Subtract.svg',
-                                  color:  Theme.of(context).scaffoldBackgroundColor,
+                                    'assets/ImagesY/RoutineScreen/Subtract.svg',
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor,
                                   ))),
                           SizedBox(
                             height: 50,
@@ -436,7 +522,7 @@ class _FancyCardState extends State<FancyCard> {
                               '${widget.Hastag}',
                               textAlign: TextAlign.center,
                               style: const TextStyle(
-                                color: Color(0x7F1F1F1F),
+                                color: Colors.black,
                                 fontSize: 10,
                                 fontFamily: 'DM Sans',
                                 fontWeight: FontWeight.w500,
@@ -465,8 +551,8 @@ class _FancyCardState extends State<FancyCard> {
                             const SizedBox(width: 5),
                             Text(
                               '${widget.Subtask.length} sub task',
-                              style: const TextStyle(
-                                color: Color(0x7F1F1F1F),
+                              style:  TextStyle(
+                                color: (widget.Subtask.length<=0)?Color(0x7F1F1F1F):Colors.black,
                                 fontSize: 10,
                                 fontFamily: 'DM Sans',
                                 fontWeight: FontWeight.w500,
@@ -501,56 +587,98 @@ class _FancyCardState extends State<FancyCard> {
                         children: [
                           GestureDetector(
                             onTap: () async {
-                              setState(() {
-                                UserHabit[widget.category][widget.index]
-                                        [widget.Habitname]['Completed']
-                                    .update(
+
+                              for (int i = 0;
+                              i <
+                                  userhabitScreenController
+                                      .UserHabit
+                                      .value[widget.category]
+                                      .length;
+                              i++){
+
+                                if (userhabitScreenController
+                                    .UserHabit.value[widget.category][i]
+                                    .containsKey(widget.Habitname)){
+
+                                  setState(() {
+                                    userhabitScreenController
+                                        .UserHabit
+                                        .value[widget.category][i]
+                                            [widget.Habitname]['Completed']
+                                        .update(
+                                            DateFormat('dd-MM-yyyy')
+                                                .format(selectedDate),
+                                            (value) => !userhabitScreenController
+                                                            .UserHabit
+                                                            .value[widget.category]
+                                                        [i]
+                                                    [widget.Habitname]['Completed'][
+                                                DateFormat('dd-MM-yyyy')
+                                                    .format(selectedDate)]);
+                                    userhabitScreenController
+                                        .UserHabit
+                                        .value[widget.category]
+                                    [i][widget.Habitname]
+                                    ['Progress']
+                                        .update(
                                         DateFormat('dd-MM-yyyy')
                                             .format(selectedDate),
-                                        (value) => !UserHabit[widget.category]
-                                                    [widget.index]
-                                                [widget.Habitname]['Completed'][
-                                            DateFormat('dd-MM-yyyy')
-                                                .format(selectedDate)]);
+                                            (value) => int.parse(userhabitScreenController
+                                                .UserHabit
+                                                .value[widget.category]
+                                            [i][widget.Habitname]
+                                            ['target']));
 
-                                // done= UserHabit[widget.category][widget.index][widget.Habitname]['Completed'][DateFormat('dd-MM-yyyy').format(selectedDate)];
-                              });
+                                    // done= UserHabit[widget.category][widget.index][widget.Habitname]['Completed'][DateFormat('dd-MM-yyyy').format(selectedDate)];
+                                  });
 
-                              setState(() {
-                                fancyCards = generateHabitCards(
-                                    userHabit: UserHabit,
-                                    state: whichState,
-                                    selectedDate: selectedDate);
-                              });
-                              BlocProvider.of<RoutineBloc>(contextRoutineScreen)
-                                  .add(ListchangeEvent(
-                                      fancyCards: fancyCards,
-                                      state: whichState, habits: UserHabit));
-                              BlocProvider.of<ProgressBloc>(contextProgress).add(Progresschangeevent(UserHabit));
+                                  setState(() {
+                                    fancyCards = generateHabitCards(
+                                        userHabit: userhabitScreenController
+                                            .UserHabit.value,
+                                        state: whichState,
+                                        selectedDate: selectedDate);
+                                  });
+                                  BlocProvider.of<RoutineBloc>(contextRoutineScreen)
+                                      .add(ListchangeEvent(
+                                          fancyCards: fancyCards,
+                                          state: whichState,
+                                          habits: userhabitScreenController
+                                              .UserHabit.value));
+                                  BlocProvider.of<ProgressBloc>(contextProgress)
+                                      .add(Progresschangeevent(
+                                          userhabitScreenController
+                                              .UserHabit.value));
 
-                              Sharedpref().saveData(UserHabit);
-                              await Sharedpref().loadData().then((value) {
-                                print(value.length);
-                                value.forEach((key, value2) {
-                                  value2.forEach((value3) {
-                                    value3.forEach((key4, value4) {
-                                      print(
-                                          '$key4:  valuee ${value4['Completed']}');
-                                      value4['Completed']
-                                          .forEach((key5, value5) {
-                                        if (key5 ==
-                                            DateFormat('dd-MM-yyyy')
-                                                .format(selectedDate)) {
-                                          print("matched $value5");
-                                          // done[DateFormat('dd-MM-yyyy')
-                                          //     .format(selectedDate)]=value5;
-
-                                        }
+                                  Sharedpref().saveData(
+                                      userhabitScreenController.UserHabit.value);
+                                  await Sharedpref().loadData().then((value) {
+                                    print(value.length);
+                                    value.forEach((key, value2) {
+                                      value2.forEach((value3) {
+                                        value3.forEach((key4, value4) {
+                                          print(
+                                              '$key4:  valuee ${value4['Completed']}');
+                                          value4['Completed']
+                                              .forEach((key5, value5) {
+                                            if (key5 ==
+                                                DateFormat('dd-MM-yyyy')
+                                                    .format(selectedDate)) {
+                                              print("matched $value5");
+                                              // done[DateFormat('dd-MM-yyyy')
+                                              //     .format(selectedDate)]=value5;
+                                            }
+                                          });
+                                        });
                                       });
                                     });
                                   });
-                                });
-                              });
+                                }
+
+                              }
+
+
+
                             },
                             child: Container(
                               width: 48,
@@ -578,7 +706,7 @@ class _FancyCardState extends State<FancyCard> {
                                   ),
                                 ),
                                 child: Visibility(
-                                  visible:  widget.done,
+                                  visible: widget.done,
                                   //done[DateFormat('dd-MM-yyyy').format(selectedDate)]==true??true,
                                   //UserHabit[widget.category][widget.index][widget.Habitname]['Completed'][DateFormat('dd-MM-yyyy').format(selectedDate)],
                                   child: Center(
@@ -613,138 +741,109 @@ List<Widget> generateHabitCards(
     required String state,
     required DateTime selectedDate}) {
   List<Widget> habitCards = [];
+  print(state);
   userHabit.forEach((category, habits) {
+    // print("category $category and habits $habits");
     List<String> Subtasks = [];
     habits.forEach((habit) {
+      // print("habit $habit");
       habit.forEach((key1, value1) {
+        // print("key $key1, \n value $value1 \n ");
         value1['Subtasks'].forEach((element) {
+          // print("in subtask");
           Subtasks.clear();
           Subtasks.add(element.toString());
         });
         if (value1['dates']
             .containsKey(DateFormat('MMMM').format(selectedDate))) {
+          print("have the current month ${value1['dates']}");
           for (int i = 0;
               i <
                   value1['dates'][DateFormat('MMMM').format(selectedDate)]
                       .length;
               i++) {
-            if (value1['dates'][DateFormat('MMMM').format(selectedDate)][i] ==
-                selectedDate.day) {
-              if (state == "Done") {
-                if (value1['Completed'] != {} && value1['Completed'] != null) {
-                  if (value1['Completed']
-                          [DateFormat('dd-MM-yyyy').format(selectedDate)] ==
-                      true) {
-                    String colorString = value1['colors'];
-                    Color color = convertToColor(colorString);
-                    for (int i = 0; i < habit.length; i++) {
-                      habitCards.add(FancyCard(
-                        Habitname: key1,
-                        starttime: value1['startTime'],
-                        endtime: value1['endTime'],
-                        Hastag: value1['Hastag'],
-                        Subtask: Subtasks,
-                        icon: value1['icon'],
-                        color: color,
-                        units: value1['changableunits'],
-                        target: value1['target'],
-                        category: category,
-                        index: i, done: value1['Completed'][DateFormat('dd-MM-yyyy').format(selectedDate)], value:  value1['Progress'][DateFormat('dd-MM-yyyy').format(selectedDate)],
-                      ));
-                    }
-                  }
-                } else {
-                  String colorString = value1['colors'];
-                  Color color = convertToColor(colorString);
-                  for (int i = 0; i < habit.length; i++) {
-                    habitCards.add(FancyCard(
-                      Habitname: key1,
-                      starttime: value1['startTime'],
-                      endtime: value1['endTime'],
-                      Hastag: value1['Hastag'],
-                      Subtask: Subtasks,
-                      icon: value1['icon'],
-                      color: color,
-                      units: value1['changableunits'],
-                      target: value1['target'],
-                      category: category,
-                      index: i,
-                        done: value1['Completed'][DateFormat('dd-MM-yyyy').format(selectedDate)], value:   value1['Progress'][DateFormat('dd-MM-yyyy').format(selectedDate)],
-                    ));
-                  }
-                }
-              } else if (state == "All") {
-                String colorString = value1['colors'];
-                Color color = convertToColor(colorString);
-                for (int i = 0; i < habit.length; i++) {
-                  habitCards.add(FancyCard(
+            print(value1['dates'][DateFormat('MMMM').format(selectedDate)][i]);
+            if (value1['dates'][DateFormat('MMMM').format(selectedDate)][i]
+                    .toString() ==
+                selectedDate.day.toString()) {
+
+              if(state=="Done"){
+                 value1['Completed'].forEach((key,value5){
+                   if(key==DateFormat('dd-MM-yyyy')
+                       .format(selectedDate)){
+                     if(value5){
+                       habitCards.add(FancyCard(
+                           Habitname: key1,
+                           starttime: value1['startTime'] ?? "0000",
+                           endtime: value1['endTime'] ?? "0000",
+                           Hastag: value1['Hastag'] ?? "Tag",
+                           Subtask: Subtasks,
+                           icon: value1['icon'],
+                           color: convertToColor(value1['colors']),
+                           units: value1['changableunits'],
+                           target: value1['target'],
+                           category: category,
+                           index: i,
+                           done: value1['Completed']
+                           [DateFormat('dd-MM-yyyy').format(selectedDate)],
+                           value: value1['Progress']
+                           [DateFormat('dd-MM-yyyy').format(selectedDate)]));
+                     }
+                   }
+                 });
+
+              } if(state=="Active"){
+                 value1['Completed'].forEach((key,value5){
+                   if(key==DateFormat('dd-MM-yyyy')
+                       .format(selectedDate)){
+                     if(!value5){
+                       habitCards.add(FancyCard(
+                           Habitname: key1,
+                           starttime: value1['startTime'] ?? "0000",
+                           endtime: value1['endTime'] ?? "0000",
+                           Hastag: value1['Hastag'] ?? "Tag",
+                           Subtask: Subtasks,
+                           icon: value1['icon'],
+                           color: convertToColor(value1['colors']),
+                           units: value1['changableunits'],
+                           target: value1['target'],
+                           category: category,
+                           index: i,
+                           done: value1['Completed']
+                           [DateFormat('dd-MM-yyyy').format(selectedDate)],
+                           value: value1['Progress']
+                           [DateFormat('dd-MM-yyyy').format(selectedDate)]));
+                     }
+                   }
+                 });
+
+              }
+              if(state=="All"){
+
+
+
+                habitCards.add(FancyCard(
                     Habitname: key1,
-                    starttime: value1['startTime'],
-                    endtime: value1['endTime'],
-                    Hastag: value1['Hastag'],
+                    starttime: value1['startTime'] ?? "0000",
+                    endtime: value1['endTime'] ?? "0000",
+                    Hastag: value1['Hastag'] ?? "Tag",
                     Subtask: Subtasks,
                     icon: value1['icon'],
-                    color: color,
+                    color: convertToColor(value1['colors']),
                     units: value1['changableunits'],
                     target: value1['target'],
                     category: category,
                     index: i,
-                      done: value1['Completed'][DateFormat('dd-MM-yyyy').format(selectedDate)], value:   value1['Progress'][DateFormat('dd-MM-yyyy').format(selectedDate)],
-                  ));
-                }
-              }
-              else {
-                if (value1['Completed'] != {} && value1['Completed'] != null) {
-                  if (value1['Completed']
-                          [DateFormat('dd-MM-yyyy').format(selectedDate)] ==
-                      true) {
-                  } else {
-                    String colorString = value1['colors'];
-                    Color color = convertToColor(colorString);
-                    for (int i = 0; i < habit.length; i++) {
-                      habitCards.add(FancyCard(
-                        Habitname: key1,
-                        starttime: value1['startTime'],
-                        endtime: value1['endTime'],
-                        Hastag: value1['Hastag'],
-                        Subtask: Subtasks,
-                        icon: value1['icon'],
-                        color: color,
-                        units: value1['changableunits'],
-                        target: value1['target'],
-                        category: category,
-                        index: i,
+                    done: value1['Completed']
+                    [DateFormat('dd-MM-yyyy').format(selectedDate)],
+                    value: value1['Progress']
+                    [DateFormat('dd-MM-yyyy').format(selectedDate)]));
 
-                          done: value1['Completed'][DateFormat('dd-MM-yyyy').format(selectedDate)],
-                        value:   value1['Progress'][DateFormat('dd-MM-yyyy').format(selectedDate)],
-                      ));
-                    }
-                  }
-                } else {
-                  String colorString = value1['colors'];
-                  Color color = convertToColor(colorString);
-                  for (int i = 0; i < habit.length; i++) {
-                    habitCards.add(FancyCard(
-                      Habitname: key1,
-                      starttime: value1['startTime'],
-                      endtime: value1['endTime'],
-                      Hastag: value1['Hastag'],
-                      Subtask: Subtasks,
-                      icon: value1['icon'],
-                      color: color,
-                      units: value1['changableunits'],
-                      target: value1['target'],
-                      category: category,
-                      index: i,
-                        done: value1['Completed'][DateFormat('dd-MM-yyyy').format(selectedDate)], value: value1['Progress'][DateFormat('dd-MM-yyyy').format(selectedDate)],
-                    ));
-                  }
-                }
               }
+
             }
           }
         }
-        ;
       });
     });
   });
