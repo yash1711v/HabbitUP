@@ -832,7 +832,7 @@ class RepeastFeatures extends StatelessWidget {
                                       BottomSheetState>(
                                     builder: (context, state) {
                                       return MonthlyGridForEndDate(
-                                        monthIndex: monthIndex-1,
+                                        monthIndex: monthIndex-1<0?0:monthIndex-1,
                                       );
                                     },
                                   );

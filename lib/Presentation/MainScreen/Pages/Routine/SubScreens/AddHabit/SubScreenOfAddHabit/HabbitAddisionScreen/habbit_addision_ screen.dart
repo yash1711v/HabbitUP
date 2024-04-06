@@ -619,13 +619,26 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                             title: "Enter Subtask",
                             content: SubtaskController,
                             onClosePressed: () {
-                              Subtasks.add(SubtaskController.text);
-                              BlocProvider.of<HabitAdisionBloc>(context).add(
-                                  SelectedColorEvent(
-                                      SelectedIndex: SelectedIndex,
-                                      properties: Properties,
-                                      name: controller.text,
-                                      icon: habitIcon, Subtasks: Subtasks));
+                              if(SubtaskController.text.isNotEmpty){
+                                Subtasks.add(SubtaskController.text);
+                                BlocProvider.of<HabitAdisionBloc>(context).add(
+                                    SelectedColorEvent(
+                                        SelectedIndex: SelectedIndex,
+                                        properties: Properties,
+                                        name: controller.text,
+                                        target: target,
+
+                                        icon: habitIcon, Subtasks: Subtasks));
+                              }else{
+                                ScaffoldMessenger.of(context).showSnackBar(   SnackBar(
+
+                                    backgroundColor: Theme.of(context).inputDecorationTheme.fillColor,
+                                    shape: const RoundedRectangleBorder(
+                                      // side: BorderSide(width: borderWidth, color: borderColor),
+                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                    ),
+                                    content: Text("Please Enter The Subtask",style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color,),)));
+                              }
                               Navigator.of(context).pop();
                             },
                             ButtonteText: 'Save',
@@ -757,6 +770,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                                                 properties: Properties,
                                                 name: controller.text,
                                                 icon: habitIcon,
+                                                target: target,
                                                 Subtasks: Subtasks));
                                       },
                                       child: Icon(Icons.cancel,color: Colors.red,)),

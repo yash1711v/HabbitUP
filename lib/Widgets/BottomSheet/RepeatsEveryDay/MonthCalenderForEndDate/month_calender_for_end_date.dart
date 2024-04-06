@@ -33,6 +33,9 @@ class MonthlyGridForEndDate extends StatelessWidget {
 
     return BlocBuilder<BottomSheetBloc, BottomSheetState>(
       builder: (context, state) {
+        print("First day index: $firstDayIndex");
+        print("days in month: ${daysInMonths[monthIndex]}");
+
         if (state is RepeatCycleState) {
           endDate = state.endDate;
         }
@@ -43,7 +46,7 @@ class MonthlyGridForEndDate extends StatelessWidget {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 7, // 7 columns for 7 days
               mainAxisExtent: 35),
-          itemCount: daysInMonths[monthIndex] + firstDayIndex,
+          itemCount: daysInMonths[monthIndex] + firstDayIndex<0?0:daysInMonths[monthIndex] + firstDayIndex,
           itemBuilder: (context, index) {
             if (index < firstDayIndex) {
               // Empty cell before the start of the month
