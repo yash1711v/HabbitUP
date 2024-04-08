@@ -13,6 +13,7 @@ import 'package:stacked_card_carousel/stacked_card_carousel.dart';
 
 import '../../../../../CommonMethods/Variable.dart';
 import '../../../../../LocalStorage/SharedPref/Sharedpref.dart';
+import '../../../../../Widgets/DialogBox/Logsadition/logs_adition.dart';
 import '../../Progress/progress_bloc.dart';
 
 class StackingCard extends StatefulWidget {
@@ -587,95 +588,106 @@ class _FancyCardState extends State<FancyCard> {
                         children: [
                           GestureDetector(
                             onTap: () async {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return LogsAdition(callback: (String log) async {
+                                    for (int i = 0; i < userhabitScreenController.UserHabit.value[widget.category].length; i++){
 
-                              for (int i = 0;
-                              i <
-                                  userhabitScreenController
-                                      .UserHabit
-                                      .value[widget.category]
-                                      .length;
-                              i++){
+                                      if (userhabitScreenController
+                                          .UserHabit.value[widget.category][i]
+                                          .containsKey(widget.Habitname)){
 
-                                if (userhabitScreenController
-                                    .UserHabit.value[widget.category][i]
-                                    .containsKey(widget.Habitname)){
-
-                                  setState(() {
-                                    userhabitScreenController
-                                        .UserHabit
-                                        .value[widget.category][i]
-                                            [widget.Habitname]['Completed']
-                                        .update(
-                                            DateFormat('dd-MM-yyyy')
-                                                .format(selectedDate),
-                                            (value) => !userhabitScreenController
-                                                            .UserHabit
-                                                            .value[widget.category]
-                                                        [i]
-                                                    [widget.Habitname]['Completed'][
-                                                DateFormat('dd-MM-yyyy')
-                                                    .format(selectedDate)]);
-                                    userhabitScreenController
-                                        .UserHabit
-                                        .value[widget.category]
-                                    [i][widget.Habitname]
-                                    ['Progress']
-                                        .update(
-                                        DateFormat('dd-MM-yyyy')
-                                            .format(selectedDate),
-                                            (value) => int.parse(userhabitScreenController
-                                                .UserHabit
-                                                .value[widget.category]
-                                            [i][widget.Habitname]
-                                            ['target']));
-
-                                    // done= UserHabit[widget.category][widget.index][widget.Habitname]['Completed'][DateFormat('dd-MM-yyyy').format(selectedDate)];
-                                  });
-
-                                  setState(() {
-                                    fancyCards = generateHabitCards(
-                                        userHabit: userhabitScreenController
-                                            .UserHabit.value,
-                                        state: whichState,
-                                        selectedDate: selectedDate);
-                                  });
-                                  BlocProvider.of<RoutineBloc>(contextRoutineScreen)
-                                      .add(ListchangeEvent(
-                                          fancyCards: fancyCards,
-                                          state: whichState,
-                                          habits: userhabitScreenController
-                                              .UserHabit.value));
-                                  BlocProvider.of<ProgressBloc>(contextProgress)
-                                      .add(Progresschangeevent(
+                                        setState(() {
                                           userhabitScreenController
-                                              .UserHabit.value));
+                                              .UserHabit
+                                              .value[widget.category][i]
+                                          [widget.Habitname]["logs"]..update(
+                                              DateFormat('dd-MM-yyyy')
+                                                  .format(selectedDate),
+                                                  (value) => log);
 
-                                  Sharedpref().saveData(
-                                      userhabitScreenController.UserHabit.value);
-                                  await Sharedpref().loadData().then((value) {
-                                    print(value.length);
-                                    value.forEach((key, value2) {
-                                      value2.forEach((value3) {
-                                        value3.forEach((key4, value4) {
-                                          print(
-                                              '$key4:  valuee ${value4['Completed']}');
-                                          value4['Completed']
-                                              .forEach((key5, value5) {
-                                            if (key5 ==
-                                                DateFormat('dd-MM-yyyy')
-                                                    .format(selectedDate)) {
-                                              print("matched $value5");
-                                              // done[DateFormat('dd-MM-yyyy')
-                                              //     .format(selectedDate)]=value5;
-                                            }
+
+
+                                          userhabitScreenController
+                                              .UserHabit
+                                              .value[widget.category][i]
+                                          [widget.Habitname]['Completed']
+                                              .update(
+                                              DateFormat('dd-MM-yyyy')
+                                                  .format(selectedDate),
+                                                  (value) => !userhabitScreenController
+                                                  .UserHabit
+                                                  .value[widget.category]
+                                              [i]
+                                              [widget.Habitname]['Completed'][
+                                              DateFormat('dd-MM-yyyy')
+                                                  .format(selectedDate)]);
+                                          userhabitScreenController
+                                              .UserHabit
+                                              .value[widget.category]
+                                          [i][widget.Habitname]
+                                          ['Progress']
+                                              .update(
+                                              DateFormat('dd-MM-yyyy')
+                                                  .format(selectedDate),
+                                                  (value) => int.parse(userhabitScreenController
+                                                  .UserHabit
+                                                  .value[widget.category]
+                                              [i][widget.Habitname]
+                                              ['target']));
+
+                                          // done= UserHabit[widget.category][widget.index][widget.Habitname]['Completed'][DateFormat('dd-MM-yyyy').format(selectedDate)];
+                                        });
+
+                                        setState(() {
+                                          fancyCards = generateHabitCards(
+                                              userHabit: userhabitScreenController
+                                                  .UserHabit.value,
+                                              state: whichState,
+                                              selectedDate: selectedDate);
+                                        });
+                                        BlocProvider.of<RoutineBloc>(contextRoutineScreen)
+                                            .add(ListchangeEvent(
+                                            fancyCards: fancyCards,
+                                            state: whichState,
+                                            habits: userhabitScreenController
+                                                .UserHabit.value));
+                                        BlocProvider.of<ProgressBloc>(contextProgress)
+                                            .add(Progresschangeevent(
+                                            userhabitScreenController
+                                                .UserHabit.value));
+
+                                        Sharedpref().saveData(
+                                            userhabitScreenController.UserHabit.value);
+                                        await Sharedpref().loadData().then((value) {
+                                          print(value.length);
+                                          value.forEach((key, value2) {
+                                            value2.forEach((value3) {
+                                              value3.forEach((key4, value4) {
+                                                print(
+                                                    '$key4:  valuee ${value4['Completed']}');
+                                                value4['Completed']
+                                                    .forEach((key5, value5) {
+                                                  if (key5 ==
+                                                      DateFormat('dd-MM-yyyy')
+                                                          .format(selectedDate)) {
+                                                    print("matched $value5");
+                                                    // done[DateFormat('dd-MM-yyyy')
+                                                    //     .format(selectedDate)]=value5;
+                                                  }
+                                                });
+                                              });
+                                            });
                                           });
                                         });
-                                      });
-                                    });
-                                  });
-                                }
+                                      }
 
-                              }
+                                    }
+
+                                  },); // Show the dialog
+                                },
+                              );
 
 
 

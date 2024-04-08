@@ -4,13 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:habitup/CommonMethods/Variable.dart';
 
 
-class MyGraph extends StatelessWidget {
+class MyGraph extends StatefulWidget {
   final List<double> weelySummery;
   const MyGraph({super.key, required this.weelySummery});
 
   @override
-  Widget build(BuildContext context) {
+  State<MyGraph> createState() => _MyGraphState();
+}
 
+class _MyGraphState extends State<MyGraph> {
+  List<double> weelySummery = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    weelySummery = widget.weelySummery;
+  }
+  @override
+  Widget build(BuildContext context) {
     return BarChart(
         swapAnimationCurve: Curves.easeInOut,
         swapAnimationDuration: const Duration(milliseconds: 250),
@@ -38,7 +49,7 @@ class MyGraph extends StatelessWidget {
 
             )
           ),
-          barGroups: weelySummery.asMap()
+          barGroups: widget.weelySummery.asMap()
               .entries.map((entry) => BarChartGroupData(
             x: entry.key,
             barRods: [

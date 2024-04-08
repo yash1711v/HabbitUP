@@ -163,6 +163,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                               "startTime":startTime.isNotEmpty?startTime:"0000",
                               "endTime":endTime.isNotEmpty?endTime:"0000",
                               "Hastag":Tags[SelectedIndexfortags],
+                              "logs":generateDateMapLogs(),
                               "changableunits": Methods().Habbits[SelectedCatagory]![selectedHabit]!['changableunits'],
                             }
                           });
@@ -194,6 +195,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                                 "startTime":startTime.isNotEmpty?startTime:"0000",
                                 "endTime":endTime.isNotEmpty?endTime:"0000",
                                 "Hastag":Tags[SelectedIndexfortags],
+                                "logs":generateDateMapLogs(),
                                 "changableunits": Methods().Habbits[SelectedCatagory]![selectedHabit]!['changableunits'],
                               }
                             });
@@ -842,4 +844,23 @@ bool checkIfAnyHabitsSet(Map<String,Set<int>> habitsMap) {
     }
   }
   return false; // No habits found in any month, return false
+}
+
+Map<String, String> generateDateMapLogs() {
+  // Initialize an empty map
+  Map<String, String> dateMap = {};
+
+  // Get today's date
+  DateTime now = DateTime.now();
+  // Get the end of the current year
+  DateTime endOfYear = DateTime(now.year, 12, 31);
+
+  // Loop from today to the end of the year
+  for (DateTime date = now; date.isBefore(endOfYear) || date.isAtSameMomentAs(endOfYear); date = date.add(Duration(days: 1))) {
+    // Format the date and add it to the map with a value of false
+    String formattedDate = DateFormat('dd-MM-yyyy').format(date);
+    dateMap[formattedDate] = "";
+  }
+
+  return dateMap;
 }
