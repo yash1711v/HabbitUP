@@ -37,8 +37,8 @@ Widget bottomNavBar(BuildContext context) {
 
           BottomBarItem(
               icon: SvgPicture.asset(
-                  i==2?"assets/ImagesY/BottomNavigationIconImages/MoreSelectedIcon.svg":"assets/ImagesY/BottomNavigationIconImages/MoreIcon.svg"),
-              title: const Text("More"),
+                  i==2?"assets/ImagesY/SettingsScreen/SettingIconActive.svg":"assets/ImagesY/SettingsScreen/SettingsIcon.svg"),
+              title: const Text("Settings"),
               selectedColor: const Color(0xFFFEF656))
         ],
         option: AnimatedBarOptions(

@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
           }else{theme=MyAppTheme.lightTheme;}
         }
         print(theme);
-        return MaterialApp(
+        return GetMaterialApp(
           theme: theme,
           onGenerateRoute: Routes().onGenerateRoute,
           initialRoute: "/Initial",

@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:stacked_card_carousel/stacked_card_carousel.dart';
 
 import '../../../../../CommonMethods/Variable.dart';
+import '../../../../../FirebaseFunctionality/DatabaseFeatures.dart';
 import '../../../../../LocalStorage/SharedPref/Sharedpref.dart';
 import '../../../../../Widgets/DialogBox/Logsadition/logs_adition.dart';
 import '../../Progress/progress_bloc.dart';
@@ -238,11 +239,10 @@ class _FancyCardState extends State<FancyCard> {
                           ),
                           Center(
                               child: GestureDetector(
-                                  onTap: () {
+                                  onTap: () async {
                                     if (widget.value! < int.parse(target)) {
                                       int v = widget.value + 1;
-
-                                      print(widget.index);
+                                      String Uid=await Sharedpref().getUid();
 
                                       for (int i = 0;
                                           i <
@@ -254,7 +254,6 @@ class _FancyCardState extends State<FancyCard> {
                                         if (userhabitScreenController
                                             .UserHabit.value[widget.category][i]
                                             .containsKey(widget.Habitname)) {
-                                          print("contains");
 
                                           setState(() {
                                             userhabitScreenController
@@ -275,22 +274,30 @@ class _FancyCardState extends State<FancyCard> {
                                                 state: whichState,
                                                 selectedDate: selectedDate);
                                           });
-                                          BlocProvider.of<RoutineBloc>(
-                                                  contextRoutineScreen)
-                                              .add(ListchangeEvent(
-                                                  fancyCards: fancyCards,
-                                                  state: whichState,
-                                                  habits:
-                                                      userhabitScreenController
-                                                          .UserHabit.value));
-                                          BlocProvider.of<ProgressBloc>(
-                                                  contextProgress)
-                                              .add(Progresschangeevent(
-                                                  userhabitScreenController
-                                                      .UserHabit.value));
                                           Sharedpref().saveData(
                                               userhabitScreenController
                                                   .UserHabit.value);
+
+                                          await Sharedpref().loadData().then((value) {
+                                            DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
+
+
+
+
+                                          });
+                                          BlocProvider.of<RoutineBloc>(
+                                              contextRoutineScreen)
+                                              .add(ListchangeEvent(
+                                              fancyCards: fancyCards,
+                                              state: whichState,
+                                              habits:
+                                              userhabitScreenController
+                                                  .UserHabit.value));
+                                          BlocProvider.of<ProgressBloc>(
+                                              contextProgress)
+                                              .add(Progresschangeevent(
+                                              userhabitScreenController
+                                                  .UserHabit.value));
                                         } else if (val == int.parse(target)) {
                                           userhabitScreenController
                                               .UserHabit
@@ -327,6 +334,13 @@ class _FancyCardState extends State<FancyCard> {
                                                 state: whichState,
                                                 selectedDate: selectedDate);
                                           });
+                                          Sharedpref().saveData(
+                                              userhabitScreenController
+                                                  .UserHabit.value);
+                                          String Uid=await Sharedpref().getUid();
+                                          await Sharedpref().loadData().then((value) {
+                                            DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
+                                          });
                                           BlocProvider.of<RoutineBloc>(
                                                   contextRoutineScreen)
                                               .add(ListchangeEvent(
@@ -355,11 +369,11 @@ class _FancyCardState extends State<FancyCard> {
                                   fit: BoxFit.fitWidth,
                                   child: Text(
                                       textAlign: TextAlign.center,
-                                      '${widget.value}/$target\nmin',
+                                      '${widget.value}/$target\n${widget.units}',
                                       style: TextStyle(
                                         color: Theme.of(context)
                                             .scaffoldBackgroundColor,
-                                        fontSize: 16,
+                                        fontSize: 20,
                                         fontFamily: 'DM Sans',
                                         fontWeight: FontWeight.w500,
                                         height: .8,
@@ -371,7 +385,7 @@ class _FancyCardState extends State<FancyCard> {
                           ),
                           Center(
                               child: GestureDetector(
-                                  onTap: () {
+                                  onTap: () async {
                                     if (val != 0) {
                                       int v = 0;
 
@@ -413,6 +427,19 @@ class _FancyCardState extends State<FancyCard> {
                                                 state: whichState,
                                                 selectedDate: selectedDate);
                                           });
+                                          String Uid=await Sharedpref().getUid();
+                                          Sharedpref().saveData(
+                                              userhabitScreenController
+                                                  .UserHabit.value);
+
+                                          await Sharedpref().loadData().then((value) {
+                                            DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
+
+
+
+
+                                          });
+
                                           BlocProvider.of<RoutineBloc>(
                                               contextRoutineScreen)
                                               .add(ListchangeEvent(
@@ -425,40 +452,7 @@ class _FancyCardState extends State<FancyCard> {
                                               .add(Progresschangeevent(
                                               userhabitScreenController
                                                   .UserHabit.value));
-                                          Sharedpref().saveData(
-                                              userhabitScreenController
-                                                  .UserHabit.value);
-                                          setState(() {
-                                            userhabitScreenController
-                                                .UserHabit
-                                                .value[widget.category]
-                                            [i][widget.Habitname]
-                                            ['Progress']
-                                                .putIfAbsent(
-                                                DateFormat('dd-MM-yyyy')
-                                                    .format(selectedDate),
-                                                    () => 0);
-                                            userhabitScreenController
-                                                .UserHabit
-                                                .value[widget.category]
-                                            [i][widget.Habitname]
-                                            ['Progress']
-                                                .update(
-                                                DateFormat('dd-MM-yyyy')
-                                                    .format(selectedDate),
-                                                    (value) => v);
 
-                                            Sharedpref().saveData(
-                                                userhabitScreenController
-                                                    .UserHabit.value);
-                                            print(userhabitScreenController
-                                                .UserHabit
-                                                .value[widget.category]
-                                            [i]
-                                            [widget.Habitname]["Progress"][
-                                            DateFormat('dd-MM-yyyy')
-                                                .format(selectedDate)]);
-                                          });
                                         }
                                       }
 
@@ -647,21 +641,13 @@ class _FancyCardState extends State<FancyCard> {
                                               state: whichState,
                                               selectedDate: selectedDate);
                                         });
-                                        BlocProvider.of<RoutineBloc>(contextRoutineScreen)
-                                            .add(ListchangeEvent(
-                                            fancyCards: fancyCards,
-                                            state: whichState,
-                                            habits: userhabitScreenController
-                                                .UserHabit.value));
-                                        BlocProvider.of<ProgressBloc>(contextProgress)
-                                            .add(Progresschangeevent(
-                                            userhabitScreenController
-                                                .UserHabit.value));
-
                                         Sharedpref().saveData(
                                             userhabitScreenController.UserHabit.value);
+                                        String Uid=await Sharedpref().getUid();
+
                                         await Sharedpref().loadData().then((value) {
                                           print(value.length);
+
                                           value.forEach((key, value2) {
                                             value2.forEach((value3) {
                                               value3.forEach((key4, value4) {
@@ -680,7 +666,21 @@ class _FancyCardState extends State<FancyCard> {
                                               });
                                             });
                                           });
+                                          DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
+
                                         });
+                                        BlocProvider.of<RoutineBloc>(contextRoutineScreen)
+                                            .add(ListchangeEvent(
+                                            fancyCards: fancyCards,
+                                            state: whichState,
+                                            habits: userhabitScreenController
+                                                .UserHabit.value));
+                                        BlocProvider.of<ProgressBloc>(contextProgress)
+                                            .add(Progresschangeevent(
+                                            userhabitScreenController
+                                                .UserHabit.value));
+
+
                                       }
 
                                     }

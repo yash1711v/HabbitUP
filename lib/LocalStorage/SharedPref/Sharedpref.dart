@@ -46,18 +46,8 @@ class Sharedpref{
     bool DetailsDone = pref.getBool("DetailsDone")??false;
     return DetailsDone;
   }
-  // setting and getting of Wakeuptime
-  setWakeupTime(String value) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("WakeupTime", value);
 
-  }
 
-  getWakeUpTime() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String WakeUpTime = pref.getString("WakeupTime")??"";
-    return WakeUpTime;
-  }
 
   // setting and getting of Feelings
   setFeelings(String value) async {
@@ -71,18 +61,8 @@ class Sharedpref{
     String Feelings = pref.getString("Feelings")??"";
     return Feelings;
   }
-  // setting and getting of Gender
-  setGender(String value) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("Gender", value);
 
-  }
 
-  getGender() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String Gender = pref.getString("Gender")??"";
-    return Gender;
-  }
 
   //Setting and getting of  Uid
   setUid(String value) async {

@@ -107,3 +107,6 @@ final UserhabitScreenController userhabitScreenController = Get.find<UserhabitSc
 
 String whichState = "All";
 
+
+//-------------------------------Settings Screen variables----------------------------
+

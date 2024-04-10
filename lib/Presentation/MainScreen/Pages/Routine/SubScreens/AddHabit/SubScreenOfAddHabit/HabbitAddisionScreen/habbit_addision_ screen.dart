@@ -14,6 +14,7 @@ import 'package:habitup/Widgets/BottomSheet/RepeatsEveryDay/bottom_sheet_bloc.da
 import 'package:intl/intl.dart';
 import '../../../../../../../../CommonMethods/InputValidator.dart';
 import '../../../../../../../../CommonMethods/Methods.dart';
+import '../../../../../../../../FirebaseFunctionality/DatabaseFeatures.dart';
 import '../../../../../../../../ScheduleNotifications/notification_scheduler.dart';
 import '../../../../../../../../Widgets/BottomSheet/IconChangeBottomSheet/icon_change_bottomsheet.dart';
 import '../../../../../../../../Widgets/BottomSheet/RepeatsEveryDay/bottom_sheet.dart';
@@ -202,15 +203,11 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                           });
                         }
                       }
-                      // setState(() {
-                      //   fancyCards= generateHabitCards(
-                      //       userHabit: userhabitScreenController.UserHabit.value,
-                      //       state: whichState,
-                      //       selectedDate: selectedDate);
-                      // });
+
 
 
                       Sharedpref().saveData(userhabitScreenController.UserHabit.value);
+                      String Uid=await Sharedpref().getUid();
                      await Sharedpref().loadData().then((value) {
                        value.forEach((key, value2) {
                          value2.forEach((element) {
@@ -222,6 +219,8 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                             });
                          });
                        });
+
+                       DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
                      });
 
                       BlocProvider.of<RoutineBloc>(contextRoutineScreen).add(ListchangeEvent(fancyCards: fancyCards,state: whichState, habits: userhabitScreenController.UserHabit.value));
@@ -366,7 +365,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                           decoration = BoxDecoration(
                             color: Theme.of(context)
                                 .inputDecorationTheme
-                                .fillColor,
+                                .fillColor==Color(0xFFF0EFEA)?Color(0xFFF3F3F3):Color(0xFF292929),
                             borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(20),
                               topRight: Radius.circular(20),
@@ -379,9 +378,9 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                                     .length -
                                 1) {
                           decoration = BoxDecoration(
-                            color: Theme.of(context)
-                                .inputDecorationTheme
-                                .fillColor,
+                             color: Theme.of(context)
+                              .inputDecorationTheme
+                              .fillColor==Color(0xFFF0EFEA)?Color(0xFFF3F3F3):Color(0xFF292929),
                             borderRadius: const BorderRadius.only(
                               bottomLeft: Radius.circular(20),
                               bottomRight: Radius.circular(20),
@@ -391,7 +390,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                           decoration = BoxDecoration(
                             color: Theme.of(context)
                                 .inputDecorationTheme
-                                .fillColor,
+                                .fillColor==Color(0xFFF0EFEA)?Color(0xFFF3F3F3):Color(0xFF292929),
                           );
                         }
 
@@ -657,8 +656,9 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                     clipBehavior: Clip.antiAlias,
                     decoration: Subtasks.length >= 1
                         ? ShapeDecoration(
-                            color:
-                                Theme.of(context).inputDecorationTheme.fillColor,
+                      color: Theme.of(context)
+                          .inputDecorationTheme
+                          .fillColor==Color(0xFFF0EFEA)?Color(0xFFF3F3F3):Color(0xFF292929),
                             shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(20),
@@ -667,8 +667,9 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                             ),
                           )
                         : ShapeDecoration(
-                            color:
-                                Theme.of(context).inputDecorationTheme.fillColor,
+                      color: Theme.of(context)
+                          .inputDecorationTheme
+                          .fillColor==Color(0xFFF0EFEA)?Color(0xFFF3F3F3):Color(0xFF292929),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
@@ -724,7 +725,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                             decoration = BoxDecoration(
                               color: Theme.of(context)
                                   .inputDecorationTheme
-                                  .fillColor,
+                                  .fillColor==Color(0xFFF0EFEA)?Color(0xFFF3F3F3):Color(0xFF292929),
                               borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(20),
                                 bottomRight: Radius.circular(20),
@@ -734,7 +735,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                             decoration = BoxDecoration(
                               color: Theme.of(context)
                                   .inputDecorationTheme
-                                  .fillColor,
+                                  .fillColor==Color(0xFFF0EFEA)?Color(0xFFF3F3F3):Color(0xFF292929),
                             );
                           }
                           return Container(

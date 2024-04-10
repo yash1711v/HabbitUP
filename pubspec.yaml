@@ -56,6 +56,8 @@ dependencies:
   percent_indicator: ^4.2.3
   get: ^4.6.6
   fl_chart: ^0.67.0
+  url_launcher: ^6.2.5
+  share_plus: ^8.0.3
 
 dev_dependencies:
   flutter_test:
@@ -94,6 +96,7 @@ flutter:
      - assets/ImagesY/RoutineScreen/AddhabbitIcons/PersonalFinance/
      - assets/ImagesY/RoutineScreen/AddhabbitIcons/Others/
      - assets/ImagesY/Progress/
+     - assets/ImagesY/SettingsScreen/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:habitup/LocalStorage/SharedPref/Sharedpref.dart';
+import '../CommonMethods/Variable.dart';
+import '../Presentation/MainScreen/Pages/Routine/SubScreens/stacking_cards.dart';
 import 'DatabaseFeatures.dart';
 
 class AuthenticationFeatures {
@@ -31,7 +33,7 @@ class AuthenticationFeatures {
             Email: await Sharedpref().getEmail(),
             Password: await Sharedpref().getPass(),
             Feeling: await Sharedpref().getFeelings(),
-            context: context);
+            context: context, UserHabits: {});
         Future.delayed(Duration(milliseconds: 1000)).then((value) {
           Navigator.of(context).popAndPushNamed("/MainScreen");
         });
@@ -42,7 +44,7 @@ class AuthenticationFeatures {
             .then((value) async {
           if (value.snapshot.exists) {
             //if exists
-
+            print("If exists");
             //Setting data from the firebase to local storage if exists
             await Sharedpref()
                 .setEmail(value.snapshot.child('Email').value.toString());
@@ -52,7 +54,17 @@ class AuthenticationFeatures {
             await Sharedpref()
                 .setFeelings(value.snapshot.child('Feelings').value.toString());
             await Sharedpref().setPass(value.snapshot.child('password').value.toString());
+            DatabaseFeatures().getUserhabits(Uid: value1.user!.uid).then((value) async => {
+              fancyCards = generateHabitCards(
+                  userHabit: value,
+                  state: whichState,
+                  selectedDate: selectedDate),
+              await Sharedpref().loadData().then((value) {
+                print(value.length);
+                userhabitScreenController.UserHabit.value=value;
+              })
 
+            });
             //showing snackbar
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 backgroundColor: Colors.white,
@@ -72,6 +84,7 @@ class AuthenticationFeatures {
 
             return "Welcome Back";
           } else {
+            print("If not exists");
             Sharedpref().setFeelings("");
             Sharedpref().setUid(value1.user!.uid);
             Sharedpref().setUsername(email);
@@ -84,7 +97,7 @@ class AuthenticationFeatures {
                 Email: await Sharedpref().getEmail(),
                 Password: await Sharedpref().getPass(),
                 Feeling: await Sharedpref().getFeelings(),
-                context: context);
+                context: context, UserHabits: {});
 
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 backgroundColor: Colors.white,
@@ -145,7 +158,7 @@ class AuthenticationFeatures {
       Email: await Sharedpref().getEmail(),
       Password: await Sharedpref().getPass(),
       Feeling: await Sharedpref().getFeelings(),
-      context: context);
+      context: context, UserHabits: {});
       Future.delayed(Duration(milliseconds: 1000)).then((value) {
       Navigator.of(context).popAndPushNamed("/MainScreen");
       });
@@ -156,7 +169,7 @@ class AuthenticationFeatures {
             Email: await Sharedpref().getEmail(),
             Password: await Sharedpref().getPass(),
             Feeling: await Sharedpref().getFeelings(),
-            context: context);
+            context: context, UserHabits: {});
 
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             backgroundColor: Colors.white,
@@ -216,20 +229,25 @@ class AuthenticationFeatures {
                 Email: await Sharedpref().getEmail(),
                 Password: " ",
                 Feeling: await Sharedpref().getFeelings(),
-                context: context);
+                context: context, UserHabits: {});
             Future.delayed(Duration(milliseconds: 1000)).then((value) {
               Navigator.of(context).popAndPushNamed("/MainScreen");
             });
           } else {
             // if not a guest checking whether the data exists or not if yes then simply fetching and setting that data to local storage
             // and other wise Sending the new entries
+            print(value1.id.toString());
             services.databaseReference
-                .child(value2.user!.uid.toString())
+                .child(value1.id.toString())
+                .once().then((value) => {print(value.snapshot.value)});
+            services.databaseReference
+                .child(value1.id.toString())
                 .once()
                 .then((value) async {
 
               if (value.snapshot.exists) {
                 //if exists
+                print("If exists");
                 await Sharedpref()
                     .setEmail(value.snapshot.child('Email').value.toString());
                 await Sharedpref().setUid(value1.id ?? "");
@@ -238,6 +256,17 @@ class AuthenticationFeatures {
                 await Sharedpref().setFeelings(
                     value.snapshot.child('Feelings').value.toString());
                 await Sharedpref().setPass(" ");
+                DatabaseFeatures().getUserhabits(Uid: value1.id).then((value) async => {
+                  fancyCards = generateHabitCards(
+                      userHabit: value,
+                      state: whichState,
+                      selectedDate: selectedDate),
+                await Sharedpref().loadData().then((value) {
+                print(value.length);
+                userhabitScreenController.UserHabit.value=value;
+                })
+
+                });
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
@@ -253,7 +282,7 @@ class AuthenticationFeatures {
                 });
                 return "Welcome Back";
               } else {
-                print("Welcome");
+                print("If not Exists exists");
                 await Sharedpref().setEmail(value1.email.toString().trim());
                 await Sharedpref().setUid(value1.id.toString());
                 await Sharedpref().setUsername(value1.displayName.toString());
@@ -278,7 +307,8 @@ class AuthenticationFeatures {
                     Email: await Sharedpref().getEmail(),
                     Password: " ",
                     Feeling: await Sharedpref().getFeelings(),
-                    context: context);
+                    context: context,
+                    UserHabits: {});
 
 
 
@@ -314,6 +344,14 @@ class AuthenticationFeatures {
   Future signout() async {
     try {
       print("logout clicked");
+      await Sharedpref().setUsername("User");
+      await Sharedpref().setDetails(false);
+      await Sharedpref().setEmail("");
+      await Sharedpref().setUid("");
+      await Sharedpref().setPass("");
+      await Sharedpref().setFeelings("");
+      await  Sharedpref().setGuest(true);
+        Sharedpref().saveData({});
       return await _auth.signOut(); //signout method of Firebase Auth
     } catch (e) {
       print(e.toString());
