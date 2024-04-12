@@ -89,7 +89,6 @@ scaffoldBackgroundColor:  Colors.white,
     ),
     textTheme: const TextTheme(
       headline1: TextStyle(color: Colors.white,fontFamily: 'Varta'),
-      headline2: TextStyle(color: Colors.white,fontFamily: 'Varta'),
       bodyText1: TextStyle(color: Colors.black,fontFamily: 'Varta'),
       bodyText2: TextStyle(color: Colors.white,fontFamily: 'Varta'),
       button: TextStyle(color: Colors.white,fontFamily: 'Varta'),

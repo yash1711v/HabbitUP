@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habitup/Presentation/AvatorScreen/AvatorScreen.dart';
-import 'package:habitup/Presentation/AvatorScreen/avator_bloc.dart';
-import 'package:habitup/Presentation/MainScreen/main_screen.dart';
-import 'package:habitup/Presentation/MainScreen/main_screen_bloc.dart';
+import 'package:HabitUp/Presentation/AvatorScreen/AvatorScreen.dart';
+import 'package:HabitUp/Presentation/AvatorScreen/avator_bloc.dart';
+import 'package:HabitUp/Presentation/MainScreen/main_screen.dart';
+import 'package:HabitUp/Presentation/MainScreen/main_screen_bloc.dart';
 import '../Bloc/general_bloc.dart';
 import '../Presentation/FeelingsSelection/FeelingSelection.dart';
 import '../Presentation/FeelingsSelection/feelings_selection_bloc.dart';

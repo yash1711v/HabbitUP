@@ -1,5 +1,5 @@
 
-# habitup
+# HabitUp
 
 A new Flutter project.
 

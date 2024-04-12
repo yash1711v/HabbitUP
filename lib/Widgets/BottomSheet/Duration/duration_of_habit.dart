@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
-import 'package:habitup/CommonMethods/Variable.dart';
-import 'package:habitup/Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/habit_adision_bloc.dart';
-import 'package:habitup/Widgets/BottomSheet/Duration/duration_bloc.dart';
+import 'package:HabitUp/CommonMethods/Variable.dart';
+import 'package:HabitUp/Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/habit_adision_bloc.dart';
+import 'package:HabitUp/Widgets/BottomSheet/Duration/duration_bloc.dart';
 import 'package:intl/intl.dart';
 
 class DurationOfHabit extends StatelessWidget {

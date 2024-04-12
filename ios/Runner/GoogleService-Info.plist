@@ -15,11 +15,11 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.habitup</string>
+	<string>com.example.HabitUp</string>
 	<key>PROJECT_ID</key>
-	<string>habitup-870ac</string>
+	<string>HabitUp-870ac</string>
 	<key>STORAGE_BUCKET</key>
-	<string>habitup-870ac.appspot.com</string>
+	<string>HabitUp-870ac.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,6 +33,6 @@
 	<key>GOOGLE_APP_ID</key>
 	<string>1:939913727709:ios:29b8a4f651c3c3178cd534</string>
 	<key>DATABASE_URL</key>
-	<string>https://habitup-870ac-default-rtdb.firebaseio.com</string>
+	<string>https://HabitUp-870ac-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

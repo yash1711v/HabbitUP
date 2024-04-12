@@ -4,11 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttermoji/fluttermojiCircleAvatar.dart';
-import 'package:habitup/CommonMethods/Variable.dart';
-import 'package:habitup/MyTheme/theme_bloc.dart';
-import 'package:habitup/Presentation/MainScreen/Pages/Routine/routine_bloc.dart';
-import 'package:habitup/Widgets/TipsofTheDay/tips_bloc.dart';
-import 'package:habitup/Widgets/TipsofTheDay/tips_dialog_box.dart';
+import 'package:HabitUp/CommonMethods/Variable.dart';
+import 'package:HabitUp/MyTheme/theme_bloc.dart';
+import 'package:HabitUp/Presentation/MainScreen/Pages/Routine/routine_bloc.dart';
+import 'package:HabitUp/Widgets/TipsofTheDay/tips_bloc.dart';
+import 'package:HabitUp/Widgets/TipsofTheDay/tips_dialog_box.dart';
 
 import '../../../../MyTheme/theme_event.dart';
 import '../../../../Widgets/edit_avator.dart';

@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:habitup/CommonMethods/Variable.dart';
-import 'package:habitup/LocalStorage/SharedPref/Sharedpref.dart';
-import 'package:habitup/Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/habit_adision_bloc.dart';
-import 'package:habitup/Widgets/BottomSheet/Duration/duration_bloc.dart';
-import 'package:habitup/Widgets/BottomSheet/Duration/duration_of_habit.dart';
-import 'package:habitup/Widgets/BottomSheet/Reminder/reminder.dart';
-import 'package:habitup/Widgets/BottomSheet/Reminder/reminder_bloc.dart';
-import 'package:habitup/Widgets/BottomSheet/RepeatsEveryDay/bottom_sheet_bloc.dart';
+import 'package:HabitUp/CommonMethods/Variable.dart';
+import 'package:HabitUp/LocalStorage/SharedPref/Sharedpref.dart';
+import 'package:HabitUp/Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/habit_adision_bloc.dart';
+import 'package:HabitUp/Widgets/BottomSheet/Duration/duration_bloc.dart';
+import 'package:HabitUp/Widgets/BottomSheet/Duration/duration_of_habit.dart';
+import 'package:HabitUp/Widgets/BottomSheet/Reminder/reminder.dart';
+import 'package:HabitUp/Widgets/BottomSheet/Reminder/reminder_bloc.dart';
+import 'package:HabitUp/Widgets/BottomSheet/RepeatsEveryDay/bottom_sheet_bloc.dart';
 import 'package:intl/intl.dart';
 import '../../../../../../../../CommonMethods/InputValidator.dart';
 import '../../../../../../../../CommonMethods/Methods.dart';
@@ -554,7 +554,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
-                                          width: 174,
+                                          width: 179,
                                           height: 24,
                                           child: Text(
                                             Properties[index],

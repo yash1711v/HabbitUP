@@ -3,11 +3,12 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:habitup/Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/habbit_addision_%20screen.dart';
-import 'package:habitup/Presentation/MainScreen/Pages/Routine/routine_bloc.dart';
+import 'package:HabitUp/Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/habbit_addision_%20screen.dart';
+import 'package:HabitUp/Presentation/MainScreen/Pages/Routine/routine_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked_card_carousel/stacked_card_carousel.dart';
 
@@ -39,11 +40,11 @@ class _StackingCardState extends State<StackingCard> {
                 pageController: controller,
                 initialOffset: -00,
                 type: StackedCardCarouselType.cardsStack,
-                spaceBetweenItems: 150,
+                spaceBetweenItems: 200,
                 items: fancyCards,
               )
             : const Padding(
-                padding: EdgeInsets.only(left: 165.0, top: 350),
+                padding: EdgeInsets.only(left: 130.0, top: 200),
                 child: Text("No Habits for today"),
               );
       },
@@ -94,12 +95,12 @@ class _FancyCardState extends State<FancyCard> {
   Widget build(BuildContext context) {
     return Container(
       width: 400,
-      height: 155,
+      height: 200,
       child: Stack(
         children: [
           Container(
               width: 400,
-              height: 155,
+              height: 200,
               decoration: ShapeDecoration(
                 color: widget.color,
                 shape: const RoundedRectangleBorder(
@@ -114,7 +115,7 @@ class _FancyCardState extends State<FancyCard> {
                     child: Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 25.0),
+                          padding: const EdgeInsets.only(top: 50.0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,8 +124,8 @@ class _FancyCardState extends State<FancyCard> {
                                 width: 25,
                                 child: Text(
                                   insertLineBreaks(widget.starttime),
-                                  style: const TextStyle(
-                                    color: Color(0xFF1F1F1F),
+                                  style:  TextStyle(
+                                    color: widget.starttime=="0000"?Color(0x7F1F1F1F):Color(0xFF1F1F1F),
                                     fontSize: 16,
                                     fontFamily: 'DM Sans',
                                     fontWeight: FontWeight.w500,
@@ -133,12 +134,12 @@ class _FancyCardState extends State<FancyCard> {
                                   ),
                                 ),
                               ),
-                              const Padding(
-                                padding: EdgeInsets.only(left: 5),
+                               Padding(
+                                padding: EdgeInsets.only(left: 10),
                                 child: Text(
                                   "|",
                                   style: TextStyle(
-                                    color: Color(0xFF1F1F1F),
+                                    color: widget.starttime=="0000" &&  widget.endtime=="0000"?Color(0x7F1F1F1F):Color(0xFF1F1F1F),
                                     fontSize: 16,
                                     fontFamily: 'DM Sans',
                                     fontWeight: FontWeight.w500,
@@ -149,8 +150,8 @@ class _FancyCardState extends State<FancyCard> {
                                 width: 25,
                                 child: Text(
                                   insertLineBreaks(widget.endtime),
-                                  style: const TextStyle(
-                                    color: Color(0xFF1F1F1F),
+                                  style:  TextStyle(
+                                    color: widget.endtime=="0000"?Color(0x7F1F1F1F):Color(0xFF1F1F1F),
                                     fontSize: 16,
                                     fontFamily: 'DM Sans',
                                     fontWeight: FontWeight.w500,
@@ -163,7 +164,7 @@ class _FancyCardState extends State<FancyCard> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 0.0, left: 10),
+                          padding: const EdgeInsets.only(bottom: 20.0, left: 10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -207,7 +208,7 @@ class _FancyCardState extends State<FancyCard> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 30.0, right: 5),
+                padding: const EdgeInsets.only(top: 65.0, right: 15),
                 child: SvgPicture.asset(
                   "${widget.icon}",
                   color: const Color(0x271F1F1F),
@@ -215,7 +216,7 @@ class _FancyCardState extends State<FancyCard> {
               ),
               Container(
                 width: 57,
-                height: 155,
+                height: 200,
                 decoration: ShapeDecoration(
                   color: Theme.of(context).textTheme.titleMedium?.color,
                   shape: const RoundedRectangleBorder(
@@ -239,7 +240,122 @@ class _FancyCardState extends State<FancyCard> {
                           ),
                           Center(
                               child: GestureDetector(
+                                onLongPress: () async {
+                                  if (widget.value! < int.parse(target)) {
+                                    int v = widget.value + 1;
+                                    String Uid=await Sharedpref().getUid();
+
+                                    for (int i = 0;
+                                    i <
+                                        userhabitScreenController
+                                            .UserHabit
+                                            .value[widget.category]
+                                            .length;
+                                    i++) {
+                                      if (userhabitScreenController
+                                          .UserHabit.value[widget.category][i]
+                                          .containsKey(widget.Habitname)) {
+
+                                        setState(() {
+                                          userhabitScreenController
+                                              .UserHabit
+                                              .value[widget.category][i]
+                                          [widget.Habitname]
+                                          ['Progress']
+                                              .update(
+                                              DateFormat('dd-MM-yyyy')
+                                                  .format(selectedDate),
+                                                  (value) => v);
+                                        });
+                                        setState(() {
+                                          fancyCards = generateHabitCards(
+                                              userHabit:
+                                              userhabitScreenController
+                                                  .UserHabit.value,
+                                              state: whichState,
+                                              selectedDate: selectedDate);
+                                        });
+                                        Sharedpref().saveData(
+                                            userhabitScreenController
+                                                .UserHabit.value);
+
+                                        await Sharedpref().loadData().then((value) {
+                                          DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
+
+
+
+
+                                        });
+                                        BlocProvider.of<RoutineBloc>(
+                                            contextRoutineScreen)
+                                            .add(ListchangeEvent(
+                                            fancyCards: fancyCards,
+                                            state: whichState,
+                                            habits:
+                                            userhabitScreenController
+                                                .UserHabit.value));
+                                        BlocProvider.of<ProgressBloc>(
+                                            contextProgress)
+                                            .add(Progresschangeevent(
+                                            userhabitScreenController
+                                                .UserHabit.value));
+                                      } else if (val == int.parse(target)) {
+                                        userhabitScreenController
+                                            .UserHabit
+                                            .value[widget.category][i]
+                                        [widget.Habitname]['Progress']
+                                            .putIfAbsent(
+                                            DateFormat('dd-MM-yyyy')
+                                                .format(selectedDate),
+                                                () => 0);
+                                        userhabitScreenController
+                                            .UserHabit
+                                            .value[widget.category][i]
+                                        [widget.Habitname]['Progress']
+                                            .update(
+                                            DateFormat('dd-MM-yyyy')
+                                                .format(selectedDate),
+                                                (value) => int.parse(target));
+
+                                        userhabitScreenController
+                                            .UserHabit
+                                            .value[widget.category][i]
+                                        [widget.Habitname]
+                                        ['Completed']
+                                            .update(
+                                            DateFormat('dd-MM-yyyy')
+                                                .format(selectedDate),
+                                                (value) => true);
+
+                                        setState(() {
+                                          fancyCards = generateHabitCards(
+                                              userHabit:
+                                              userhabitScreenController
+                                                  .UserHabit.value,
+                                              state: whichState,
+                                              selectedDate: selectedDate);
+                                        });
+                                        Sharedpref().saveData(
+                                            userhabitScreenController
+                                                .UserHabit.value);
+                                        String Uid=await Sharedpref().getUid();
+                                        await Sharedpref().loadData().then((value) {
+                                          DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
+                                        });
+                                        BlocProvider.of<RoutineBloc>(
+                                            contextRoutineScreen)
+                                            .add(ListchangeEvent(
+                                            fancyCards: fancyCards,
+                                            state: whichState,
+                                            habits:
+                                            userhabitScreenController
+                                                .UserHabit.value));
+                                      }
+                                    }
+                                  }
+                                },
                                   onTap: () async {
+
                                     if (widget.value! < int.parse(target)) {
                                       int v = widget.value + 1;
                                       String Uid=await Sharedpref().getUid();
@@ -357,34 +473,128 @@ class _FancyCardState extends State<FancyCard> {
                                     'assets/ImagesY/RoutineScreen/Addition.svg',
                                     color: Theme.of(context)
                                         .scaffoldBackgroundColor,
+                                    width: 24,
                                   ))),
                           Padding(
                             padding:
-                                const EdgeInsets.only(top: 15.0, bottom: 10),
+                                const EdgeInsets.only(top: 22.0, bottom: 12),
                             child: SizedBox(
                               width: 57,
                               height: 24,
                               child: Center(
                                 child: FittedBox(
                                   fit: BoxFit.fitWidth,
-                                  child: Text(
-                                      textAlign: TextAlign.center,
-                                      '${widget.value}/$target\n${widget.units}',
-                                      style: TextStyle(
-                                        color: Theme.of(context)
-                                            .scaffoldBackgroundColor,
-                                        fontSize: 20,
-                                        fontFamily: 'DM Sans',
-                                        fontWeight: FontWeight.w500,
-                                        height: .8,
-                                        letterSpacing: 0.78,
-                                      )),
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Text(
+                                            textAlign: TextAlign.center,
+                                            '${widget.value}/$target',
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .scaffoldBackgroundColor,
+                                              fontSize: 20,
+                                              fontFamily: 'DM Sans',
+                                              fontWeight: FontWeight.w500,
+                                              height: .8,
+                                              letterSpacing: 0.78,
+                                            )),
+                                      ),
+                                      Text(
+                                          textAlign: TextAlign.center,
+                                          '${widget.units}',
+                                          style: TextStyle(
+                                            color: Theme.of(context)
+                                                .scaffoldBackgroundColor,
+                                            fontSize: 15,
+                                            fontFamily: 'DM Sans',
+                                            fontWeight: FontWeight.w500,
+                                            height: .8,
+                                            letterSpacing: 0.78,
+                                          )),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                           Center(
                               child: GestureDetector(
+                                  onLongPress: () async {
+                                    if (val != 0) {
+                                      int v = 0;
+
+                                      v = widget.value - 1<0?0:widget.value - 1;
+                                      for (int i = 0;
+                                      i <
+                                          userhabitScreenController
+                                              .UserHabit
+                                              .value[widget.category]
+                                              .length;
+                                      i++) {
+                                        if (userhabitScreenController
+                                            .UserHabit.value[widget.category][i]
+                                            .containsKey(widget.Habitname)) {
+                                          setState(() {
+                                            userhabitScreenController
+                                                .UserHabit
+                                                .value[widget.category]
+                                            [i][widget.Habitname]
+                                            ['Progress']
+                                                .putIfAbsent(
+                                                DateFormat('dd-MM-yyyy')
+                                                    .format(selectedDate),
+                                                    () => 0);
+                                            userhabitScreenController
+                                                .UserHabit
+                                                .value[widget.category]
+                                            [i][widget.Habitname]
+                                            ['Progress']
+                                                .update(
+                                                DateFormat('dd-MM-yyyy')
+                                                    .format(selectedDate),
+                                                    (value) => v);
+                                          });
+                                          setState(() {
+                                            fancyCards = generateHabitCards(
+                                                userHabit: userhabitScreenController
+                                                    .UserHabit.value,
+                                                state: whichState,
+                                                selectedDate: selectedDate);
+                                          });
+                                          String Uid=await Sharedpref().getUid();
+                                          Sharedpref().saveData(
+                                              userhabitScreenController
+                                                  .UserHabit.value);
+
+                                          await Sharedpref().loadData().then((value) {
+                                            DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
+
+
+
+
+                                          });
+
+                                          BlocProvider.of<RoutineBloc>(
+                                              contextRoutineScreen)
+                                              .add(ListchangeEvent(
+                                              fancyCards: fancyCards,
+                                              state: whichState,
+                                              habits: userhabitScreenController
+                                                  .UserHabit.value));
+                                          BlocProvider.of<ProgressBloc>(
+                                              contextProgress)
+                                              .add(Progresschangeevent(
+                                              userhabitScreenController
+                                                  .UserHabit.value));
+
+                                        }
+                                      }
+
+
+                                    }
+                                  },
                                   onTap: () async {
                                     if (val != 0) {
                                       int v = 0;
@@ -463,6 +673,7 @@ class _FancyCardState extends State<FancyCard> {
                                     'assets/ImagesY/RoutineScreen/Subtract.svg',
                                     color: Theme.of(context)
                                         .scaffoldBackgroundColor,
+                                    width: 24,
                                   ))),
                           SizedBox(
                             height: 50,
@@ -480,7 +691,7 @@ class _FancyCardState extends State<FancyCard> {
             children: [
               Container(
                 width: 365,
-                height: 32,
+                height: 40,
                 padding: const EdgeInsets.only(
                     top: 9, left: 32, right: 46, bottom: 9),
                 clipBehavior: Clip.antiAlias,
@@ -499,7 +710,7 @@ class _FancyCardState extends State<FancyCard> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         child: Row(
@@ -508,8 +719,8 @@ class _FancyCardState extends State<FancyCard> {
                               padding: const EdgeInsets.only(top: 1.0),
                               child: SvgPicture.asset(
                                 "assets/ImagesY/RoutineScreen/TagSmallIcon.svg",
-                                width: 10,
-                                height: 10,
+                                width: 14,
+                                height: 14,
                               ),
                             ),
                             const SizedBox(width: 5),
@@ -518,7 +729,7 @@ class _FancyCardState extends State<FancyCard> {
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 10,
+                                fontSize: 14,
                                 fontFamily: 'DM Sans',
                                 fontWeight: FontWeight.w500,
                                 height: 0.12,
@@ -529,33 +740,38 @@ class _FancyCardState extends State<FancyCard> {
                         ),
                       ),
                       const SizedBox(width: 20),
-                      Container(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 1.0),
-                              child: SvgPicture.asset(
-                                "assets/ImagesY/RoutineScreen/AddSubtask.svg",
-                                width: 10,
-                                height: 10,
+                      GestureDetector(
+                        onTap: (){
+                          HapticFeedback.lightImpact();
+                        },
+                        child: Container(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 1.0),
+                                child: SvgPicture.asset(
+                                  "assets/ImagesY/RoutineScreen/AddSubtask.svg",
+                                  width: 14,
+                                  height: 14,
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              '${widget.Subtask.length} sub task',
-                              style:  TextStyle(
-                                color: (widget.Subtask.length<=0)?Color(0x7F1F1F1F):Colors.black,
-                                fontSize: 10,
-                                fontFamily: 'DM Sans',
-                                fontWeight: FontWeight.w500,
-                                height: 0.12,
-                                letterSpacing: 0.30,
+                              const SizedBox(width: 5),
+                              Text(
+                                '${widget.Subtask.length} sub task',
+                                style:  TextStyle(
+                                  color: (widget.Subtask.length<=0)?Color(0x7F1F1F1F):Colors.black,
+                                  fontSize: 14,
+                                  fontFamily: 'DM Sans',
+                                  fontWeight: FontWeight.w500,
+                                  height: 0.12,
+                                  letterSpacing: 0.30,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -586,6 +802,7 @@ class _FancyCardState extends State<FancyCard> {
                                 context: context,
                                 builder: (context) {
                                   return LogsAdition(callback: (String log) async {
+                                    HapticFeedback.lightImpact();
                                     for (int i = 0; i < userhabitScreenController.UserHabit.value[widget.category].length; i++){
 
                                       if (userhabitScreenController

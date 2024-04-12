@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habitup/CommonMethods/Variable.dart';
+import 'package:HabitUp/CommonMethods/Variable.dart';
 import 'package:intl/intl.dart';
 
 import '../bottom_sheet_bloc.dart';

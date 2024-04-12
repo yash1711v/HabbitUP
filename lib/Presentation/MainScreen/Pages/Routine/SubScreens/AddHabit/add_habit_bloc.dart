@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:habitup/CommonMethods/Methods.dart';
+import 'package:HabitUp/CommonMethods/Methods.dart';
 import 'package:meta/meta.dart';
 
 part 'add_habit_event.dart';

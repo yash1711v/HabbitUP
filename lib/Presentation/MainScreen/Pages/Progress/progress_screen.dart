@@ -7,11 +7,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:habitup/CommonMethods/Variable.dart';
-import 'package:habitup/Presentation/MainScreen/Pages/Progress/ViewAllScreen/view_all_screen.dart';
-import 'package:habitup/Presentation/MainScreen/Pages/Progress/progress_bloc.dart';
-import 'package:habitup/Presentation/MainScreen/Pages/Routine/routine_bloc.dart';
-import 'package:habitup/Widgets/DialogBox/MonthPickerDialogBox/month_picker_dialog_box.dart';
+import 'package:HabitUp/CommonMethods/Variable.dart';
+import 'package:HabitUp/Presentation/MainScreen/Pages/Progress/ViewAllScreen/view_all_screen.dart';
+import 'package:HabitUp/Presentation/MainScreen/Pages/Progress/progress_bloc.dart';
+import 'package:HabitUp/Presentation/MainScreen/Pages/Routine/routine_bloc.dart';
+import 'package:HabitUp/Widgets/DialogBox/MonthPickerDialogBox/month_picker_dialog_box.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -126,25 +126,24 @@ class _ProgressScreenState extends State<ProgressScreen> {
                             return ListView.builder(
                               scrollDirection: Axis.horizontal,
                               shrinkWrap: true,
-                              itemCount: TotalNumberOfmethods(
-                                              userhabitScreenController
-                                                  .UserHabit.value)
+                              itemCount: Habits
                                           .length <=
                                       0
                                   ? 10
-                                  : TotalNumberOfmethods(userhabitScreenController
-                                          .UserHabit.value)
+                                  : Habits
                                       .length,
                               itemBuilder: (BuildContext context, int index) {
-                                updateStreak(TotalNumberOfmethods(
-                                        userhabitScreenController
-                                            .UserHabit.value)[nameOfHabits
-                                        .elementAt(index)]['Progress'])
-                                    .then((value) {
-                                  setState(() {
-                                    Streak = value.toString();
-                                  });
-                                });
+                               // Future.delayed(Duration(milliseconds: 700)).then((value) {
+                               //   updateStreak(TotalNumberOfmethods(
+                               //       userhabitScreenController
+                               //           .UserHabit.value)[nameOfHabits
+                               //       .elementAt(index)]['Progress'])
+                               //       .then((value) {
+                               //     setState(() {
+                               //       Streak = value.toString();
+                               //     });
+                               //   });
+                               // });
                                 return Padding(
                                     padding: const EdgeInsets.only(left: 10),
                                     child: Habits.length <= 0
@@ -398,202 +397,202 @@ class _ProgressScreenState extends State<ProgressScreen> {
                     ),
                   ),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 20.0, left: 15, right: 15),
-                //   child: Container(
-                //     width: MediaQuery.of(context).size.width,
-                //     height: 282,
-                //     decoration: ShapeDecoration(
-                //       color: Theme.of(context).inputDecorationTheme.fillColor,
-                //       shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(20),
-                //       ),
-                //     ),
-                //     child: Stack(
-                //       children: [
-                //         Padding(
-                //           padding: EdgeInsets.only(top: 7.0),
-                //           child: Row(
-                //             mainAxisAlignment: MainAxisAlignment.center,
-                //             children: [
-                //               IconButton(
-                //                 onPressed: () {
-                //                   setState(() {
-                //                     if (weekNumber > 1) {
-                //                       weekNumber = weekNumber - 1;
-                //                       setState(() {
-                //                         chartValues = generateWeekWiseDates(
-                //                             month,
-                //                             'week ${weekNumber}',
-                //                             TotalNumberOfmethods(
-                //                                 userhabitScreenController
-                //                                     .UserHabit.value),
-                //                             habitname);
-                //                       });
-                //                     }
-                //                   });
-                //                 },
-                //                 icon: Icon(
-                //                   Icons.arrow_back_ios_rounded,
-                //                   color: Theme.of(contextProgress)
-                //                       .textTheme
-                //                       .titleMedium
-                //                       ?.color,
-                //                 ),
-                //               ),
-                //               Padding(
-                //                 padding: EdgeInsets.symmetric(horizontal: 15.0),
-                //                 child: GestureDetector(
-                //                   onTap: () {
-                //                     showDialog(
-                //                       context: context,
-                //                       builder: (context) {
-                //                         return MonthDialogPicker(
-                //                           callback: (value) {
-                //                             setState(() {
-                //                               month = value;
-                //                             });
-                //                             setState(() {
-                //                               chartValues = generateWeekWiseDates(
-                //                                   value,
-                //                                   'week ${weekNumber}',
-                //                                   TotalNumberOfmethods(
-                //                                       userhabitScreenController
-                //                                           .UserHabit.value),
-                //                                   habitname);
-                //                             });
-                //                           },
-                //                           month: _monthNameinShort(month),
-                //                         ); // Show the dialog
-                //                       },
-                //                     );
-                //                   },
-                //                   child: Text(
-                //                     "${month}, Week $weekNumber",
-                //                     style: TextStyle(
-                //                         color: Theme.of(contextProgress)
-                //                             .textTheme
-                //                             .titleMedium
-                //                             ?.color),
-                //                   ),
-                //                 ),
-                //               ),
-                //               IconButton(
-                //                 onPressed: () {
-                //                   if (weekNumber <
-                //                       getTotalWeeksInMonth(DateTime.now().year,
-                //                           DateTime.now().month)) {
-                //                     setState(() {
-                //                       weekNumber = weekNumber + 1;
-                //                     });
-                //                   }
-                //                   setState(() {
-                //                     chartValues = generateWeekWiseDates(
-                //                         month,
-                //                         'week ${weekNumber}',
-                //                         TotalNumberOfmethods(
-                //                             userhabitScreenController
-                //                                 .UserHabit.value),
-                //                         habitname);
-                //                   });
-                //
-                //                   print(chartValues);
-                //                 },
-                //                 icon: Icon(
-                //                   Icons.arrow_forward_ios_rounded,
-                //                   color: Theme.of(contextProgress)
-                //                       .textTheme
-                //                       .titleMedium
-                //                       ?.color,
-                //                 ),
-                //               ),
-                //             ],
-                //           ),
-                //         ),
-                //         Padding(
-                //           padding: EdgeInsets.only(top: 80.0),
-                //           child: BarChart(BarChartData(
-                //               gridData: const FlGridData(
-                //                 show: false,
-                //               ),
-                //               borderData: FlBorderData(show: false),
-                //               titlesData: const FlTitlesData(
-                //                   show: true,
-                //                   topTitles: AxisTitles(
-                //                     sideTitles: SideTitles(showTitles: false),
-                //                   ),
-                //                   rightTitles: AxisTitles(
-                //                     sideTitles: SideTitles(showTitles: false),
-                //                   ),
-                //                   leftTitles: AxisTitles(
-                //                     sideTitles: SideTitles(showTitles: false),
-                //                   ),
-                //                   bottomTitles: AxisTitles(
-                //                     sideTitles: SideTitles(
-                //                         showTitles: true,
-                //                         getTitlesWidget: getBottomTiles),
-                //                   )),
-                //               barGroups: chartValues
-                //                   .asMap()
-                //                   .entries
-                //                   .map((entry) =>
-                //                       BarChartGroupData(x: entry.key, barRods: [
-                //                         BarChartRodData(
-                //                             toY: entry.value.toDouble(),
-                //                             color: Theme.of(contextProgress)
-                //                                 .textTheme
-                //                                 .titleMedium
-                //                                 ?.color,
-                //                             width: 35.51,
-                //                             borderRadius: const BorderRadius.all(
-                //                                 Radius.circular(10)),
-                //                             backDrawRodData:
-                //                                 BackgroundBarChartRodData(
-                //                               show: false,
-                //                             ))
-                //                       ]))
-                //                   .toList(),
-                //               barTouchData: BarTouchData(
-                //                 touchTooltipData: BarTouchTooltipData(
-                //                   tooltipRoundedRadius: 8,
-                //                   getTooltipItem:
-                //                       (group, groupIndex, rod, rodIndex) {
-                //                     late String weekDay;
-                //                     switch (group.x.toInt()) {
-                //                       case 0:
-                //                         weekDay = 'Mon';
-                //                         break;
-                //                       case 1:
-                //                         weekDay = 'Tue';
-                //                         break;
-                //                       case 2:
-                //                         weekDay = 'Wed';
-                //                         break;
-                //                       case 3:
-                //                         weekDay = 'Thu';
-                //                         break;
-                //                       case 4:
-                //                         weekDay = 'Fri';
-                //                         break;
-                //                       case 5:
-                //                         weekDay = 'Sat';
-                //                         break;
-                //                       case 6:
-                //                         weekDay = 'Sun';
-                //                         break;
-                //                     }
-                //                     return BarTooltipItem(
-                //                       '$weekDay: ${group.barRods[rodIndex].toY.round().toString()}',
-                //                       const TextStyle(color: Colors.white),
-                //                     );
-                //                   },
-                //                 ),
-                //               ))),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0, left: 15, right: 15),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 282,
+                    decoration: ShapeDecoration(
+                      color: Theme.of(context).inputDecorationTheme.fillColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    child: Stack(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 7.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    if (weekNumber > 1) {
+                                      weekNumber = weekNumber - 1;
+                                      setState(() {
+                                        chartValues = generateWeekWiseDates(
+                                            month,
+                                            'week ${weekNumber}',
+                                            TotalNumberOfmethods(
+                                                userhabitScreenController
+                                                    .UserHabit.value),
+                                            habitname);
+                                      });
+                                    }
+                                  });
+                                },
+                                icon: Icon(
+                                  Icons.arrow_back_ios_rounded,
+                                  color: Theme.of(contextProgress)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.color,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 15.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return MonthDialogPicker(
+                                          callback: (value) {
+                                            setState(() {
+                                              month = value;
+                                            });
+                                            setState(() {
+                                              chartValues = generateWeekWiseDates(
+                                                  value,
+                                                  'week ${weekNumber}',
+                                                  TotalNumberOfmethods(
+                                                      userhabitScreenController
+                                                          .UserHabit.value),
+                                                  habitname);
+                                            });
+                                          },
+                                          month: _monthNameinShort(month),
+                                        ); // Show the dialog
+                                      },
+                                    );
+                                  },
+                                  child: Text(
+                                    "${month}, Week $weekNumber",
+                                    style: TextStyle(
+                                        color: Theme.of(contextProgress)
+                                            .textTheme
+                                            .titleMedium
+                                            ?.color),
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  if (weekNumber <
+                                      getTotalWeeksInMonth(DateTime.now().year,
+                                          DateTime.now().month)) {
+                                    setState(() {
+                                      weekNumber = weekNumber + 1;
+                                    });
+                                  }
+                                  setState(() {
+                                    chartValues = generateWeekWiseDates(
+                                        month,
+                                        'week ${weekNumber}',
+                                        TotalNumberOfmethods(
+                                            userhabitScreenController
+                                                .UserHabit.value),
+                                        habitname);
+                                  });
+
+                                  print(chartValues);
+                                },
+                                icon: Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  color: Theme.of(contextProgress)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.color,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 80.0),
+                          child: BarChart(BarChartData(
+                              gridData: const FlGridData(
+                                show: false,
+                              ),
+                              borderData: FlBorderData(show: false),
+                              titlesData: const FlTitlesData(
+                                  show: true,
+                                  topTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false),
+                                  ),
+                                  rightTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false),
+                                  ),
+                                  leftTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false),
+                                  ),
+                                  bottomTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                        showTitles: true,
+                                        getTitlesWidget: getBottomTiles),
+                                  )),
+                              barGroups: chartValues
+                                  .asMap()
+                                  .entries
+                                  .map((entry) =>
+                                      BarChartGroupData(x: entry.key, barRods: [
+                                        BarChartRodData(
+                                            toY: entry.value.toDouble(),
+                                            color: Theme.of(contextProgress)
+                                                .textTheme
+                                                .titleMedium
+                                                ?.color,
+                                            width: 35.51,
+                                            borderRadius: const BorderRadius.all(
+                                                Radius.circular(10)),
+                                            backDrawRodData:
+                                                BackgroundBarChartRodData(
+                                              show: false,
+                                            ))
+                                      ]))
+                                  .toList(),
+                              barTouchData: BarTouchData(
+                                touchTooltipData: BarTouchTooltipData(
+                                  tooltipRoundedRadius: 8,
+                                  getTooltipItem:
+                                      (group, groupIndex, rod, rodIndex) {
+                                    late String weekDay;
+                                    switch (group.x.toInt()) {
+                                      case 0:
+                                        weekDay = 'Mon';
+                                        break;
+                                      case 1:
+                                        weekDay = 'Tue';
+                                        break;
+                                      case 2:
+                                        weekDay = 'Wed';
+                                        break;
+                                      case 3:
+                                        weekDay = 'Thu';
+                                        break;
+                                      case 4:
+                                        weekDay = 'Fri';
+                                        break;
+                                      case 5:
+                                        weekDay = 'Sat';
+                                        break;
+                                      case 6:
+                                        weekDay = 'Sun';
+                                        break;
+                                    }
+                                    return BarTooltipItem(
+                                      '$weekDay: ${group.barRods[rodIndex].toY.round().toString()}',
+                                      const TextStyle(color: Colors.white),
+                                    );
+                                  },
+                                ),
+                              ))),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 30.0),
                   child: Container(
@@ -730,7 +729,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                               Get.to(ViewAllScreen(habitName: nameOfHabits.elementAt(index),Habits: Habits,));
                                               },
                                               child: Padding(
-                                                padding: const EdgeInsets.only(left: 250),
+                                                padding: const EdgeInsets.only(left: 240),
                                                 child: Text(
                                                   'View all',
                                                   style: TextStyle(
@@ -982,8 +981,7 @@ List<double> generateWeekWiseDates(String monthName, String week,
                   completed++;
 
                   valueDate.forEach((keyDate, valueDate) {
-                    if (valueHabit.containsKey(
-                        DateFormat('dd-MM-yyyy').format(DateTime.now()))) {
+                    if (weekProgress.containsKey(DateFormat('dd-MM-yyyy').format(DateTime.now()))) {
                       weekProgress.update(
                           DateFormat('dd-MM-yyyy').format(DateTime.now()),
                           (value) => double.parse(completed.toString()));

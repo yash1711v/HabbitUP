@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:habitup/LocalStorage/SharedPref/Sharedpref.dart';
-import 'package:habitup/MyTheme/theme_event.dart';
+import 'package:HabitUp/LocalStorage/SharedPref/Sharedpref.dart';
+import 'package:HabitUp/MyTheme/theme_event.dart';
 import 'package:meta/meta.dart';
 
 import 'ThememSelectionWidget.dart';

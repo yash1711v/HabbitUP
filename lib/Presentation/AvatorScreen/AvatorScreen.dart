@@ -10,8 +10,8 @@ import 'package:fluttermoji/fluttermojiCircleAvatar.dart';
 import 'package:fluttermoji/fluttermojiCustomizer.dart';
 import 'package:fluttermoji/fluttermojiThemeData.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:habitup/LocalStorage/SharedPref/Sharedpref.dart';
-import 'package:habitup/Presentation/AvatorScreen/avator_bloc.dart';
+import 'package:HabitUp/LocalStorage/SharedPref/Sharedpref.dart';
+import 'package:HabitUp/Presentation/AvatorScreen/avator_bloc.dart';
 
 import '../../Widgets/edit_avator.dart';
 

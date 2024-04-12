@@ -1,10 +1,12 @@
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:habitup/CommonMethods/Methods.dart';
-import 'package:habitup/LocalStorage/SharedPref/Sharedpref.dart';
+import 'package:HabitUp/CommonMethods/Methods.dart';
+import 'package:HabitUp/LocalStorage/SharedPref/Sharedpref.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'CommonMethods/Variable.dart';
 import 'MyTheme/MyThemeData.dart';
@@ -13,6 +15,7 @@ import 'MyTheme/theme_event.dart';
 import 'Routes/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'background_services/backservices.dart';
 import 'firebase_options.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
@@ -28,17 +31,37 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  PermissionStatus status2=await Permission.notification.request();
+
   tz.initializeTimeZones();
   tz.setLocalLocation(tz.getLocation('Asia/Kolkata'));
   await Sharedpref().loadData().then((value) {
     print(value.length);
     userhabitScreenController.UserHabit.value=value;
   });
+  await initializeService();
+  // await AndroidAlarmManager.initialize();
+  // final int helloAlarmID = 200;
+  // await AndroidAlarmManager.periodic(
+  //     const Duration(seconds: 1), helloAlarmID, SettingNotification);
+
+
   runApp(BlocProvider(
     create: (context) => ThemeBloc(),
     child: MyApp(),
   ));
 }
+
+// @pragma('vm:entry-point')
+// Future<void> SettingNotification() async {
+//   print("helooo");
+//   DateTime now=DateTime.now();
+//   bool isMidnight = now.hour == 0 && now.minute == 0;
+//   print("midnight --------> $isMidnight");
+//   if(isMidnight) {
+//
+//   }
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

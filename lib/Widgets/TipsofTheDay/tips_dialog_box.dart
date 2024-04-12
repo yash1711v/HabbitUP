@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:habitup/Widgets/TipsofTheDay/tips_bloc.dart';
+import 'package:HabitUp/Widgets/TipsofTheDay/tips_bloc.dart';
 
 class Tips extends StatelessWidget {
   Tips({super.key});

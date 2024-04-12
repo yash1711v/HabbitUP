@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:habitup/Presentation/SignupScreens/signup_bloc.dart';
+import 'package:HabitUp/Presentation/SignupScreens/signup_bloc.dart';
 
 import '../../LocalStorage/SharedPref/Sharedpref.dart';
 

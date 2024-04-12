@@ -4,8 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttermoji/fluttermojiCircleAvatar.dart';
-import 'package:habitup/FirebaseFunctionality/AuthenticationFeatures.dart';
-import 'package:habitup/LocalStorage/SharedPref/Sharedpref.dart';
+import 'package:get/get.dart';
+import 'package:HabitUp/FirebaseFunctionality/AuthenticationFeatures.dart';
+import 'package:HabitUp/LocalStorage/SharedPref/Sharedpref.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -31,11 +32,11 @@ class _MoreScreenState extends State<MoreScreen> {
     getEmailandName();
   }
   Future<void> privacyScren() async {
-    const url = 'https://sites.google.com/view/habitup-privacy-policy/home'; // Replace with your privacy policy URL
+    const url = 'https://sites.google.com/view/HabitUp-privacy-policy/home'; // Replace with your privacy policy URL
     await launchUrl(Uri.parse(url));
   }
   Future<void> RateAndShareApp() async {
-    const url = 'https://play.google.com/store/apps/details?id=com.habitapps.habitup'; // Replace with your privacy policy URL
+    const url = 'https://play.google.com/store/apps/details?id=com.habitapps.HabitUp'; // Replace with your privacy policy URL
     await launchUrl(Uri.parse(url));
   }
   getEmailandName() async {
@@ -52,7 +53,7 @@ class _MoreScreenState extends State<MoreScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Uid.isNotEmpty && Uid!=null?Column(
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 80.0),
@@ -136,7 +137,7 @@ class _MoreScreenState extends State<MoreScreen> {
                         'Notifications',
                         style: TextStyle(
                           color: Colors.grey,
-                          fontSize: 12,
+                          fontSize: 16,
                           fontFamily: 'DM Sans',
                           fontWeight: FontWeight.w400,
                           height: 0.10,
@@ -160,7 +161,7 @@ class _MoreScreenState extends State<MoreScreen> {
                           'Notifications',
                           style: TextStyle(
                             color: Theme.of(context).textTheme.titleMedium?.color,
-                            fontSize: 16,
+                            fontSize: 20,
                             fontFamily: 'DM Sans',
                             fontWeight: FontWeight.w400,
                             height: 0.07,
@@ -231,7 +232,7 @@ class _MoreScreenState extends State<MoreScreen> {
                             RateAndShareApp();
                           },
                           child: Text(
-                            'Rate Habitup 5 Stars',
+                            'Rate HabitUp 5 Stars',
                             style: TextStyle(
                               color: Theme.of(context).textTheme.titleMedium?.color,
                               fontSize: 20,
@@ -260,7 +261,7 @@ class _MoreScreenState extends State<MoreScreen> {
                         child: TextButton(
 
                           onPressed: () async {
-                            final urlI='https://play.google.com/store/apps/details?id=com.habitapps.habitup';
+                            final urlI='https://play.google.com/store/apps/details?id=com.habitapps.HabitUp';
                             try {
                               await Share.share(
                                 'Check out this app: $urlI',
@@ -353,7 +354,18 @@ class _MoreScreenState extends State<MoreScreen> {
                         padding: const EdgeInsets.only(left: 5.0),
                         child: TextButton(
                           onPressed: (){
-                            AuthenticationFeatures().signout();
+                            AuthenticationFeatures().signout().then((value) async {
+                              print("logout clicked");
+                              await Sharedpref().setUsername("User");
+                              await Sharedpref().setDetails(false);
+                              await Sharedpref().setEmail("");
+                              await Sharedpref().setUid("");
+                              await Sharedpref().setPass("");
+                              await Sharedpref().setFeelings("");
+                              await  Sharedpref().setGuest(false);
+                              Sharedpref().saveData({});
+                              Navigator.of(context).pushNamedAndRemoveUntil('/LoginScreen', (route) => false);
+                            });
                           },
                          child: Text(
                             'Logout',
@@ -375,6 +387,149 @@ class _MoreScreenState extends State<MoreScreen> {
               ],
             ),
           )
+        ],
+      ):Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 80.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    HapticFeedback.lightImpact();
+                    EditAvator(context);
+                  },
+                  child: FluttermojiCircleAvatar(
+                    radius: 70,
+                    backgroundColor:
+                    Theme.of(context).textTheme.titleMedium?.color,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0),
+            child: Container(
+              width: 400,
+              height: 14,
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'You are not logged in yet. Do it now to save your streak.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                      fontFamily: 'DM Sans',
+                      fontWeight: FontWeight.w400,
+                      height: 0.10,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  minimumSize: Size(327, 61),
+                   backgroundColor:  Theme.of(context).textTheme.titleMedium?.color,
+                ),
+                onPressed: (){
+                  Navigator.of(context).pushNamed('/SignupScreen');
+                }, child: Text("Sign Up",
+              style: TextStyle(
+                color: Theme.of(context).textTheme.titleMedium?.color==Colors.white?Colors.black:Colors.white,
+                fontSize: 16,
+                fontFamily: 'DM Sans',
+                fontWeight: FontWeight.w500,
+                height: 0.07,
+              ),
+
+            )),
+          ),
+         Padding(
+           padding: const EdgeInsets.only(top: 10.0),
+           child: Row(
+             mainAxisAlignment: MainAxisAlignment.center,
+             children: [
+               Text(
+                 'Already a member? ',
+                 style: TextStyle(
+                   color: Theme.of(context).textTheme.titleMedium?.color,
+                   fontSize: 14,
+                   fontFamily: 'DM Sans',
+                   fontWeight: FontWeight.w400,
+                   height: 0,
+                   letterSpacing: 0.42,
+                 ),
+               ),
+
+               GestureDetector(
+                 onTap: (){
+                   Navigator.of(context).pushNamed('/LoginScreen');
+
+                 },
+                 child: Text(
+                   ' Log In',
+                   style: TextStyle(
+                     color: Theme.of(context).textTheme.titleMedium?.color,
+                     fontSize: 16,
+                     fontFamily: 'DM Sans',
+                     fontWeight: FontWeight.w700,
+                     height: 0,
+                   ),
+                 ),
+               ),
+
+             ],
+           ),
+         ),
+
+
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0,left: 50,right: 50),
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  minimumSize: Size(327, 61),
+                  backgroundColor:  Theme.of(context).textTheme.titleMedium?.color,
+                ),
+                onPressed: () async {
+                    AuthenticationFeatures().signInWithGoogle(context,await Sharedpref().getGuest());
+
+                }, child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                  SvgPicture.asset("assets/ImagesY/GoogleLogo.svg"),
+                    SizedBox(width: 10,),
+                    Text("Sign Up With Google",
+                                  style: TextStyle(
+                    color: Theme.of(context).textTheme.titleMedium?.color==Colors.white?Colors.black:Colors.white,
+                    fontSize: 16,
+                    fontFamily: 'DM Sans',
+                    fontWeight: FontWeight.w500,
+                    height: 0.07,
+                                  ),
+
+                                ),
+                  ],
+                )),
+          ),
         ],
       ),
     );

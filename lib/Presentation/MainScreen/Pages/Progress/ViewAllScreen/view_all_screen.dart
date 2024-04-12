@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:habitup/FirebaseFunctionality/DatabaseFeatures.dart';
-import 'package:habitup/LocalStorage/SharedPref/Sharedpref.dart';
-import 'package:habitup/Widgets/DialogBox/Logsadition/logs_adition.dart';
+import 'package:HabitUp/FirebaseFunctionality/DatabaseFeatures.dart';
+import 'package:HabitUp/LocalStorage/SharedPref/Sharedpref.dart';
+import 'package:HabitUp/Widgets/DialogBox/Logsadition/logs_adition.dart';
 
 import '../../../../../CommonMethods/Variable.dart';
 import '../../Routine/SubScreens/stacking_cards.dart';
@@ -63,19 +63,22 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
 
                   Padding(
                     padding: const EdgeInsets.only(top: 45.0,),
-                    child: Text(widget.habitName,
-                        style: TextStyle(
-                      color: Color(0xFF1F1F1F),
-                      fontSize: 30,
-                      fontFamily: 'DM Sans',
-                      fontWeight: FontWeight.bold,
-                      height: 0,
-                          decoration: TextDecoration.none
-                    ),),
+                    child: SizedBox(
+                      width: 300,
+                      child: Text(widget.habitName,
+                          style: TextStyle(
+                        color: Color(0xFF1F1F1F),
+                        fontSize: 30,
+                        fontFamily: 'DM Sans',
+                        fontWeight: FontWeight.bold,
+                        height: 0,
+                            decoration: TextDecoration.none
+                      ),),
+                    ),
                   ),
 
                   Padding(
-                    padding: const EdgeInsets.only(top: 45.0,left: 175.0),
+                    padding: const EdgeInsets.only(top: 45.0,),
                     child: SvgPicture.asset(widget.Habits[widget.habitName]['icon'],
                     width: 30,
                     height: 30,

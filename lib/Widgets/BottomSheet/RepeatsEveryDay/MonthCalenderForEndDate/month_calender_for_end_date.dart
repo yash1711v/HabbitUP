@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habitup/CommonMethods/Variable.dart';
-import 'package:habitup/Widgets/BottomSheet/RepeatsEveryDay/bottom_sheet_bloc.dart';
+import 'package:HabitUp/CommonMethods/Variable.dart';
+import 'package:HabitUp/Widgets/BottomSheet/RepeatsEveryDay/bottom_sheet_bloc.dart';
+
+import '../../../../CommonMethods/Variable.dart';
+import '../bottom_sheet_bloc.dart';
 
 class MonthlyGridForEndDate extends StatelessWidget {
   final int monthIndex;

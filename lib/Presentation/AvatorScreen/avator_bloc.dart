@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:habitup/LocalStorage/SharedPref/Sharedpref.dart';
+import 'package:HabitUp/LocalStorage/SharedPref/Sharedpref.dart';
 import 'package:meta/meta.dart';
 
 part 'avator_event.dart';

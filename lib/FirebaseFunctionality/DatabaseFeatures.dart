@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:habitup/CommonMethods/Variable.dart';
-import 'package:habitup/LocalStorage/SharedPref/Sharedpref.dart';
+import 'package:HabitUp/CommonMethods/Variable.dart';
+import 'package:HabitUp/LocalStorage/SharedPref/Sharedpref.dart';
 
 class DatabaseFeatures{
   DatabaseReference databaseReference = FirebaseDatabase.instance.reference().child("users");

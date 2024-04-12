@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habitup/Presentation/MainScreen/Pages/More/more_bloc.dart';
-import 'package:habitup/Presentation/MainScreen/Pages/Progress/progress_bloc.dart';
-import 'package:habitup/Presentation/MainScreen/Pages/Progress/progress_screen.dart';
-import 'package:habitup/Presentation/MainScreen/Pages/Routine/routine_bloc.dart';
-import 'package:habitup/Presentation/MainScreen/main_screen_bloc.dart';
+import 'package:HabitUp/Presentation/MainScreen/Pages/More/more_bloc.dart';
+import 'package:HabitUp/Presentation/MainScreen/Pages/Progress/progress_bloc.dart';
+import 'package:HabitUp/Presentation/MainScreen/Pages/Progress/progress_screen.dart';
+import 'package:HabitUp/Presentation/MainScreen/Pages/Routine/routine_bloc.dart';
+import 'package:HabitUp/Presentation/MainScreen/main_screen_bloc.dart';
 
 
 import '../../CommonMethods/Variable.dart';

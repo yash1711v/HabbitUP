@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:habitup/LocalStorage/SharedPref/Sharedpref.dart';
+import 'package:HabitUp/LocalStorage/SharedPref/Sharedpref.dart';
 import '../CommonMethods/Variable.dart';
 import '../Presentation/MainScreen/Pages/Routine/SubScreens/stacking_cards.dart';
 import 'DatabaseFeatures.dart';
@@ -27,14 +27,19 @@ class AuthenticationFeatures {
 
 
       if (Guest) {
+        await Sharedpref().setEmail(email.toString().trim());
+        await Sharedpref().setUid(value1.user!.uid.toString());
+        await Sharedpref().setPass(password);
         services.writeToDatabase(
             Uid: await Sharedpref().getUid(),
             username: await Sharedpref().getUsername(),
             Email: await Sharedpref().getEmail(),
-            Password: await Sharedpref().getPass(),
+            Password: password,
             Feeling: await Sharedpref().getFeelings(),
             context: context, UserHabits: {});
-        Future.delayed(Duration(milliseconds: 1000)).then((value) {
+        Future.delayed(Duration(milliseconds: 1000)).then((value) async {
+          DatabaseFeatures().updateUserhabits(UserHabits: await Sharedpref().loadData(), Uid: await Sharedpref().getUid());
+          Sharedpref().setGuest(false);
           Navigator.of(context).popAndPushNamed("/MainScreen");
         });
       } else {
@@ -152,16 +157,21 @@ class AuthenticationFeatures {
           Sharedpref().setUsername(username);
           Sharedpref().setUid(value.user!.uid);
       if (Guest) {
+        await Sharedpref().setEmail(email.toString().trim());
+        await Sharedpref().setUid(value.user!.uid.toString());
+        await Sharedpref().setPass(password);
         services.writeToDatabase(
             Uid: await Sharedpref().getUid(),
-      username: await Sharedpref().getUsername(),
-      Email: await Sharedpref().getEmail(),
-      Password: await Sharedpref().getPass(),
-      Feeling: await Sharedpref().getFeelings(),
-      context: context, UserHabits: {});
-      Future.delayed(Duration(milliseconds: 1000)).then((value) {
-      Navigator.of(context).popAndPushNamed("/MainScreen");
-      });
+            username: await Sharedpref().getUsername(),
+            Email: await Sharedpref().getEmail(),
+            Password: password,
+            Feeling: await Sharedpref().getFeelings(),
+            context: context, UserHabits: {});
+        Future.delayed(Duration(milliseconds: 1000)).then((value) async {
+          DatabaseFeatures().updateUserhabits(UserHabits: await Sharedpref().loadData(), Uid: await Sharedpref().getUid());
+          Sharedpref().setGuest(false);
+          Navigator.of(context).popAndPushNamed("/MainScreen");
+        });
       } else {
         services.writeToDatabase(
             Uid: await Sharedpref().getUid(),
@@ -223,6 +233,11 @@ class AuthenticationFeatures {
 
           if (isGuest) {
             // if guest then adding the guest data to the firebase
+            print("Is Guest");
+            await Sharedpref().setEmail(value1.email.toString().trim());
+            await Sharedpref().setUid(value1.id.toString());
+            await Sharedpref().setUsername(value1.displayName.toString());
+            await Sharedpref().setPass(" ");
             services.writeToDatabase(
                 Uid: await Sharedpref().getUid(),
                 username: await Sharedpref().getUsername(),
@@ -230,7 +245,9 @@ class AuthenticationFeatures {
                 Password: " ",
                 Feeling: await Sharedpref().getFeelings(),
                 context: context, UserHabits: {});
-            Future.delayed(Duration(milliseconds: 1000)).then((value) {
+            Future.delayed(Duration(milliseconds: 1000)).then((value) async {
+              DatabaseFeatures().updateUserhabits(UserHabits: await Sharedpref().loadData(), Uid: await Sharedpref().getUid());
+              Sharedpref().setGuest(false);
               Navigator.of(context).popAndPushNamed("/MainScreen");
             });
           } else {
@@ -343,15 +360,7 @@ class AuthenticationFeatures {
 
   Future signout() async {
     try {
-      print("logout clicked");
-      await Sharedpref().setUsername("User");
-      await Sharedpref().setDetails(false);
-      await Sharedpref().setEmail("");
-      await Sharedpref().setUid("");
-      await Sharedpref().setPass("");
-      await Sharedpref().setFeelings("");
-      await  Sharedpref().setGuest(true);
-        Sharedpref().saveData({});
+
       return await _auth.signOut(); //signout method of Firebase Auth
     } catch (e) {
       print(e.toString());
