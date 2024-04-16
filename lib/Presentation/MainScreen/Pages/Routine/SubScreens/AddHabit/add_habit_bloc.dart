@@ -92,6 +92,19 @@ class AddHabitBloc extends Bloc<AddHabitEvent, AddHabitState> {
          });
         emit(OthersState(isOthersOpened: event.OthersOpened, Habitnames: Habitnames, HabitIcons: HabitIcons));
       }
+       if(event is CustomEvent){
+         List<String> Habitnames=[];
+         List<String> HabitIcons=[];
+         Methods().Habbits["Custom"]?.forEach((key1, value) {
+           Habitnames.add(key1);
+           Methods().Habbits["Custom"]![key1]!.forEach((key, value) {
+             if(key=="Icon") {
+               HabitIcons.add(Methods().Habbits["Custom"]![key1]![key]);
+             }
+           });
+         });
+        emit(CustomState(isCustomOpened: event.CustomOpened, Habitnames: Habitnames, HabitIcons: HabitIcons));
+      }
 
     });
   }

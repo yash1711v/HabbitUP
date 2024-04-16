@@ -1,4 +1,4 @@
-
+import 'package:HabitUp/Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/CustomHabit/custom_habit_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:HabitUp/Presentation/AvatorScreen/AvatorScreen.dart';
@@ -10,6 +10,7 @@ import '../Presentation/FeelingsSelection/FeelingSelection.dart';
 import '../Presentation/FeelingsSelection/feelings_selection_bloc.dart';
 import '../Presentation/LogInScreenY/LogInScreen.dart';
 import '../Presentation/LogInScreenY/login_bloc.dart';
+import '../Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/CustomHabit/CustomHabitAdission.dart';
 import '../Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/habbit_addision_ screen.dart';
 import '../Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/habit_adision_bloc.dart';
 import '../Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/add_habbit_screen.dart';
@@ -19,7 +20,6 @@ import '../Presentation/OnBoardingY/onboardingscreen.dart';
 import '../Presentation/SignupScreens/SignUpScreen.dart';
 import '../Presentation/SignupScreens/signup_bloc.dart';
 import '../Presentation/SplashScreenY/SplashScreen.dart';
-
 
 class Routes {
   Route<dynamic>? onGenerateRoute(RouteSettings settings) {
@@ -70,7 +70,7 @@ class Routes {
             );
           },
         );
-        case "/AvatarScreen":
+      case "/AvatarScreen":
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) => BlocProvider(
             create: (context) => AvatorBloc(),
@@ -96,11 +96,11 @@ class Routes {
             );
           },
         );
-        case "/MainScreen":
+      case "/MainScreen":
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) => BlocProvider(
             create: (context) => MainScreenBloc(),
-            child:  MainScreen(),
+            child: MainScreen(),
           ),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(
@@ -109,11 +109,11 @@ class Routes {
             );
           },
         );
-        case "/AddHabitScreen":
+      case "/AddHabitScreen":
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) => BlocProvider(
             create: (context) => AddHabitBloc(),
-            child:  AddHabitScreen(),
+            child: AddHabitScreen(),
           ),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(
@@ -122,11 +122,24 @@ class Routes {
             );
           },
         );
-        case "/HabitAddisionScree":
+      case "/HabitAddisionScree":
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) => BlocProvider(
             create: (context) => HabitAdisionBloc(),
-            child:  HabbitAddisionScreen(),
+            child: HabbitAddisionScreen(),
+          ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
+        );
+      case "/CustomHabitAdission":
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider(
+            create: (context) => CustomHabitBloc(),
+            child: CustomHabitAdission(),
           ),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(

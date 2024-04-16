@@ -64,7 +64,7 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 45.0,),
                     child: SizedBox(
-                      width: 300,
+                      width: 265,
                       child: Text(widget.habitName,
                           style: TextStyle(
                         color: Color(0xFF1F1F1F),

@@ -8,13 +8,16 @@ import 'package:HabitUp/CommonMethods/Variable.dart';
 import 'package:HabitUp/Widgets/BottomSheet/Reminder/reminder_bloc.dart';
 import 'package:intl/intl.dart';
 
+import '../../../Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/CustomHabit/CustomHabitAdission.dart';
+import '../../../Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/CustomHabit/custom_habit_bloc.dart';
 import '../../../Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/habit_adision_bloc.dart';
 
 class Reminder extends StatelessWidget {
   int index = 0;
   BuildContext habitAddisionContext;
+  bool newcreating=false;
   Reminder(
-      {super.key, required this.index, required this.habitAddisionContext});
+      {super.key, required this.index, required this.habitAddisionContext,this.newcreating=false});
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +54,35 @@ class Reminder extends StatelessWidget {
                     children: [
                       IconButton(
                           onPressed: () {
+                            Reminders.clear();
+                            BlocProvider.of<ReminderBloc>(context).add(
+                                ReminderEvents(
+                                    SetReminder: false,
+                                    Reminders: Reminders,
+                                    time: DateTime.now()));
+                            if(newcreating){
+                              properties[index] = "No Reminders";
+                              BlocProvider.of<CustomHabitBloc>(
+                                  habitAddisionContext)
+                                  .add(SelectedColorEventCustom(
+                                properties: properties,
+                              ));
+                            }
+                            else{
+                              Properties[index] = "No Reminders";
+
+                              BlocProvider.of<HabitAdisionBloc>(
+                                  habitAddisionContext)
+                                  .add(SelectedColorEvent(
+                                SelectedIndex: SelectedIndex,
+                                properties: Properties,
+                                name: selectedHabit,
+                                icon: SelectedHabitIcon,
+                                target: target,
+                                Subtasks: Subtasks,
+                              ));
+                            }
+
                             Navigator.of(context).pop();
                           },
                           icon: Icon(
@@ -74,17 +106,28 @@ class Reminder extends StatelessWidget {
                                     ? "Reminders: Multiple"
                                     : "Reminder: ${Reminders.first}";
                                 print("$time");
-                                Properties[index] = "$time";
+                                if(newcreating){
+                                  properties[index] = "$time";
+                                  BlocProvider.of<CustomHabitBloc>(
+                                      habitAddisionContext)
+                                      .add(SelectedColorEventCustom(
+                                    properties: properties,
+                                  ));
+                                }
+                                else{
+                                  Properties[index] = "$time";
 
-                                BlocProvider.of<HabitAdisionBloc>(
-                                        habitAddisionContext)
-                                    .add(SelectedColorEvent(
-                                  SelectedIndex: SelectedIndex,
-                                  properties: Properties,
-                                  name: selectedHabit,
-                                  icon: SelectedHabitIcon,
-                                  target: target, Subtasks: Subtasks,
-                                ));
+                                  BlocProvider.of<HabitAdisionBloc>(
+                                          habitAddisionContext)
+                                      .add(SelectedColorEvent(
+                                    SelectedIndex: SelectedIndex,
+                                    properties: Properties,
+                                    name: selectedHabit,
+                                    icon: SelectedHabitIcon,
+                                    target: target,
+                                    Subtasks: Subtasks,
+                                  ));
+                                }
                               },
                               child: const Text(
                                 'Save',

@@ -133,6 +133,8 @@ class Methods {
             "assets/ImagesY/RoutineScreen/AddhabbitIcons/StayingFitIcons/Go_For_Swimming_Icon.svg"
       },
     },
+    "Custom": {
+    },
     "Stress Relief": {
       "Meditate": {
         "properties": [

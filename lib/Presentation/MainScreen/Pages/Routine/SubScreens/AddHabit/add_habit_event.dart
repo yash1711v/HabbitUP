@@ -42,6 +42,13 @@ class OthersEvent extends AddHabitEvent{
 
 
 }
+class CustomEvent extends AddHabitEvent{
+ bool CustomOpened;
+
+ CustomEvent({required this.CustomOpened});
+
+
+}
 
 
 

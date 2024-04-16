@@ -1,5 +1,11 @@
 import 'dart:async';
 
+import 'package:d_chart/commons/axis.dart';
+import 'package:d_chart/commons/config_render.dart';
+import 'package:d_chart/commons/decorator.dart';
+import 'package:d_chart/commons/enums.dart';
+import 'package:d_chart/commons/style.dart';
+import 'package:d_chart/ordinal/combo.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +22,8 @@ import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math' as Math;
+import 'package:d_chart/commons/data_model.dart';
+import 'package:d_chart/ordinal/bar.dart';
 
 import '../Routine/SubScreens/stacking_cards.dart';
 import 'Graph/bar_chart.dart';
@@ -34,6 +42,19 @@ class _ProgressScreenState extends State<ProgressScreen> {
   int Selectedindex = -1;
   String habitname = "All";
   List<double> chartValues = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+
+  List<OrdinalData> ordinalList = [
+    OrdinalData(domain: 'Mon', measure: 3),
+    OrdinalData(domain: 'Tue', measure: 5),
+    OrdinalData(domain: 'Wed', measure: 9),
+    OrdinalData(domain: 'Thu', measure: 6.5),
+  ];
+
+
+  List<OrdinalGroup> ordinalGroup = [];
+  List<OrdinalData> adjustData(List<OrdinalData> originalData, double offset) {
+    return originalData.map((data) => OrdinalData(domain:data.domain,  measure: data.measure + offset,)).toList();
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -42,11 +63,44 @@ class _ProgressScreenState extends State<ProgressScreen> {
     BlocProvider.of<ProgressBloc>(context)
         .add(Progresschangeevent(userhabitScreenController.UserHabit.value));
     print(weekNumber);
+    setState(() {
+      chartValues=generateWeekWiseDates(     month,
+          'week ${weekNumber}',
+          TotalNumberOfmethods(
+              userhabitScreenController
+                  .UserHabit.value),
+          "All");
+      ordinalList=[
+        OrdinalData(domain: 'Mon', measure: chartValues[0]),
+        OrdinalData(domain: 'Tue', measure: chartValues[1]),
+        OrdinalData(domain: 'Wed', measure: chartValues[2]),
+        OrdinalData(domain: 'Thu', measure: chartValues[3]),
+        OrdinalData(domain: 'Fri', measure: chartValues[4]),
+        OrdinalData(domain: 'Sat', measure: chartValues[5]),
+        OrdinalData(domain: 'Sun', measure: chartValues[6]),
+      ];
+    });
+
   }
+ Color onTapwhichColor(Color? color){
+    print(color.toString());
+    if(color==Colors.black){
+      return Colors.black;
+    }
+    else{
+      return Colors.white;
+    }
+  }
+
+Color numberColors=Colors.black;
+
 
   @override
   Widget build(BuildContext context) {
     contextProgress = context;
+    setState(() {
+
+    });
     BlocProvider.of<ProgressBloc>(context)
         .add(Progresschangeevent(userhabitScreenController.UserHabit.value));
     return SingleChildScrollView(
@@ -61,12 +115,12 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 width: 30,
               ),
               SizedBox(
-                width: 210,
+                width: 196,
                 child: Text(
                   'Today’s progress',
                   style: TextStyle(
                     color: Theme.of(context).textTheme.titleMedium?.color,
-                    fontSize: 26,
+                    fontSize: 24,
                     fontFamily: 'DM Sans',
                     fontWeight: FontWeight.w500,
                     height: 0,
@@ -85,6 +139,9 @@ class _ProgressScreenState extends State<ProgressScreen> {
                     nameOfHabits = Habitsname().toSet();
       
                     progress = todatsProgress(Habits);
+
+
+
                   }
                   return Padding(
                     padding: const EdgeInsets.only(left: 60.0),
@@ -133,17 +190,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                   : Habits
                                       .length,
                               itemBuilder: (BuildContext context, int index) {
-                               // Future.delayed(Duration(milliseconds: 700)).then((value) {
-                               //   updateStreak(TotalNumberOfmethods(
-                               //       userhabitScreenController
-                               //           .UserHabit.value)[nameOfHabits
-                               //       .elementAt(index)]['Progress'])
-                               //       .then((value) {
-                               //     setState(() {
-                               //       Streak = value.toString();
-                               //     });
-                               //   });
-                               // });
+
                                 return Padding(
                                     padding: const EdgeInsets.only(left: 10),
                                     child: Habits.length <= 0
@@ -180,6 +227,17 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                                           userhabitScreenController
                                                               .UserHabit.value),
                                                       habitname);
+                                                  ordinalList=[
+                                                    OrdinalData(domain: 'Mon', measure: chartValues[0]),
+                                                    OrdinalData(domain: 'Tue', measure: chartValues[1]),
+                                                    OrdinalData(domain: 'Wed', measure: chartValues[2]),
+                                                    OrdinalData(domain: 'Thu', measure: chartValues[3]),
+                                                    OrdinalData(domain: 'Fri', measure: chartValues[4]),
+                                                    OrdinalData(domain: 'Sat', measure: chartValues[5]),
+                                                    OrdinalData(domain: 'Sun', measure: chartValues[6]),
+                                                  ];
+
+
                                                 });
                                                 print(chartValues);
                                               } else {
@@ -187,6 +245,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                                   Selectedindex = index;
                                                   habitname = nameOfHabits
                                                       .elementAt(Selectedindex);
+
                                                 });
                                               }
                                               setState(() {
@@ -197,8 +256,19 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                                         userhabitScreenController
                                                             .UserHabit.value),
                                                     habitname);
+                                                ordinalList=[
+                                                  OrdinalData(domain: 'Mon', measure: chartValues[0]),
+                                                  OrdinalData(domain: 'Tue', measure: chartValues[1]),
+                                                  OrdinalData(domain: 'Wed', measure: chartValues[2]),
+                                                  OrdinalData(domain: 'Thu', measure: chartValues[3]),
+                                                  OrdinalData(domain: 'Fri', measure: chartValues[4]),
+                                                  OrdinalData(domain: 'Sat', measure: chartValues[5]),
+                                                  OrdinalData(domain: 'Sun', measure: chartValues[6]),
+                                                ];
+                                                numberColors=convertToColor(Habits[habitname]['colors']);
+                                                print(Habits[habitname]['colors']);
                                               });
-                                              print(chartValues);
+
                                             },
                                             child: Stack(
                                               children: [
@@ -208,12 +278,20 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                                       ? 178
                                                       : 150,
                                                   clipBehavior: Clip.antiAlias,
+
                                                   decoration: ShapeDecoration(
                                                     color: convertToColor(Habits[
                                                         nameOfHabits.elementAt(
                                                             index)]['colors']),
                                                     shape:
-                                                        const RoundedRectangleBorder(
+                                                         RoundedRectangleBorder(
+                                                          side: BorderSide(
+                                                              color: Selectedindex == index? onTapwhichColor(Theme.of(
+                                                                  context)
+                                                                  .textTheme
+                                                                  .titleMedium
+                                                                  ?.color,):Colors.transparent,
+                                                              width: 4),
                                                       borderRadius:
                                                           BorderRadius.only(
                                                         topLeft:
@@ -297,27 +375,25 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                                             const EdgeInsets.only(
                                                                 top: 10.0),
                                                         child: SizedBox(
-                                                          width: 55,
-                                                          child: FittedBox(
-                                                            fit: BoxFit.fitWidth,
-                                                            child: Text(
-                                                              nameOfHabits
-                                                                  .elementAt(
-                                                                      index),
-                                                              style: TextStyle(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .titleMedium
-                                                                    ?.color,
-                                                                fontSize: 10,
-                                                                fontFamily:
-                                                                    'DM Sans',
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                height: 0,
-                                                              ),
+                                                          width: 60,
+                                                          child: Text(
+                                                            textAlign: TextAlign.center,
+                                                            nameOfHabits
+                                                                .elementAt(
+                                                                    index),
+                                                            style: TextStyle(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleMedium
+                                                                  ?.color,
+                                                              fontSize: 10,
+                                                              fontFamily:
+                                                                  'DM Sans',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              height: 0,
                                                             ),
                                                           ),
                                                         ),
@@ -339,34 +415,6 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                                     ],
                                                   ),
                                                 ),
-                                                Visibility(
-                                                  visible: Selectedindex == index,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            bottom: 100.0),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                                  left: 50.0),
-                                                          child: SvgPicture.asset(
-                                                            "assets/ImagesY/Progress/MinimineIcon.svg",
-                                                            color:
-                                                                Theme.of(context)
-                                                                    .textTheme
-                                                                    .titleMedium
-                                                                    ?.color,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                )
                                               ],
                                             ),
                                           ));
@@ -428,6 +476,15 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                                 userhabitScreenController
                                                     .UserHabit.value),
                                             habitname);
+                                        ordinalList=[
+                                          OrdinalData(domain: 'Mon', measure: chartValues[0]),
+                                          OrdinalData(domain: 'Tue', measure: chartValues[1]),
+                                          OrdinalData(domain: 'Wed', measure: chartValues[2]),
+                                          OrdinalData(domain: 'Thu', measure: chartValues[3]),
+                                          OrdinalData(domain: 'Fri', measure: chartValues[4]),
+                                          OrdinalData(domain: 'Sat', measure: chartValues[5]),
+                                          OrdinalData(domain: 'Sun', measure: chartValues[6]),
+                                        ];
                                       });
                                     }
                                   });
@@ -461,6 +518,15 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                                           .UserHabit.value),
                                                   habitname);
                                             });
+                                            ordinalList=[
+                                              OrdinalData(domain: 'Mon', measure: chartValues[0]),
+                                              OrdinalData(domain: 'Tue', measure: chartValues[1]),
+                                              OrdinalData(domain: 'Wed', measure: chartValues[2]),
+                                              OrdinalData(domain: 'Thu', measure: chartValues[3]),
+                                              OrdinalData(domain: 'Fri', measure: chartValues[4]),
+                                              OrdinalData(domain: 'Sat', measure: chartValues[5]),
+                                              OrdinalData(domain: 'Sun', measure: chartValues[6]),
+                                            ];
                                           },
                                           month: _monthNameinShort(month),
                                         ); // Show the dialog
@@ -494,6 +560,15 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                             userhabitScreenController
                                                 .UserHabit.value),
                                         habitname);
+                                    ordinalList=[
+                                      OrdinalData(domain: 'Mon', measure: chartValues[0]),
+                                      OrdinalData(domain: 'Tue', measure: chartValues[1]),
+                                      OrdinalData(domain: 'Wed', measure: chartValues[2]),
+                                      OrdinalData(domain: 'Thu', measure: chartValues[3]),
+                                      OrdinalData(domain: 'Fri', measure: chartValues[4]),
+                                      OrdinalData(domain: 'Sat', measure: chartValues[5]),
+                                      OrdinalData(domain: 'Sun', measure: chartValues[6]),
+                                    ];
                                   });
 
                                   print(chartValues);
@@ -509,86 +584,163 @@ class _ProgressScreenState extends State<ProgressScreen> {
                             ],
                           ),
                         ),
+
                         Padding(
-                          padding: EdgeInsets.only(top: 80.0),
-                          child: BarChart(BarChartData(
-                              gridData: const FlGridData(
-                                show: false,
-                              ),
-                              borderData: FlBorderData(show: false),
-                              titlesData: const FlTitlesData(
-                                  show: true,
-                                  topTitles: AxisTitles(
-                                    sideTitles: SideTitles(showTitles: false),
-                                  ),
-                                  rightTitles: AxisTitles(
-                                    sideTitles: SideTitles(showTitles: false),
-                                  ),
-                                  leftTitles: AxisTitles(
-                                    sideTitles: SideTitles(showTitles: false),
-                                  ),
-                                  bottomTitles: AxisTitles(
-                                    sideTitles: SideTitles(
-                                        showTitles: true,
-                                        getTitlesWidget: getBottomTiles),
-                                  )),
-                              barGroups: chartValues
-                                  .asMap()
-                                  .entries
-                                  .map((entry) =>
-                                      BarChartGroupData(x: entry.key, barRods: [
-                                        BarChartRodData(
-                                            toY: entry.value.toDouble(),
-                                            color: Theme.of(contextProgress)
-                                                .textTheme
-                                                .titleMedium
-                                                ?.color,
-                                            width: 35.51,
-                                            borderRadius: const BorderRadius.all(
-                                                Radius.circular(10)),
-                                            backDrawRodData:
-                                                BackgroundBarChartRodData(
-                                              show: false,
-                                            ))
-                                      ]))
-                                  .toList(),
-                              barTouchData: BarTouchData(
-                                touchTooltipData: BarTouchTooltipData(
-                                  tooltipRoundedRadius: 8,
-                                  getTooltipItem:
-                                      (group, groupIndex, rod, rodIndex) {
-                                    late String weekDay;
-                                    switch (group.x.toInt()) {
-                                      case 0:
-                                        weekDay = 'Mon';
-                                        break;
-                                      case 1:
-                                        weekDay = 'Tue';
-                                        break;
-                                      case 2:
-                                        weekDay = 'Wed';
-                                        break;
-                                      case 3:
-                                        weekDay = 'Thu';
-                                        break;
-                                      case 4:
-                                        weekDay = 'Fri';
-                                        break;
-                                      case 5:
-                                        weekDay = 'Sat';
-                                        break;
-                                      case 6:
-                                        weekDay = 'Sun';
-                                        break;
-                                    }
-                                    return BarTooltipItem(
-                                      '$weekDay: ${group.barRods[rodIndex].toY.round().toString()}',
-                                      const TextStyle(color: Colors.white),
-                                    );
-                                  },
+                          padding: const EdgeInsets.only(top: 70.0,left: 0,right: 0,bottom: 20),
+                          child: SizedBox(
+                            child: DChartComboO(
+                              domainAxis: DomainAxis(
+
+                                labelStyle: LabelStyle(
+                                  color: onTapwhichColor(Theme.of(contextProgress)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.color),
+                                  fontSize: 15,
                                 ),
-                              ))),
+                                showLine: false,
+
+                              ),
+                              measureAxis: MeasureAxis(
+                                noRenderSpec: true,
+                                labelStyle: LabelStyle(
+                                  color: onTapwhichColor(Theme.of(contextProgress)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.color),
+                                  fontSize: 15,
+                                ),
+                                showLine: false
+                            // This hides the horizontal grid lines
+                              ),
+                              barLabelDecorator: BarLabelDecorator(
+                                labelAnchor: BarLabelAnchor.middle,
+                               labelPadding: 5,
+                               barLabelPosition: BarLabelPosition.outside,
+
+                              ),
+                              animate: true,
+                              groupList: [
+                                OrdinalGroup(
+                                  id: '1',
+                                  chartType: ChartType.bar,
+                                  data: ordinalList,
+                                  color:  Theme.of(contextProgress)
+                                                          .textTheme
+                                                          .titleMedium
+                                                          ?.color,
+                                ),
+                                OrdinalGroup(
+                                  id: '2',
+                                  chartType: ChartType.line,
+                                  data: ordinalList,
+                                  color: Colors.red
+                                ),
+                              ],
+                              configRenderBar: ConfigRenderBar(
+                                radius:8,
+                                minBarLengthPx: 1// or inside based on preference
+
+                              ),
+                              allowSliding: false,
+                              outsideBarLabelStyle: (OrdinalGroup group, OrdinalData data, int? index) {
+                                return LabelStyle(
+                                  color: numberColors,  // Choose a contrasting color for visibility
+                                  fontSize: 15,  // Set the font size as required
+                                );
+                              }, // Apply the label style function
+                              barLabelValue: (OrdinalGroup group, OrdinalData data, int? index) {
+                                print("hellooo------>${data.measure.toString()}");
+                                return data.measure>0?data.measure.toStringAsFixed(0):"";  // Assuming 'value' is the field you want to display
+                              },
+
+                            ),
+                          ),
                         ),
+
+
+
+
+                        // Padding(
+                        //   padding: EdgeInsets.only(top: 80.0),
+                        //   child: BarChart(BarChartData(
+                        //       gridData: const FlGridData(
+                        //         show: false,
+                        //       ),
+                        //       borderData: FlBorderData(show: false),
+                        //       titlesData: const FlTitlesData(
+                        //           show: true,
+                        //           topTitles: AxisTitles(
+                        //             sideTitles: SideTitles(showTitles: false),
+                        //           ),
+                        //           rightTitles: AxisTitles(
+                        //             sideTitles: SideTitles(showTitles: false),
+                        //           ),
+                        //           leftTitles: AxisTitles(
+                        //             sideTitles: SideTitles(showTitles: false),
+                        //           ),
+                        //           bottomTitles: AxisTitles(
+                        //             sideTitles: SideTitles(
+                        //                 showTitles: true,
+                        //                 getTitlesWidget: getBottomTiles),
+                        //           )),
+                        //       barGroups: chartValues
+                        //           .asMap()
+                        //           .entries
+                        //           .map((entry) =>
+                        //               BarChartGroupData(x: entry.key, barRods: [
+                        //                 BarChartRodData(
+                        //                     toY: entry.value.toDouble(),
+                        //                     color: Theme.of(contextProgress)
+                        //                         .textTheme
+                        //                         .titleMedium
+                        //                         ?.color,
+                        //                     width: 35.51,
+                        //                     borderRadius: const BorderRadius.all(
+                        //                         Radius.circular(10)),
+                        //                     backDrawRodData:
+                        //                         BackgroundBarChartRodData(
+                        //                       show: false,
+                        //                     ))
+                        //               ]))
+                        //           .toList(),
+                        //       barTouchData: BarTouchData(
+                        //         touchTooltipData: BarTouchTooltipData(
+                        //           tooltipRoundedRadius: 8,
+                        //           getTooltipItem:
+                        //               (group, groupIndex, rod, rodIndex) {
+                        //             late String weekDay;
+                        //             switch (group.x.toInt()) {
+                        //               case 0:
+                        //                 weekDay = 'Mon';
+                        //                 break;
+                        //               case 1:
+                        //                 weekDay = 'Tue';
+                        //                 break;
+                        //               case 2:
+                        //                 weekDay = 'Wed';
+                        //                 break;
+                        //               case 3:
+                        //                 weekDay = 'Thu';
+                        //                 break;
+                        //               case 4:
+                        //                 weekDay = 'Fri';
+                        //                 break;
+                        //               case 5:
+                        //                 weekDay = 'Sat';
+                        //                 break;
+                        //               case 6:
+                        //                 weekDay = 'Sun';
+                        //                 break;
+                        //             }
+                        //             return BarTooltipItem(
+                        //               '$weekDay: ${group.barRods[rodIndex].toY.round().toString()}',
+                        //               const TextStyle(color: Colors.white),
+                        //             );
+                        //           },
+                        //         ),
+                        //       ))),
+                        // ),
                       ],
                     ),
                   ),
@@ -903,8 +1055,7 @@ int todatsProgress(Map<String, dynamic> habit) {
   return int.parse(((percentage / habit.length) * 100).toStringAsFixed(0));
 }
 
-List<double> generateWeekWiseDates(String monthName, String week,
-    Map<String, dynamic> habits, String Habitname) {
+List<double> generateWeekWiseDates(String monthName, String week, Map<String, dynamic> habits, String Habitname) {
   // Initialize the list to store week-wise dates
   List<Map<String, dynamic>> weekWiseDates = [];
   List<double> weekProgressList = [];
@@ -947,6 +1098,7 @@ List<double> generateWeekWiseDates(String monthName, String week,
     // Add the week map to the list
     weekWiseDates.add(weekMap);
   }
+  int completed = 0;
   Map<String, double> weekProgress = {};
   weekProgress.clear();
   weekWiseDates.forEach((element) {
@@ -973,7 +1125,7 @@ List<double> generateWeekWiseDates(String monthName, String week,
               });
             }
           } else {
-            int completed = 0;
+
             values.forEach((key2, valueHabit) {
               if (key2 == 'Completed') {
                 if (valueHabit[
@@ -990,20 +1142,7 @@ List<double> generateWeekWiseDates(String monthName, String week,
                 }
                 ;
               }
-              // valueDate.forEach((keyDate, valueDate) {
-              //   if(valueHabit[DateFormat('dd-MM-yyyy').format(DateTime.now())]){
-              //     completed++;
-              //     valueDate.forEach((keyDate, valueDate) {
-              //       if (valueHabit.containsKey(keyDate)) {
-              //         weekProgress.update(
-              //             keyDate,
-              //                 (value) =>
-              //                 double.parse(completed.toString()));
-              //       }
-              //     });
-              //
-              //   };
-              // });
+           
             });
           }
         });
@@ -1141,3 +1280,4 @@ class TruncatedText extends StatelessWidget {
     );
   }
 }
+

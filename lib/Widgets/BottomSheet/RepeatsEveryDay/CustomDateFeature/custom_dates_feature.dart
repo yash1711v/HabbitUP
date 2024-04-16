@@ -152,7 +152,7 @@ class CustomDateFeature extends StatelessWidget {
   }
 }
 whichText(int frequency,String whichoption,){
-  if(whichoption.isNotEmpty && whichoption!=null){
+  if(whichoption.isNotEmpty && whichoption!=null && frequency!=0){
      if(whichoption=="Daily"){
        return "Repeats every $frequency Day";
      }

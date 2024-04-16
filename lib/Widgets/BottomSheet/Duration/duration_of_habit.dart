@@ -8,10 +8,14 @@ import 'package:HabitUp/Presentation/MainScreen/Pages/Routine/SubScreens/AddHabi
 import 'package:HabitUp/Widgets/BottomSheet/Duration/duration_bloc.dart';
 import 'package:intl/intl.dart';
 
+import '../../../Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/CustomHabit/CustomHabitAdission.dart';
+import '../../../Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/CustomHabit/custom_habit_bloc.dart';
+
 class DurationOfHabit extends StatelessWidget {
   int index=0;
   BuildContext habitAddisionContext;
-   DurationOfHabit({super.key,required this.index,required this.habitAddisionContext});
+  bool newCreating;
+   DurationOfHabit({super.key,required this.index,required this.habitAddisionContext,this.newCreating=false});
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +48,23 @@ class DurationOfHabit extends StatelessWidget {
                     children: [
                       IconButton(
                           onPressed: () {
+                            BlocProvider.of<DurationBloc>(context).add(SetTimeEvent(settingTime: false));
+                            if(newCreating){
+                              properties[index]="Time: All Day";
+                              BlocProvider.of<CustomHabitBloc>(
+                                  habitAddisionContext)
+                                  .add(SelectedColorEventCustom(
+                                properties: properties,
+                              ));
+                            }else
+                            {
+                              Properties[index] = "Time: All Day";
+                              BlocProvider.of<HabitAdisionBloc>(habitAddisionContext).add(SelectedColorEvent(SelectedIndex: SelectedIndex,properties: Properties,
+                                name: selectedHabit,
+                                icon: SelectedHabitIcon,
+                                target: target, Subtasks: Subtasks,
+                              ));
+                            }
                             Navigator.of(context).pop();
                           },
                           icon: Icon(
@@ -62,12 +83,23 @@ class DurationOfHabit extends StatelessWidget {
                                 time="$startTime-${adjustTime(startTime, endTime)}";
                                 endTime=adjustTime(startTime, endTime);
                                 print("$time");
-                                Properties[index]="Time: $time";
-                                BlocProvider.of<HabitAdisionBloc>(habitAddisionContext).add(SelectedColorEvent(SelectedIndex: SelectedIndex,properties: Properties,
-                                  name: selectedHabit,
-                                  icon: SelectedHabitIcon,
+                                if(newCreating){
+                                  properties[index]="Time: $time";
+                                  BlocProvider.of<CustomHabitBloc>(
+                                      habitAddisionContext)
+                                      .add(SelectedColorEventCustom(
+                                    properties: properties,
+                                  ));
+                                }else
+                                {
+                                  Properties[index] = "Time: $time";
+                                  BlocProvider.of<HabitAdisionBloc>(habitAddisionContext).add(SelectedColorEvent(SelectedIndex: SelectedIndex,properties: Properties,
+                                    name: selectedHabit,
+                                    icon: SelectedHabitIcon,
                                     target: target, Subtasks: Subtasks,
-                                ));
+                                  ));
+                                }
+
                               },
                               child: const Text(
                                 'Save',

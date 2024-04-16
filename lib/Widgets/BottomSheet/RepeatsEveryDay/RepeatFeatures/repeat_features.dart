@@ -1,3 +1,4 @@
+import 'package:HabitUp/Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/CustomHabit/custom_habit_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:HabitUp/CommonMethods/Variable.dart';
@@ -6,6 +7,7 @@ import 'package:HabitUp/Widgets/BottomSheet/RepeatsEveryDay/MonthCalenderWithFoC
 import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
 
+import '../../../../Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/CustomHabit/CustomHabitAdission.dart';
 import '../../../../Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/habit_adision_bloc.dart';
 import '../MonthCalenderForEndDate/month_calender_for_end_date.dart';
 import '../bottom_sheet_bloc.dart';
@@ -16,13 +18,15 @@ class RepeastFeatures extends StatelessWidget {
   final List<String> daysOfWeek;
   int index;
   BuildContext habitAddisionContext;
+  bool newHabit;
   RepeastFeatures(
       {super.key,
       required this.pageController2,
       required this.pageController,
       required this.daysOfWeek,
         required this. index,
-        required this.habitAddisionContext
+        required this.habitAddisionContext,
+        this.newHabit=false
       });
   final List<String> daysOfWeekOnlyOneChar = [
     'M',
@@ -112,12 +116,18 @@ class RepeastFeatures extends StatelessWidget {
                               duration: const Duration(milliseconds: 10),
                               curve: Curves.easeOut);
                         }
-                        Properties[index]=whichText(frequencyNumber, whichOption);
-                        BlocProvider.of<HabitAdisionBloc>(habitAddisionContext).add(SelectedColorEvent(SelectedIndex: SelectedIndex,properties: Properties,
-                          name: selectedHabit,
-                          icon: SelectedHabitIcon,
-                          target: target, Subtasks: Subtasks,
-                        ));
+                        if(newHabit){
+                          properties[index]=whichText(frequencyNumber, whichOption);
+                          BlocProvider.of<CustomHabitBloc>(habitAddisionContext).add(SelectedColorEventCustom(properties: properties));
+                        }else{
+                          Properties[index]=whichText(frequencyNumber, whichOption);
+                          BlocProvider.of<HabitAdisionBloc>(habitAddisionContext).add(SelectedColorEvent(SelectedIndex: SelectedIndex,properties: Properties,
+                            name: selectedHabit,
+                            icon: SelectedHabitIcon,
+                            target: target, Subtasks: Subtasks,
+                          ));
+                        }
+
 
                         print(datesOnwhichTheHabbitsAreSet);
                       },

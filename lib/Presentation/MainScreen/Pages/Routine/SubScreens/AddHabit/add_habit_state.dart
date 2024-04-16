@@ -52,3 +52,9 @@ class OthersState extends AddHabitState{
   List<String> HabitIcons=[];
   OthersState({required this.isOthersOpened,required this.Habitnames,required this.HabitIcons});
 }
+class CustomState extends AddHabitState{
+  final bool isCustomOpened;
+  List<String> Habitnames=[];
+  List<String> HabitIcons=[];
+  CustomState({required this.isCustomOpened,required this.Habitnames,required this.HabitIcons});
+}

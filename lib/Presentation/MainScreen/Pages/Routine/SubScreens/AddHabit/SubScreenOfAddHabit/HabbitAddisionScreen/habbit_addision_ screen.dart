@@ -400,6 +400,12 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                             onTap: () {
                               if (Properties.length == 5) {
                                 if (index == 0) {
+                                  if(checkIfAnyHabitsSet(datesOnwhichTheHabbitsAreSet)){}else{
+                                    addDates(
+                                      frequency: 1,
+                                      endDate: endDate.isNotEmpty?endDate:"31-12-${DateTime.now().year}",
+                                    );
+                                  }
                                   showModalBottomSheet(
                                       context: context,
                                       builder: (BuildContext context) {
@@ -447,6 +453,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                                   );
                                 } else if (index == 2) {
                                   showModalBottomSheet(
+                                    isDismissible: false,
                                       enableDrag: false,
                                       context: context,
                                       builder: (BuildContext context) {
@@ -460,6 +467,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                                       });
                                 } else if (index == 3) {
                                   showModalBottomSheet(
+                                      isDismissible: false,
                                       enableDrag: false,
                                       context: context,
                                       builder: (BuildContext context) {
@@ -473,12 +481,13 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                                       });
                                 } else if (index == 4) {
                                   showModalBottomSheet(
+
                                       context: context,
                                       builder: (BuildContext context) {
                                         return TagBottomSheet(
                                           onClosePressed: () {},
                                           indexProperties: index,
-                                          habitAddisionContext: context2,
+                                          habitAddisionContext: context2, creatingNew: false,
                                         );
                                       });
                                 }
@@ -498,6 +507,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                                       });
                                 } else if (index == 1) {
                                   showModalBottomSheet(
+                                      isDismissible: false,
                                       enableDrag: false,
                                       context: context,
                                       builder: (BuildContext context) {
@@ -511,6 +521,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                                       });
                                 } else if (index == 2) {
                                   showModalBottomSheet(
+                                      isDismissible: false,
                                       enableDrag: false,
                                       context: context,
                                       builder: (BuildContext context) {
@@ -524,12 +535,13 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                                       });
                                 } else if (index == 3) {
                                   showModalBottomSheet(
+
                                       context: context,
                                       builder: (BuildContext context) {
                                         return TagBottomSheet(
                                           onClosePressed: () {},
                                           indexProperties: index,
-                                          habitAddisionContext: context2,
+                                          habitAddisionContext: context2, creatingNew: false,
                                         );
                                       });
                                 }
@@ -554,7 +566,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
-                                          width: 179,
+                                          width: 265,
                                           height: 24,
                                           child: Text(
                                             Properties[index],
@@ -566,7 +578,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(width: 85),
+
                                         if (Properties.length == 5)
                                           index == 1
                                               ? Padding(

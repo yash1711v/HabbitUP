@@ -5,15 +5,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:HabitUp/CommonMethods/Variable.dart';
 import 'package:HabitUp/Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/habit_adision_bloc.dart';
 
+import '../../../Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/CustomHabit/CustomHabitAdission.dart';
+import '../../../Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/CustomHabit/custom_habit_bloc.dart';
+
 class TagBottomSheet extends StatefulWidget {
   final VoidCallback onClosePressed;
   final int indexProperties;
   final BuildContext habitAddisionContext;
-  const TagBottomSheet(
+  bool creatingNew;
+   TagBottomSheet(
       {super.key,
       required this.onClosePressed,
       required this.indexProperties,
-      required this.habitAddisionContext});
+      required this.habitAddisionContext,
+      required this.creatingNew,
+      });
 
   @override
   State<TagBottomSheet> createState() => _TagBottomSheetState();
@@ -87,16 +93,29 @@ class _TagBottomSheetState extends State<TagBottomSheet> {
                             setState(() {
                               SelectedIndexfortags=index;
                             });
-                            Properties[widget.indexProperties] = "${Tags[index]}";
-                            BlocProvider.of<HabitAdisionBloc>(widget.habitAddisionContext)
-                                .add(SelectedColorEvent(
-                              SelectedIndex: SelectedIndex,
-                              properties: Properties,
-                              name: selectedHabit,
-                              icon: SelectedHabitIcon,
-                              target: target, Subtasks: Subtasks,
-                            ));
-                          },
+                            if(widget.creatingNew){
+                              properties[widget.indexProperties] = "${Tags[index]}";
+                              BlocProvider.of<CustomHabitBloc>(
+                                  widget.habitAddisionContext)
+                                  .add(SelectedColorEventCustom(
+                                properties: properties,
+                              ));
+                            }
+                           else {
+                                Properties[widget.indexProperties] =
+                                    "${Tags[index]}";
+                                BlocProvider.of<HabitAdisionBloc>(
+                                        widget.habitAddisionContext)
+                                    .add(SelectedColorEvent(
+                                  SelectedIndex: SelectedIndex,
+                                  properties: Properties,
+                                  name: selectedHabit,
+                                  icon: SelectedHabitIcon,
+                                  target: target,
+                                  Subtasks: Subtasks,
+                                ));
+                              }
+                            },
                           child: Row(
                             children: [
                               Container(
@@ -148,17 +167,28 @@ class _TagBottomSheetState extends State<TagBottomSheet> {
                                         SelectedIndexfortags=index;
                                       });
 
-                                      Properties[widget.indexProperties] =
-                                      "${Tags[index]}";
-                                      BlocProvider.of<HabitAdisionBloc>(
-                                          widget.habitAddisionContext)
-                                          .add(SelectedColorEvent(
-                                        SelectedIndex: SelectedIndex,
-                                        properties: Properties,
-                                        name: selectedHabit,
-                                        icon: SelectedHabitIcon,
-                                        target: target, Subtasks: Subtasks,
-                                      ));
+                                      if(widget.creatingNew){
+                                        properties[widget.indexProperties] = "${Tags[index]}";
+                                        BlocProvider.of<CustomHabitBloc>(
+                                            widget.habitAddisionContext)
+                                            .add(SelectedColorEventCustom(
+                                          properties: properties,
+                                        ));
+                                      }
+                                      else {
+                                        Properties[widget.indexProperties] =
+                                        "${Tags[index]}";
+                                        BlocProvider.of<HabitAdisionBloc>(
+                                            widget.habitAddisionContext)
+                                            .add(SelectedColorEvent(
+                                          SelectedIndex: SelectedIndex,
+                                          properties: Properties,
+                                          name: selectedHabit,
+                                          icon: SelectedHabitIcon,
+                                          target: target,
+                                          Subtasks: Subtasks,
+                                        ));
+                                      }
                                     },
                                     child: Text(Tags[index])),
                               ),
@@ -192,6 +222,9 @@ class _TagBottomSheetState extends State<TagBottomSheet> {
                                 Tags.add(controller.text);
                               }
                             });
+                          setState(() {
+                            SelectedIndexfortags=Tags.length-1;
+                          });
                           _pageController.previousPage(duration: const Duration(milliseconds: 700), curve: Curves.easeIn);
 
                         },

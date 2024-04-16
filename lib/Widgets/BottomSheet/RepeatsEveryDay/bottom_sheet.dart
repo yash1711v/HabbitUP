@@ -8,7 +8,8 @@ import 'RepeatFeatures/repeat_features.dart';
 class BottomSheetCustom extends StatelessWidget {
   int index;
   BuildContext habitAddisionContext;
-  BottomSheetCustom({super.key, required ,required this. index, required this.habitAddisionContext});
+  bool newHabit;
+  BottomSheetCustom({super.key, required ,required this. index, required this.habitAddisionContext,this.newHabit=false});
 
 
   final currentMonth = DateTime.now().month;
@@ -46,7 +47,7 @@ class BottomSheetCustom extends StatelessWidget {
           controller: _pageController2,
           children: [
             CustomDateFeature(pageController2: _pageController2, pageController: _pageController, daysOfWeek: daysOfWeek,),
-            RepeastFeatures(pageController2: _pageController2, pageController: _pageController, daysOfWeek: daysOfWeek, index: index, habitAddisionContext: habitAddisionContext,)
+            RepeastFeatures(pageController2: _pageController2, pageController: _pageController, daysOfWeek: daysOfWeek, index: index, habitAddisionContext: habitAddisionContext,newHabit: newHabit,)
           ],
         ));
   }

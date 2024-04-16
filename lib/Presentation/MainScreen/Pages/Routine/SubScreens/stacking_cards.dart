@@ -94,7 +94,7 @@ class _FancyCardState extends State<FancyCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 400,
+      width: 380,
       height: 200,
       child: Stack(
         children: [
