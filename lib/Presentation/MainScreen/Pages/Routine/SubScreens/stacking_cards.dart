@@ -1,3 +1,4 @@
+import 'dart:core';
 import 'dart:ui';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,9 +13,11 @@ import 'package:HabitUp/Presentation/MainScreen/Pages/Routine/routine_bloc.dart'
 import 'package:intl/intl.dart';
 import 'package:stacked_card_carousel/stacked_card_carousel.dart';
 
+import '../../../../../CommonMethods/Methods.dart';
 import '../../../../../CommonMethods/Variable.dart';
 import '../../../../../FirebaseFunctionality/DatabaseFeatures.dart';
 import '../../../../../LocalStorage/SharedPref/Sharedpref.dart';
+import '../../../../../Widgets/DialogBox/DeleteDialog/Delete.dart';
 import '../../../../../Widgets/DialogBox/Logsadition/logs_adition.dart';
 import '../../Progress/progress_bloc.dart';
 
@@ -84,6 +87,7 @@ class FancyCard extends StatefulWidget {
   final bool done;
   final int value;
 
+
   @override
   State<FancyCard> createState() => _FancyCardState();
 }
@@ -93,280 +97,214 @@ class _FancyCardState extends State<FancyCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 380,
-      height: 200,
-      child: Stack(
-        children: [
-          Container(
-              width: 400,
-              height: 200,
-              decoration: ShapeDecoration(
-                color: widget.color,
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(35))),
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 15.0,
-                    ),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 50.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: 25,
-                                child: Text(
-                                  insertLineBreaks(widget.starttime),
-                                  style:  TextStyle(
-                                    color: widget.starttime=="0000"?Color(0x7F1F1F1F):Color(0xFF1F1F1F),
-                                    fontSize: 16,
-                                    fontFamily: 'DM Sans',
-                                    fontWeight: FontWeight.w500,
-                                    height: 1,
-                                    letterSpacing: 0.48,
-                                  ),
-                                ),
-                              ),
-                               Padding(
-                                padding: EdgeInsets.only(left: 10),
-                                child: Text(
-                                  "|",
-                                  style: TextStyle(
-                                    color: widget.starttime=="0000" &&  widget.endtime=="0000"?Color(0x7F1F1F1F):Color(0xFF1F1F1F),
-                                    fontSize: 16,
-                                    fontFamily: 'DM Sans',
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 25,
-                                child: Text(
-                                  insertLineBreaks(widget.endtime),
-                                  style:  TextStyle(
-                                    color: widget.endtime=="0000"?Color(0x7F1F1F1F):Color(0xFF1F1F1F),
-                                    fontSize: 16,
-                                    fontFamily: 'DM Sans',
-                                    fontWeight: FontWeight.w500,
-                                    height: 1,
-                                    letterSpacing: 0.48,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 20.0, left: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.only(bottom: 8.0, left: 5),
-                                child: Text(
-                                  'Evening',
-                                  style: TextStyle(
-                                    color: Color(0xFF1F1F1F),
-                                    fontSize: 10,
-                                    fontFamily: 'DM Sans',
-                                    fontWeight: FontWeight.w500,
-                                    height: 0.12,
-                                    letterSpacing: 0.30,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 280,
-                                child: Text(
-                                  '${widget.Habitname}',
-                                  style: const TextStyle(
-                                    color: Color(0xFF1F1F1F),
-                                    fontSize: 40,
-                                    fontFamily: 'DM Sans',
-                                    fontWeight: FontWeight.w500,
-                                    height: 1,
-                                    letterSpacing: 0.40,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              )),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 65.0, right: 15),
-                child: SvgPicture.asset(
-                  "${widget.icon}",
-                  color: const Color(0x271F1F1F),
-                ),
-              ),
-              Container(
-                width: 57,
+    return GestureDetector(
+      onLongPress: () async {
+        print("long press");
+        String Uid=await Sharedpref().getUid();
+        showDialog(
+          context: context,
+          builder: (context) {
+            return DeleteScreen(callback: (String ) async {
+              userhabitScreenController.UserHabit.value.remove(widget.category);
+              Sharedpref().saveData(userhabitScreenController.UserHabit.value);
+
+              await Sharedpref().loadData().then((value) {
+                value.forEach((key, value2) {
+                  value2.forEach((element) {
+                    element.forEach((key3,value3) {
+                      value3.forEach((key4, value4) {
+                        print('key $key4: \n value $value4');});
+
+                    });
+                  });
+                });
+
+                DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
+              });
+
+              BlocProvider.of<RoutineBloc>(contextRoutineScreen).add(ListchangeEvent(fancyCards: fancyCards,state: whichState, habits: userhabitScreenController.UserHabit.value));
+              Navigator.pushNamed(context, '/MainScreen');
+              BlocProvider.of<ProgressBloc>(contextProgress).add(Progresschangeevent(userhabitScreenController.UserHabit.value));
+              print(userhabitScreenController.UserHabit.value[widget.category].removeAt(widget.index));
+
+            }, habitname: widget.Habitname,); // Show the dialog
+          },
+        );
+
+      },
+      onTap: (){
+        selectedHabit = widget.Habitname;
+
+        SelectedCatagory = widget.category;
+        target = "30";
+        SelectedHabitIcon = Habbits[
+        widget.category]![widget.Habitname]!['Icon'];
+        SelectedColorIndex = Habbits[
+        SelectedCatagory]![widget.Habitname]!['color']??0;
+        Properties =Habbits[SelectedCatagory]![selectedHabit]!['properties'];
+        Navigator.of(context).pushNamed(
+          "/HabitAddisionScree",
+        );
+      },
+      child: Container(
+        width: 380,
+        height: 200,
+        child: Stack(
+          children: [
+            Container(
+                width: 400,
                 height: 200,
                 decoration: ShapeDecoration(
-                  color: Theme.of(context).textTheme.titleMedium?.color,
+                  color: widget.color,
                   shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(35),
-                      bottomRight: Radius.circular(35),
+                      borderRadius: BorderRadius.all(Radius.circular(35))),
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 15.0,
+                      ),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 50.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 25,
+                                  child: Text(
+                                    insertLineBreaks(widget.starttime),
+                                    style:  TextStyle(
+                                      color: widget.starttime=="0000"?Color(0x7F1F1F1F):Color(0xFF1F1F1F),
+                                      fontSize: 16,
+                                      fontFamily: 'DM Sans',
+                                      fontWeight: FontWeight.w500,
+                                      height: 1,
+                                      letterSpacing: 0.48,
+                                    ),
+                                  ),
+                                ),
+                                 Padding(
+                                  padding: EdgeInsets.only(left: 10),
+                                  child: Text(
+                                    "|",
+                                    style: TextStyle(
+                                      color: widget.starttime=="0000" &&  widget.endtime=="0000"?Color(0x7F1F1F1F):Color(0xFF1F1F1F),
+                                      fontSize: 16,
+                                      fontFamily: 'DM Sans',
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 25,
+                                  child: Text(
+                                    insertLineBreaks(widget.endtime),
+                                    style:  TextStyle(
+                                      color: widget.endtime=="0000"?Color(0x7F1F1F1F):Color(0xFF1F1F1F),
+                                      fontSize: 16,
+                                      fontFamily: 'DM Sans',
+                                      fontWeight: FontWeight.w500,
+                                      height: 1,
+                                      letterSpacing: 0.48,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 20.0, left: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(bottom: 8.0, left: 5),
+                                  child: Text(
+                                    'Evening',
+                                    style: TextStyle(
+                                      color: Color(0xFF1F1F1F),
+                                      fontSize: 10,
+                                      fontFamily: 'DM Sans',
+                                      fontWeight: FontWeight.w500,
+                                      height: 0.12,
+                                      letterSpacing: 0.30,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 280,
+                                  child: Text(
+                                    '${widget.Habitname}',
+                                    style: const TextStyle(
+                                      color: Color(0xFF1F1F1F),
+                                      fontSize: 40,
+                                      fontFamily: 'DM Sans',
+                                      fontWeight: FontWeight.w500,
+                                      height: 1,
+                                      letterSpacing: 0.40,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
+                  ],
+                )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 65.0, right: 15),
+                  child: SvgPicture.asset(
+                    "${widget.icon}",
+                    color: const Color(0x271F1F1F),
                   ),
                 ),
-                child: Container(
+                Container(
                   width: 57,
-                  height: 155,
-                  child: Stack(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Center(
-                              child: GestureDetector(
-                                onLongPress: () async {
-                                  if (widget.value! < int.parse(target)) {
-                                    int v = widget.value + 1;
-                                    String Uid=await Sharedpref().getUid();
-
-                                    for (int i = 0;
-                                    i <
-                                        userhabitScreenController
-                                            .UserHabit
-                                            .value[widget.category]
-                                            .length;
-                                    i++) {
-                                      if (userhabitScreenController
-                                          .UserHabit.value[widget.category][i]
-                                          .containsKey(widget.Habitname)) {
-
-                                        setState(() {
-                                          userhabitScreenController
-                                              .UserHabit
-                                              .value[widget.category][i]
-                                          [widget.Habitname]
-                                          ['Progress']
-                                              .update(
-                                              DateFormat('dd-MM-yyyy')
-                                                  .format(selectedDate),
-                                                  (value) => v);
-                                        });
-                                        setState(() {
-                                          fancyCards = generateHabitCards(
-                                              userHabit:
-                                              userhabitScreenController
-                                                  .UserHabit.value,
-                                              state: whichState,
-                                              selectedDate: selectedDate);
-                                        });
-                                        Sharedpref().saveData(
-                                            userhabitScreenController
-                                                .UserHabit.value);
-
-                                        await Sharedpref().loadData().then((value) {
-                                          DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
-
-
-
-
-                                        });
-                                        BlocProvider.of<RoutineBloc>(
-                                            contextRoutineScreen)
-                                            .add(ListchangeEvent(
-                                            fancyCards: fancyCards,
-                                            state: whichState,
-                                            habits:
-                                            userhabitScreenController
-                                                .UserHabit.value));
-                                        BlocProvider.of<ProgressBloc>(
-                                            contextProgress)
-                                            .add(Progresschangeevent(
-                                            userhabitScreenController
-                                                .UserHabit.value));
-                                      } else if (val == int.parse(target)) {
-                                        userhabitScreenController
-                                            .UserHabit
-                                            .value[widget.category][i]
-                                        [widget.Habitname]['Progress']
-                                            .putIfAbsent(
-                                            DateFormat('dd-MM-yyyy')
-                                                .format(selectedDate),
-                                                () => 0);
-                                        userhabitScreenController
-                                            .UserHabit
-                                            .value[widget.category][i]
-                                        [widget.Habitname]['Progress']
-                                            .update(
-                                            DateFormat('dd-MM-yyyy')
-                                                .format(selectedDate),
-                                                (value) => int.parse(target));
-
-                                        userhabitScreenController
-                                            .UserHabit
-                                            .value[widget.category][i]
-                                        [widget.Habitname]
-                                        ['Completed']
-                                            .update(
-                                            DateFormat('dd-MM-yyyy')
-                                                .format(selectedDate),
-                                                (value) => true);
-
-                                        setState(() {
-                                          fancyCards = generateHabitCards(
-                                              userHabit:
-                                              userhabitScreenController
-                                                  .UserHabit.value,
-                                              state: whichState,
-                                              selectedDate: selectedDate);
-                                        });
-                                        Sharedpref().saveData(
-                                            userhabitScreenController
-                                                .UserHabit.value);
-                                        String Uid=await Sharedpref().getUid();
-                                        await Sharedpref().loadData().then((value) {
-                                          DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
-                                        });
-                                        BlocProvider.of<RoutineBloc>(
-                                            contextRoutineScreen)
-                                            .add(ListchangeEvent(
-                                            fancyCards: fancyCards,
-                                            state: whichState,
-                                            habits:
-                                            userhabitScreenController
-                                                .UserHabit.value));
-                                      }
-                                    }
-                                  }
-                                },
-                                  onTap: () async {
-
+                  height: 200,
+                  decoration: ShapeDecoration(
+                    color: Theme.of(context).textTheme.titleMedium?.color,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(35),
+                        bottomRight: Radius.circular(35),
+                      ),
+                    ),
+                  ),
+                  child: Container(
+                    width: 57,
+                    height: 155,
+                    child: Stack(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Center(
+                                child: GestureDetector(
+                                  onLongPress: () async {
                                     if (widget.value! < int.parse(target)) {
                                       int v = widget.value + 1;
                                       String Uid=await Sharedpref().getUid();
 
                                       for (int i = 0;
-                                          i <
-                                              userhabitScreenController
-                                                  .UserHabit
-                                                  .value[widget.category]
-                                                  .length;
-                                          i++) {
+                                      i <
+                                          userhabitScreenController
+                                              .UserHabit
+                                              .value[widget.category]
+                                              .length;
+                                      i++) {
                                         if (userhabitScreenController
                                             .UserHabit.value[widget.category][i]
                                             .containsKey(widget.Habitname)) {
@@ -375,18 +313,18 @@ class _FancyCardState extends State<FancyCard> {
                                             userhabitScreenController
                                                 .UserHabit
                                                 .value[widget.category][i]
-                                                    [widget.Habitname]
-                                                    ['Progress']
+                                            [widget.Habitname]
+                                            ['Progress']
                                                 .update(
-                                                    DateFormat('dd-MM-yyyy')
-                                                        .format(selectedDate),
+                                                DateFormat('dd-MM-yyyy')
+                                                    .format(selectedDate),
                                                     (value) => v);
                                           });
                                           setState(() {
                                             fancyCards = generateHabitCards(
                                                 userHabit:
-                                                    userhabitScreenController
-                                                        .UserHabit.value,
+                                                userhabitScreenController
+                                                    .UserHabit.value,
                                                 state: whichState,
                                                 selectedDate: selectedDate);
                                           });
@@ -418,35 +356,35 @@ class _FancyCardState extends State<FancyCard> {
                                           userhabitScreenController
                                               .UserHabit
                                               .value[widget.category][i]
-                                                  [widget.Habitname]['Progress']
+                                          [widget.Habitname]['Progress']
                                               .putIfAbsent(
-                                                  DateFormat('dd-MM-yyyy')
-                                                      .format(selectedDate),
+                                              DateFormat('dd-MM-yyyy')
+                                                  .format(selectedDate),
                                                   () => 0);
                                           userhabitScreenController
                                               .UserHabit
                                               .value[widget.category][i]
-                                                  [widget.Habitname]['Progress']
+                                          [widget.Habitname]['Progress']
                                               .update(
-                                                  DateFormat('dd-MM-yyyy')
-                                                      .format(selectedDate),
+                                              DateFormat('dd-MM-yyyy')
+                                                  .format(selectedDate),
                                                   (value) => int.parse(target));
 
                                           userhabitScreenController
                                               .UserHabit
                                               .value[widget.category][i]
-                                                  [widget.Habitname]
-                                                  ['Completed']
+                                          [widget.Habitname]
+                                          ['Completed']
                                               .update(
-                                                  DateFormat('dd-MM-yyyy')
-                                                      .format(selectedDate),
+                                              DateFormat('dd-MM-yyyy')
+                                                  .format(selectedDate),
                                                   (value) => true);
 
                                           setState(() {
                                             fancyCards = generateHabitCards(
                                                 userHabit:
-                                                    userhabitScreenController
-                                                        .UserHabit.value,
+                                                userhabitScreenController
+                                                    .UserHabit.value,
                                                 state: whichState,
                                                 selectedDate: selectedDate);
                                           });
@@ -458,311 +396,392 @@ class _FancyCardState extends State<FancyCard> {
                                             DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
                                           });
                                           BlocProvider.of<RoutineBloc>(
-                                                  contextRoutineScreen)
+                                              contextRoutineScreen)
                                               .add(ListchangeEvent(
-                                                  fancyCards: fancyCards,
-                                                  state: whichState,
-                                                  habits:
-                                                      userhabitScreenController
-                                                          .UserHabit.value));
+                                              fancyCards: fancyCards,
+                                              state: whichState,
+                                              habits:
+                                              userhabitScreenController
+                                                  .UserHabit.value));
                                         }
                                       }
                                     }
                                   },
-                                  child: SvgPicture.asset(
-                                    'assets/ImagesY/RoutineScreen/Addition.svg',
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor,
-                                    width: 24,
-                                  ))),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(top: 22.0, bottom: 12),
-                            child: SizedBox(
-                              width: 57,
-                              height: 24,
-                              child: Center(
-                                child: FittedBox(
-                                  fit: BoxFit.fitWidth,
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Text(
+                                    onTap: () async {
+
+                                      if (widget.value! < int.parse(target)) {
+                                        int v = widget.value + 1;
+                                        String Uid=await Sharedpref().getUid();
+
+                                        for (int i = 0;
+                                            i <
+                                                userhabitScreenController
+                                                    .UserHabit
+                                                    .value[widget.category]
+                                                    .length;
+                                            i++) {
+                                          if (userhabitScreenController
+                                              .UserHabit.value[widget.category][i]
+                                              .containsKey(widget.Habitname)) {
+
+                                            setState(() {
+                                              userhabitScreenController
+                                                  .UserHabit
+                                                  .value[widget.category][i]
+                                                      [widget.Habitname]
+                                                      ['Progress']
+                                                  .update(
+                                                      DateFormat('dd-MM-yyyy')
+                                                          .format(selectedDate),
+                                                      (value) => v);
+                                            });
+                                            setState(() {
+                                              fancyCards = generateHabitCards(
+                                                  userHabit:
+                                                      userhabitScreenController
+                                                          .UserHabit.value,
+                                                  state: whichState,
+                                                  selectedDate: selectedDate);
+                                            });
+                                            Sharedpref().saveData(
+                                                userhabitScreenController
+                                                    .UserHabit.value);
+
+                                            await Sharedpref().loadData().then((value) {
+                                              DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
+
+
+
+
+                                            });
+                                            BlocProvider.of<RoutineBloc>(
+                                                contextRoutineScreen)
+                                                .add(ListchangeEvent(
+                                                fancyCards: fancyCards,
+                                                state: whichState,
+                                                habits:
+                                                userhabitScreenController
+                                                    .UserHabit.value));
+                                            BlocProvider.of<ProgressBloc>(
+                                                contextProgress)
+                                                .add(Progresschangeevent(
+                                                userhabitScreenController
+                                                    .UserHabit.value));
+                                          } else if (val == int.parse(target)) {
+                                            userhabitScreenController
+                                                .UserHabit
+                                                .value[widget.category][i]
+                                                    [widget.Habitname]['Progress']
+                                                .putIfAbsent(
+                                                    DateFormat('dd-MM-yyyy')
+                                                        .format(selectedDate),
+                                                    () => 0);
+                                            userhabitScreenController
+                                                .UserHabit
+                                                .value[widget.category][i]
+                                                    [widget.Habitname]['Progress']
+                                                .update(
+                                                    DateFormat('dd-MM-yyyy')
+                                                        .format(selectedDate),
+                                                    (value) => int.parse(target));
+
+                                            userhabitScreenController
+                                                .UserHabit
+                                                .value[widget.category][i]
+                                                    [widget.Habitname]
+                                                    ['Completed']
+                                                .update(
+                                                    DateFormat('dd-MM-yyyy')
+                                                        .format(selectedDate),
+                                                    (value) => true);
+
+                                            setState(() {
+                                              fancyCards = generateHabitCards(
+                                                  userHabit:
+                                                      userhabitScreenController
+                                                          .UserHabit.value,
+                                                  state: whichState,
+                                                  selectedDate: selectedDate);
+                                            });
+                                            Sharedpref().saveData(
+                                                userhabitScreenController
+                                                    .UserHabit.value);
+                                            String Uid=await Sharedpref().getUid();
+                                            await Sharedpref().loadData().then((value) {
+                                              DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
+                                            });
+                                            BlocProvider.of<RoutineBloc>(
+                                                    contextRoutineScreen)
+                                                .add(ListchangeEvent(
+                                                    fancyCards: fancyCards,
+                                                    state: whichState,
+                                                    habits:
+                                                        userhabitScreenController
+                                                            .UserHabit.value));
+                                          }
+                                        }
+                                      }
+                                    },
+                                    child: SvgPicture.asset(
+                                      'assets/ImagesY/RoutineScreen/Addition.svg',
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                      width: 24,
+                                    ))),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 22.0, bottom: 12),
+                              child: SizedBox(
+                                width: 57,
+                                height: 24,
+                                child: Center(
+                                  child: FittedBox(
+                                    fit: BoxFit.fitWidth,
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(2.0),
+                                          child: Text(
+                                              textAlign: TextAlign.center,
+                                              '${widget.value}/$target',
+                                              style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .scaffoldBackgroundColor,
+                                                fontSize: 20,
+                                                fontFamily: 'DM Sans',
+                                                fontWeight: FontWeight.w500,
+                                                height: .8,
+                                                letterSpacing: 0.78,
+                                              )),
+                                        ),
+                                        Text(
                                             textAlign: TextAlign.center,
-                                            '${widget.value}/$target',
+                                            '${widget.units}',
                                             style: TextStyle(
                                               color: Theme.of(context)
                                                   .scaffoldBackgroundColor,
-                                              fontSize: 20,
+                                              fontSize: 15,
                                               fontFamily: 'DM Sans',
                                               fontWeight: FontWeight.w500,
                                               height: .8,
                                               letterSpacing: 0.78,
                                             )),
-                                      ),
-                                      Text(
-                                          textAlign: TextAlign.center,
-                                          '${widget.units}',
-                                          style: TextStyle(
-                                            color: Theme.of(context)
-                                                .scaffoldBackgroundColor,
-                                            fontSize: 15,
-                                            fontFamily: 'DM Sans',
-                                            fontWeight: FontWeight.w500,
-                                            height: .8,
-                                            letterSpacing: 0.78,
-                                          )),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          Center(
-                              child: GestureDetector(
-                                  onLongPress: () async {
-                                    if (val != 0) {
-                                      int v = 0;
+                            Center(
+                                child: GestureDetector(
+                                    onLongPress: () async {
+                                      if (val != 0) {
+                                        int v = 0;
 
-                                      v = widget.value - 1<0?0:widget.value - 1;
-                                      for (int i = 0;
-                                      i <
-                                          userhabitScreenController
-                                              .UserHabit
-                                              .value[widget.category]
-                                              .length;
-                                      i++) {
-                                        if (userhabitScreenController
-                                            .UserHabit.value[widget.category][i]
-                                            .containsKey(widget.Habitname)) {
-                                          setState(() {
+                                        v = widget.value - 1<0?0:widget.value - 1;
+                                        for (int i = 0;
+                                        i <
                                             userhabitScreenController
                                                 .UserHabit
                                                 .value[widget.category]
-                                            [i][widget.Habitname]
-                                            ['Progress']
-                                                .putIfAbsent(
-                                                DateFormat('dd-MM-yyyy')
-                                                    .format(selectedDate),
-                                                    () => 0);
-                                            userhabitScreenController
-                                                .UserHabit
-                                                .value[widget.category]
-                                            [i][widget.Habitname]
-                                            ['Progress']
-                                                .update(
-                                                DateFormat('dd-MM-yyyy')
-                                                    .format(selectedDate),
-                                                    (value) => v);
-                                          });
-                                          setState(() {
-                                            fancyCards = generateHabitCards(
-                                                userHabit: userhabitScreenController
-                                                    .UserHabit.value,
-                                                state: whichState,
-                                                selectedDate: selectedDate);
-                                          });
-                                          String Uid=await Sharedpref().getUid();
-                                          Sharedpref().saveData(
-                                              userhabitScreenController
-                                                  .UserHabit.value);
-
-                                          await Sharedpref().loadData().then((value) {
-                                            DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
-
-
-
-
-                                          });
-
-                                          BlocProvider.of<RoutineBloc>(
-                                              contextRoutineScreen)
-                                              .add(ListchangeEvent(
-                                              fancyCards: fancyCards,
-                                              state: whichState,
-                                              habits: userhabitScreenController
-                                                  .UserHabit.value));
-                                          BlocProvider.of<ProgressBloc>(
-                                              contextProgress)
-                                              .add(Progresschangeevent(
-                                              userhabitScreenController
-                                                  .UserHabit.value));
-
-                                        }
-                                      }
-
-
-                                    }
-                                  },
-                                  onTap: () async {
-                                    if (val != 0) {
-                                      int v = 0;
-
-                                      v = widget.value - 1<0?0:widget.value - 1;
-                                      for (int i = 0;
-                                          i <
+                                                .length;
+                                        i++) {
+                                          if (userhabitScreenController
+                                              .UserHabit.value[widget.category][i]
+                                              .containsKey(widget.Habitname)) {
+                                            setState(() {
                                               userhabitScreenController
                                                   .UserHabit
                                                   .value[widget.category]
-                                                  .length;
-                                          i++) {
-                                        if (userhabitScreenController
-                                            .UserHabit.value[widget.category][i]
-                                            .containsKey(widget.Habitname)) {
-                                          setState(() {
-                                            userhabitScreenController
-                                                .UserHabit
-                                                .value[widget.category]
-                                            [i][widget.Habitname]
-                                            ['Progress']
-                                                .putIfAbsent(
-                                                DateFormat('dd-MM-yyyy')
-                                                    .format(selectedDate),
-                                                    () => 0);
-                                            userhabitScreenController
-                                                .UserHabit
-                                                .value[widget.category]
-                                            [i][widget.Habitname]
-                                            ['Progress']
-                                                .update(
-                                                DateFormat('dd-MM-yyyy')
-                                                    .format(selectedDate),
-                                                    (value) => v);
-                                          });
-                                          setState(() {
-                                            fancyCards = generateHabitCards(
-                                                userHabit: userhabitScreenController
-                                                    .UserHabit.value,
+                                              [i][widget.Habitname]
+                                              ['Progress']
+                                                  .putIfAbsent(
+                                                  DateFormat('dd-MM-yyyy')
+                                                      .format(selectedDate),
+                                                      () => 0);
+                                              userhabitScreenController
+                                                  .UserHabit
+                                                  .value[widget.category]
+                                              [i][widget.Habitname]
+                                              ['Progress']
+                                                  .update(
+                                                  DateFormat('dd-MM-yyyy')
+                                                      .format(selectedDate),
+                                                      (value) => v);
+                                            });
+                                            setState(() {
+                                              fancyCards = generateHabitCards(
+                                                  userHabit: userhabitScreenController
+                                                      .UserHabit.value,
+                                                  state: whichState,
+                                                  selectedDate: selectedDate);
+                                            });
+                                            String Uid=await Sharedpref().getUid();
+                                            Sharedpref().saveData(
+                                                userhabitScreenController
+                                                    .UserHabit.value);
+
+                                            await Sharedpref().loadData().then((value) {
+                                              DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
+
+
+
+
+                                            });
+
+                                            BlocProvider.of<RoutineBloc>(
+                                                contextRoutineScreen)
+                                                .add(ListchangeEvent(
+                                                fancyCards: fancyCards,
                                                 state: whichState,
-                                                selectedDate: selectedDate);
-                                          });
-                                          String Uid=await Sharedpref().getUid();
-                                          Sharedpref().saveData(
-                                              userhabitScreenController
-                                                  .UserHabit.value);
+                                                habits: userhabitScreenController
+                                                    .UserHabit.value));
+                                            BlocProvider.of<ProgressBloc>(
+                                                contextProgress)
+                                                .add(Progresschangeevent(
+                                                userhabitScreenController
+                                                    .UserHabit.value));
 
-                                          await Sharedpref().loadData().then((value) {
-                                            DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
-
-
-
-
-                                          });
-
-                                          BlocProvider.of<RoutineBloc>(
-                                              contextRoutineScreen)
-                                              .add(ListchangeEvent(
-                                              fancyCards: fancyCards,
-                                              state: whichState,
-                                              habits: userhabitScreenController
-                                                  .UserHabit.value));
-                                          BlocProvider.of<ProgressBloc>(
-                                              contextProgress)
-                                              .add(Progresschangeevent(
-                                              userhabitScreenController
-                                                  .UserHabit.value));
-
+                                          }
                                         }
+
+
                                       }
+                                    },
+                                    onTap: () async {
+                                      if (val != 0) {
+                                        int v = 0;
+
+                                        v = widget.value - 1<0?0:widget.value - 1;
+                                        for (int i = 0;
+                                            i <
+                                                userhabitScreenController
+                                                    .UserHabit
+                                                    .value[widget.category]
+                                                    .length;
+                                            i++) {
+                                          if (userhabitScreenController
+                                              .UserHabit.value[widget.category][i]
+                                              .containsKey(widget.Habitname)) {
+                                            setState(() {
+                                              userhabitScreenController
+                                                  .UserHabit
+                                                  .value[widget.category]
+                                              [i][widget.Habitname]
+                                              ['Progress']
+                                                  .putIfAbsent(
+                                                  DateFormat('dd-MM-yyyy')
+                                                      .format(selectedDate),
+                                                      () => 0);
+                                              userhabitScreenController
+                                                  .UserHabit
+                                                  .value[widget.category]
+                                              [i][widget.Habitname]
+                                              ['Progress']
+                                                  .update(
+                                                  DateFormat('dd-MM-yyyy')
+                                                      .format(selectedDate),
+                                                      (value) => v);
+                                            });
+                                            setState(() {
+                                              fancyCards = generateHabitCards(
+                                                  userHabit: userhabitScreenController
+                                                      .UserHabit.value,
+                                                  state: whichState,
+                                                  selectedDate: selectedDate);
+                                            });
+                                            String Uid=await Sharedpref().getUid();
+                                            Sharedpref().saveData(
+                                                userhabitScreenController
+                                                    .UserHabit.value);
+
+                                            await Sharedpref().loadData().then((value) {
+                                              DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
 
 
-                                    }
-                                  },
-                                  child: SvgPicture.asset(
-                                    'assets/ImagesY/RoutineScreen/Subtract.svg',
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor,
-                                    width: 24,
-                                  ))),
-                          SizedBox(
-                            height: 50,
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                width: 365,
-                height: 40,
-                padding: const EdgeInsets.only(
-                    top: 9, left: 32, right: 46, bottom: 9),
-                clipBehavior: Clip.antiAlias,
-                decoration: const ShapeDecoration(
-                  color: Color(0x191F1F1F),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(44),
-                      bottomLeft: Radius.circular(44),
+
+
+                                            });
+
+                                            BlocProvider.of<RoutineBloc>(
+                                                contextRoutineScreen)
+                                                .add(ListchangeEvent(
+                                                fancyCards: fancyCards,
+                                                state: whichState,
+                                                habits: userhabitScreenController
+                                                    .UserHabit.value));
+                                            BlocProvider.of<ProgressBloc>(
+                                                contextProgress)
+                                                .add(Progresschangeevent(
+                                                userhabitScreenController
+                                                    .UserHabit.value));
+
+                                          }
+                                        }
+
+
+                                      }
+                                    },
+                                    child: SvgPicture.asset(
+                                      'assets/ImagesY/RoutineScreen/Subtract.svg',
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                      width: 24,
+                                    ))),
+                            SizedBox(
+                              height: 50,
+                            ),
+                          ],
+                        )
+                      ],
                     ),
                   ),
                 ),
-                child: Container(
-                  width: 191,
-                  height: 14,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 1.0),
-                              child: SvgPicture.asset(
-                                "assets/ImagesY/RoutineScreen/TagSmallIcon.svg",
-                                width: 14,
-                                height: 14,
-                              ),
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              '${widget.Hastag}',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontFamily: 'DM Sans',
-                                fontWeight: FontWeight.w500,
-                                height: 0.12,
-                                letterSpacing: 0.30,
-                              ),
-                            ),
-                          ],
-                        ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: 365,
+                  height: 40,
+                  padding: const EdgeInsets.only(
+                      top: 9, left: 32, right: 46, bottom: 9),
+                  clipBehavior: Clip.antiAlias,
+                  decoration: const ShapeDecoration(
+                    color: Color(0x191F1F1F),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(44),
+                        bottomLeft: Radius.circular(44),
                       ),
-                      const SizedBox(width: 20),
-                      GestureDetector(
-                        onTap: (){
-                          HapticFeedback.lightImpact();
-                        },
-                        child: Container(
+                    ),
+                  ),
+                  child: Container(
+                    width: 191,
+                    height: 14,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
                           child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(top: 1.0),
                                 child: SvgPicture.asset(
-                                  "assets/ImagesY/RoutineScreen/AddSubtask.svg",
+                                  "assets/ImagesY/RoutineScreen/TagSmallIcon.svg",
                                   width: 14,
                                   height: 14,
                                 ),
                               ),
                               const SizedBox(width: 5),
                               Text(
-                                '${widget.Subtask.length} sub task',
-                                style:  TextStyle(
-                                  color: (widget.Subtask.length<=0)?Color(0x7F1F1F1F):Colors.black,
+                                '${widget.Hastag}',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  color: Colors.black,
                                   fontSize: 14,
                                   fontFamily: 'DM Sans',
                                   fontWeight: FontWeight.w500,
@@ -773,193 +792,228 @@ class _FancyCardState extends State<FancyCard> {
                             ],
                           ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 20),
+                        GestureDetector(
+                          onTap: (){
+                            HapticFeedback.lightImpact();
+                          },
+                          child: Container(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 1.0),
+                                  child: SvgPicture.asset(
+                                    "assets/ImagesY/RoutineScreen/AddSubtask.svg",
+                                    width: 14,
+                                    height: 14,
+                                  ),
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  '${widget.Subtask.length} sub task',
+                                  style:  TextStyle(
+                                    color: (widget.Subtask.length<=0)?Color(0x7F1F1F1F):Colors.black,
+                                    fontSize: 14,
+                                    fontFamily: 'DM Sans',
+                                    fontWeight: FontWeight.w500,
+                                    height: 0.12,
+                                    letterSpacing: 0.30,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 2.0),
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GestureDetector(
-                            onTap: () async {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return LogsAdition(callback: (String log) async {
-                                    HapticFeedback.lightImpact();
-                                    for (int i = 0; i < userhabitScreenController.UserHabit.value[widget.category].length; i++){
+                )
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 2.0),
+                      child: Container(
+                        width: 48,
+                        height: 48,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              onTap: () async {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return LogsAdition(callback: (String log) async {
+                                      HapticFeedback.lightImpact();
+                                      for (int i = 0; i < userhabitScreenController.UserHabit.value[widget.category].length; i++){
 
-                                      if (userhabitScreenController
-                                          .UserHabit.value[widget.category][i]
-                                          .containsKey(widget.Habitname)){
+                                        if (userhabitScreenController
+                                            .UserHabit.value[widget.category][i]
+                                            .containsKey(widget.Habitname)){
 
-                                        setState(() {
-                                          userhabitScreenController
-                                              .UserHabit
-                                              .value[widget.category][i]
-                                          [widget.Habitname]["logs"]..update(
-                                              DateFormat('dd-MM-yyyy')
-                                                  .format(selectedDate),
-                                                  (value) => log);
-
+                                          setState(() {
+                                            userhabitScreenController
+                                                .UserHabit
+                                                .value[widget.category][i]
+                                            [widget.Habitname]["logs"]..update(
+                                                DateFormat('dd-MM-yyyy')
+                                                    .format(selectedDate),
+                                                    (value) => log);
 
 
-                                          userhabitScreenController
-                                              .UserHabit
-                                              .value[widget.category][i]
-                                          [widget.Habitname]['Completed']
-                                              .update(
-                                              DateFormat('dd-MM-yyyy')
-                                                  .format(selectedDate),
-                                                  (value) => !userhabitScreenController
-                                                  .UserHabit
-                                                  .value[widget.category]
-                                              [i]
-                                              [widget.Habitname]['Completed'][
-                                              DateFormat('dd-MM-yyyy')
-                                                  .format(selectedDate)]);
-                                          userhabitScreenController
-                                              .UserHabit
-                                              .value[widget.category]
-                                          [i][widget.Habitname]
-                                          ['Progress']
-                                              .update(
-                                              DateFormat('dd-MM-yyyy')
-                                                  .format(selectedDate),
-                                                  (value) => int.parse(userhabitScreenController
-                                                  .UserHabit
-                                                  .value[widget.category]
-                                              [i][widget.Habitname]
-                                              ['target']));
 
-                                          // done= UserHabit[widget.category][widget.index][widget.Habitname]['Completed'][DateFormat('dd-MM-yyyy').format(selectedDate)];
-                                        });
+                                            userhabitScreenController
+                                                .UserHabit
+                                                .value[widget.category][i]
+                                            [widget.Habitname]['Completed']
+                                                .update(
+                                                DateFormat('dd-MM-yyyy')
+                                                    .format(selectedDate),
+                                                    (value) => !userhabitScreenController
+                                                    .UserHabit
+                                                    .value[widget.category]
+                                                [i]
+                                                [widget.Habitname]['Completed'][
+                                                DateFormat('dd-MM-yyyy')
+                                                    .format(selectedDate)]);
+                                            userhabitScreenController
+                                                .UserHabit
+                                                .value[widget.category]
+                                            [i][widget.Habitname]
+                                            ['Progress']
+                                                .update(
+                                                DateFormat('dd-MM-yyyy')
+                                                    .format(selectedDate),
+                                                    (value) => int.parse(userhabitScreenController
+                                                    .UserHabit
+                                                    .value[widget.category]
+                                                [i][widget.Habitname]
+                                                ['target']));
 
-                                        setState(() {
-                                          fancyCards = generateHabitCards(
-                                              userHabit: userhabitScreenController
-                                                  .UserHabit.value,
-                                              state: whichState,
-                                              selectedDate: selectedDate);
-                                        });
-                                        Sharedpref().saveData(
-                                            userhabitScreenController.UserHabit.value);
-                                        String Uid=await Sharedpref().getUid();
+                                            // done= UserHabit[widget.category][widget.index][widget.Habitname]['Completed'][DateFormat('dd-MM-yyyy').format(selectedDate)];
+                                          });
 
-                                        await Sharedpref().loadData().then((value) {
-                                          print(value.length);
+                                          setState(() {
+                                            fancyCards = generateHabitCards(
+                                                userHabit: userhabitScreenController
+                                                    .UserHabit.value,
+                                                state: whichState,
+                                                selectedDate: selectedDate);
+                                          });
+                                          Sharedpref().saveData(
+                                              userhabitScreenController.UserHabit.value);
+                                          String Uid=await Sharedpref().getUid();
 
-                                          value.forEach((key, value2) {
-                                            value2.forEach((value3) {
-                                              value3.forEach((key4, value4) {
-                                                print(
-                                                    '$key4:  valuee ${value4['Completed']}');
-                                                value4['Completed']
-                                                    .forEach((key5, value5) {
-                                                  if (key5 ==
-                                                      DateFormat('dd-MM-yyyy')
-                                                          .format(selectedDate)) {
-                                                    print("matched $value5");
-                                                    // done[DateFormat('dd-MM-yyyy')
-                                                    //     .format(selectedDate)]=value5;
-                                                  }
+                                          await Sharedpref().loadData().then((value) {
+                                            print(value.length);
+
+                                            value.forEach((key, value2) {
+                                              value2.forEach((value3) {
+                                                value3.forEach((key4, value4) {
+                                                  print(
+                                                      '$key4:  valuee ${value4['Completed']}');
+                                                  value4['Completed']
+                                                      .forEach((key5, value5) {
+                                                    if (key5 ==
+                                                        DateFormat('dd-MM-yyyy')
+                                                            .format(selectedDate)) {
+                                                      print("matched $value5");
+                                                      // done[DateFormat('dd-MM-yyyy')
+                                                      //     .format(selectedDate)]=value5;
+                                                    }
+                                                  });
                                                 });
                                               });
                                             });
+                                            DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
+
                                           });
-                                          DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
+                                          BlocProvider.of<RoutineBloc>(contextRoutineScreen)
+                                              .add(ListchangeEvent(
+                                              fancyCards: fancyCards,
+                                              state: whichState,
+                                              habits: userhabitScreenController
+                                                  .UserHabit.value));
+                                          BlocProvider.of<ProgressBloc>(contextProgress)
+                                              .add(Progresschangeevent(
+                                              userhabitScreenController
+                                                  .UserHabit.value));
 
-                                        });
-                                        BlocProvider.of<RoutineBloc>(contextRoutineScreen)
-                                            .add(ListchangeEvent(
-                                            fancyCards: fancyCards,
-                                            state: whichState,
-                                            habits: userhabitScreenController
-                                                .UserHabit.value));
-                                        BlocProvider.of<ProgressBloc>(contextProgress)
-                                            .add(Progresschangeevent(
-                                            userhabitScreenController
-                                                .UserHabit.value));
 
+                                        }
 
                                       }
 
-                                    }
-
-                                  },); // Show the dialog
-                                },
-                              );
+                                    },); // Show the dialog
+                                  },
+                                );
 
 
 
-                            },
-                            child: Container(
-                              width: 48,
-                              height: 48,
-                              decoration: ShapeDecoration(
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                shape: OvalBorder(
-                                  side: BorderSide(
-                                    width: 2,
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor,
-                                  ),
-                                ),
-                              ),
+                              },
                               child: Container(
-                                width: 41,
-                                height: 41,
+                                width: 48,
+                                height: 48,
                                 decoration: ShapeDecoration(
                                   color:
                                       Theme.of(context).scaffoldBackgroundColor,
                                   shape: OvalBorder(
                                     side: BorderSide(
-                                        width: 3, color: widget.color),
+                                      width: 2,
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                    ),
                                   ),
                                 ),
-                                child: Visibility(
-                                  visible: widget.done,
-                                  //done[DateFormat('dd-MM-yyyy').format(selectedDate)]==true??true,
-                                  //UserHabit[widget.category][widget.index][widget.Habitname]['Completed'][DateFormat('dd-MM-yyyy').format(selectedDate)],
-                                  child: Center(
-                                    child: SvgPicture.asset(
-                                      "assets/ImagesY/RoutineScreen/HbitDonemark.svg",
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium
-                                          ?.color,
+                                child: Container(
+                                  width: 41,
+                                  height: 41,
+                                  decoration: ShapeDecoration(
+                                    color:
+                                        Theme.of(context).scaffoldBackgroundColor,
+                                    shape: OvalBorder(
+                                      side: BorderSide(
+                                          width: 3, color: widget.color),
+                                    ),
+                                  ),
+                                  child: Visibility(
+                                    visible: widget.done,
+                                    //done[DateFormat('dd-MM-yyyy').format(selectedDate)]==true??true,
+                                    //UserHabit[widget.category][widget.index][widget.Habitname]['Completed'][DateFormat('dd-MM-yyyy').format(selectedDate)],
+                                    child: Center(
+                                      child: SvgPicture.asset(
+                                        "assets/ImagesY/RoutineScreen/HbitDonemark.svg",
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium
+                                            ?.color,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  )
-                ],
-              ),
-            ],
-          )
-        ],
+                    )
+                  ],
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

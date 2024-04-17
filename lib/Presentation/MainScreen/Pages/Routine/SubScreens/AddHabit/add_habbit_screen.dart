@@ -341,9 +341,13 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                 SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
                                 SelectedColorIndex = 3;
+                                List<String> p=[];
+                                Habbits[SelectedCatagory]![
+                                selectedHabit]!['properties'].forEach((element) {
+                                  p.add(element.toString());
+                                });
                                 Properties =
-                                    Habbits[SelectedCatagory]![
-                                        selectedHabit]!['properties'];
+                                    p;
                                 Navigator.of(context2).pushNamed(
                                   "/HabitAddisionScree",
                                 );
@@ -446,6 +450,13 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
+                                List<String> p=[];
+                                Habbits[SelectedCatagory]![
+                                selectedHabit]!['properties'].forEach((element) {
+                                  p.add(element.toString());
+                                });
+                                print(Habbits[SelectedCatagory]![
+                                selectedHabit]!['properties']);
                                 selectedHabit = "Exercise";
 
                                 SelectedCatagory = "Staying fit";
@@ -453,9 +464,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                 target = "30";
                                 SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
-                                Properties =
-                                    Habbits[SelectedCatagory]![
-                                        selectedHabit]!['properties'];
+                                Properties = p;
                                 print(Properties);
                                 Navigator.of(context2).pushNamed(
                                   "/HabitAddisionScree",
@@ -563,12 +572,16 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
 
                                 SelectedCatagory = "Staying fit";
                                 target = "30";
+                                List<String> p=[];
+                                Habbits[SelectedCatagory]![
+                                selectedHabit]!['properties'].forEach((element) {
+                                  p.add(element.toString());
+                                });
                                 SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
                                 SelectedColorIndex = 1;
                                 Properties =
-                                    Habbits[SelectedCatagory]![
-                                        selectedHabit]!['properties'];
+                                    p;
                                 Navigator.of(context2).pushNamed(
                                   "/HabitAddisionScree",
                                 );
@@ -678,9 +691,13 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                 SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
                                 SelectedColorIndex = 3;
+                                List<String> p=[];
+                                Habbits[SelectedCatagory]![
+                                selectedHabit]!['properties'].forEach((element) {
+                                  p.add(element.toString());
+                                });
                                 Properties =
-                                    Habbits[SelectedCatagory]![
-                                        selectedHabit]!['properties'];
+                                    p;
                                 Navigator.of(context2).pushNamed(
                                   "/HabitAddisionScree",
                                 );
@@ -790,9 +807,13 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                 SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
                                 SelectedColorIndex = 0;
+                                List<String> p=[];
+                                Habbits[SelectedCatagory]![
+                                selectedHabit]!['properties'].forEach((element) {
+                                  p.add(element.toString());
+                                });
                                 Properties =
-                                    Habbits[SelectedCatagory]![
-                                        selectedHabit]!['properties'];
+                                   p;
                                 Navigator.of(context2).pushNamed(
                                   "/HabitAddisionScree",
                                 );
@@ -902,9 +923,12 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                 SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
                                 SelectedColorIndex = 3;
-                                Properties =
-                                    Habbits[SelectedCatagory]![
-                                        selectedHabit]!['properties'];
+                                List<String> p=[];
+                                Habbits[SelectedCatagory]![
+                                selectedHabit]!['properties'].forEach((element) {
+                                  p.add(element.toString());
+                                });
+                                Properties =p;
                                 Navigator.of(context2).pushNamed(
                                   "/HabitAddisionScree",
                                 );
@@ -1014,9 +1038,12 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                 SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
                                 SelectedColorIndex = 4;
-                                Properties =
-                                    Habbits[SelectedCatagory]![
-                                        selectedHabit]!['properties'];
+                                List<String> p=[];
+                                Habbits[SelectedCatagory]![
+                                selectedHabit]!['properties'].forEach((element) {
+                                  p.add(element.toString());
+                                });
+                                Properties =p;
                                 Navigator.of(context2).pushNamed(
                                   "/HabitAddisionScree",
                                 );
@@ -1125,9 +1152,12 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                 SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
                                 SelectedColorIndex = 4;
-                                Properties =
-                                    Habbits[SelectedCatagory]![
-                                        selectedHabit]!['properties'];
+                                List<String> p=[];
+                                Habbits[SelectedCatagory]![
+                                selectedHabit]!['properties'].forEach((element) {
+                                  p.add(element.toString());
+                                });
+                                Properties = p;
                                 Navigator.of(context2).pushNamed(
                                   "/HabitAddisionScree",
                                 );
@@ -1236,9 +1266,12 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                 SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
                                 SelectedColorIndex = 4;
-                                Properties =
-                                    Habbits[SelectedCatagory]![
-                                        selectedHabit]!['properties'];
+                                List<String> p=[];
+                                Habbits[SelectedCatagory]![
+                                selectedHabit]!['properties'].forEach((element) {
+                                  p.add(element.toString());
+                                });
+                                Properties = p;
                                 Navigator.of(context2).pushNamed(
                                   "/HabitAddisionScree",
                                 );
@@ -1387,18 +1420,26 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                               shrinkWrap: true,
                                 itemCount: CustomHabitNames.length,
                                 itemBuilder: (BuildContext context,int index){
+                                  print(Habbits['Custom']);
                                   return   Padding(
                                     padding: const EdgeInsets.only(left: 15.0),
                                     child: GestureDetector(
                                       onTap: () {
+
                                         selectedHabit = CustomHabitNames[index];
 
                                         SelectedCatagory = "Custom";
+                                        List<String> p=[];
+                                        Habbits[SelectedCatagory]![
+                                        selectedHabit]!['properties'].forEach((element) {
+                                          p.add(element.toString());
+                                        });
                                         target = "30";
                                         SelectedHabitIcon = Habbits[
                                         SelectedCatagory]![selectedHabit]!['Icon'];
-                                        SelectedColorIndex = 3;
-                                        Properties =properties;
+                                        SelectedColorIndex = Habbits[
+                                        SelectedCatagory]![selectedHabit]!['color']??0;
+                                        Properties =p;
                                         Navigator.of(context2).pushNamed(
                                           "/HabitAddisionScree",
                                         );
@@ -1661,13 +1702,16 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                               SelectedCatagory = "Staying fit";
                                               SelectedColorIndex = 1;
                                               target = "30";
+                                              List<String> p=[];
+                                              Habbits[SelectedCatagory]![
+                                              selectedHabit]!['properties'].forEach((element) {
+                                                p.add(element.toString());
+                                              });
                                               SelectedHabitIcon =
                                                   Habbits[
                                                           SelectedCatagory]![
                                                       selectedHabit]!['Icon'];
-                                              Properties = Habbits[
-                                                      SelectedCatagory]![
-                                                  selectedHabit]!['properties'];
+                                              Properties = p;
                                               print(Properties);
                                               Navigator.of(context2).pushNamed(
                                                 "/HabitAddisionScree",
@@ -1942,13 +1986,16 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                                   "Stress Relief";
                                               SelectedColorIndex = 0;
                                               target = "30";
+                                              List<String> p=[];
+                                              Habbits[SelectedCatagory]![
+                                              selectedHabit]!['properties'].forEach((element) {
+                                                p.add(element.toString());
+                                              });
                                               SelectedHabitIcon =
                                                   Habbits[
                                                           SelectedCatagory]![
                                                       selectedHabit]!['Icon'];
-                                              Properties = Habbits[
-                                                      SelectedCatagory]![
-                                                  selectedHabit]!['properties'];
+                                              Properties = p;
                                               print(Properties);
                                               Navigator.of(context2).pushNamed(
                                                 "/HabitAddisionScree",
@@ -2223,14 +2270,17 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                               SelectedCatagory =
                                                   "Healthy LifeStyle";
                                               target = "30";
+                                              List<String> p=[];
+                                              Habbits[SelectedCatagory]![
+                                              selectedHabit]!['properties'].forEach((element) {
+                                                p.add(element.toString());
+                                              });
                                               SelectedHabitIcon =
                                                   Habbits[
                                                           SelectedCatagory]![
                                                       selectedHabit]!['Icon'];
                                               SelectedColorIndex = 3;
-                                              Properties = Habbits[
-                                                      SelectedCatagory]![
-                                                  selectedHabit]!['properties'];
+                                              Properties = p;
                                               Navigator.of(context2).pushNamed(
                                                 "/HabitAddisionScree",
                                               );
@@ -2503,14 +2553,17 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
 
                                               SelectedCatagory = "Loved Ones";
                                               target = "30";
+                                              List<String> p=[];
+                                              Habbits[SelectedCatagory]![
+                                              selectedHabit]!['properties'].forEach((element) {
+                                                p.add(element.toString());
+                                              });
                                               SelectedHabitIcon =
                                                   Habbits[
                                                           SelectedCatagory]![
                                                       selectedHabit]!['Icon'];
                                               SelectedColorIndex = 6;
-                                              Properties = Habbits[
-                                                      SelectedCatagory]![
-                                                  selectedHabit]!['properties'];
+                                              Properties = p;
                                               Navigator.of(context2).pushNamed(
                                                 "/HabitAddisionScree",
                                               );
@@ -2791,9 +2844,12 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                                           SelectedCatagory]![
                                                       selectedHabit]!['Icon'];
                                               SelectedColorIndex = 2;
-                                              Properties = Habbits[
-                                                      SelectedCatagory]![
-                                                  selectedHabit]!['properties'];
+                                              List<String> p=[];
+                                              Habbits[SelectedCatagory]![
+                                              selectedHabit]!['properties'].forEach((element) {
+                                                p.add(element.toString());
+                                              });
+                                              Properties = p;
                                               Navigator.of(context2).pushNamed(
                                                 "/HabitAddisionScree",
                                               );
@@ -3064,10 +3120,13 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                                   Habbits[
                                                           SelectedCatagory]![
                                                       selectedHabit]!['Icon'];
+                                              List<String> p=[];
+                                              Habbits[SelectedCatagory]![
+                                              selectedHabit]!['properties'].forEach((element) {
+                                                p.add(element.toString());
+                                              });
                                               SelectedColorIndex = 4;
-                                              Properties = Habbits[
-                                                      SelectedCatagory]![
-                                                  selectedHabit]!['properties'];
+                                              Properties = p;
                                               Navigator.of(context2).pushNamed(
                                                 "/HabitAddisionScree",
                                               );

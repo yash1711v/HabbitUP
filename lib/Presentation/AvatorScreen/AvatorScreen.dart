@@ -128,7 +128,7 @@ class _AvatorScreenState extends State<AvatorScreen> {
                               EditAvator(context);
                             },
                             child: const Text(
-                              "Customize Avator",
+                              "Customize Avatar",
                               style: TextStyle(color: Colors.black),
                             ))),
                   ),

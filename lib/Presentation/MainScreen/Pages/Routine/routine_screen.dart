@@ -44,9 +44,6 @@ class _RoutineScreenState extends State<RoutineScreen> {
   }
   @override
   Widget build(BuildContext context) {
-
-
-
     return SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),
       child: Column(

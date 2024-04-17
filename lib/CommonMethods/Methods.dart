@@ -243,7 +243,7 @@ Map<String, Map<String, Map<String, dynamic>>> Habbits = {
         "No Reminder",
         "Morning Routine"
       ],
-      "changableunits": "Number",
+      "changableunits": "fruits",
       "Icon":
       "assets/ImagesY/RoutineScreen/AddhabbitIcons/HealthyLifeStyle/Eat_Fruit_Icon.svg"
     },
@@ -277,7 +277,7 @@ Map<String, Map<String, Map<String, dynamic>>> Habbits = {
         "No Reminder",
         "Morning Routine"
       ],
-      "changableunits": "Number",
+      "changableunits": "times",
       "Icon":
       "assets/ImagesY/RoutineScreen/AddhabbitIcons/HealthyLifeStyle/Eat_Health-Meals.svg"
     },
@@ -289,7 +289,7 @@ Map<String, Map<String, Map<String, dynamic>>> Habbits = {
         "No Reminder",
         "Morning Routine"
       ],
-      "changableunits": "Number",
+      "changableunits": "cup",
       "Icon":
       "assets/ImagesY/RoutineScreen/AddhabbitIcons/HealthyLifeStyle/limit_Caffien_icon.svg"
     },
@@ -313,7 +313,7 @@ Map<String, Map<String, Map<String, dynamic>>> Habbits = {
         "No Reminder",
         "Morning Routine"
       ],
-      "changableunits": "Number",
+      "changableunits": "times",
       "Icon":
       "assets/ImagesY/RoutineScreen/AddhabbitIcons/HealthyLifeStyle/Limit_Sugar_Icons.svg"
     },
@@ -337,7 +337,7 @@ Map<String, Map<String, Map<String, dynamic>>> Habbits = {
         "No Reminder",
         "Morning Routine"
       ],
-      "changableunits": "Number",
+      "changableunits": "times",
       "Icon":
       "assets/ImagesY/RoutineScreen/AddhabbitIcons/HealthyLifeStyle/Skin_care_icon.svg"
     },
@@ -516,7 +516,7 @@ Map<String, Map<String, Map<String, dynamic>>> Habbits = {
         "No Reminder",
         "Morning Routine"
       ],
-      "changableunits": "Number",
+      "changableunits": "times",
       "Icon":
       "assets/ImagesY/RoutineScreen/AddhabbitIcons/Others/Brush_2_times_Icon.svg"
     },
