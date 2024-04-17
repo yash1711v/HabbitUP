@@ -16,11 +16,11 @@ class AddHabitBloc extends Bloc<AddHabitEvent, AddHabitState> {
       if(event is StayingFitClickedEvent){
         List<String> Habitnames=[];
         List<String> HabitIcons=[];
-        Methods().Habbits["Staying fit"]?.forEach((key1, value) {
+        Habbits["Staying fit"]?.forEach((key1, value) {
           Habitnames.add(key1);
-          Methods().Habbits["Staying fit"]![key1]!.forEach((key, value) {
+          Habbits["Staying fit"]![key1]!.forEach((key, value) {
             if(key=="Icon") {
-              HabitIcons.add(Methods().Habbits["Staying fit"]![key1]![key]);
+              HabitIcons.add(Habbits["Staying fit"]![key1]![key]);
             }
           });
         });
@@ -30,11 +30,11 @@ class AddHabitBloc extends Bloc<AddHabitEvent, AddHabitState> {
       if(event is StressReliefClickedEvent){
         List<String> Habitnames=[];
         List<String> HabitIcons=[];
-        Methods().Habbits["Stress Relief"]?.forEach((key1, value) {
+        Habbits["Stress Relief"]?.forEach((key1, value) {
           Habitnames.add(key1);
-          Methods().Habbits["Stress Relief"]![key1]!.forEach((key, value) {
+          Habbits["Stress Relief"]![key1]!.forEach((key, value) {
             if(key=="Icon") {
-              HabitIcons.add(Methods().Habbits["Stress Relief"]![key1]![key]);
+              HabitIcons.add(Habbits["Stress Relief"]![key1]![key]);
             }
           });
         });
@@ -43,11 +43,11 @@ class AddHabitBloc extends Bloc<AddHabitEvent, AddHabitState> {
       if(event is HealthyLifeStyleClickedEvent){
         List<String> Habitnames=[];
         List<String> HabitIcons=[];
-        Methods().Habbits["Healthy LifeStyle"]?.forEach((key1, value) {
+        Habbits["Healthy LifeStyle"]?.forEach((key1, value) {
           Habitnames.add(key1);
-          Methods().Habbits["Healthy LifeStyle"]![key1]!.forEach((key, value) {
+          Habbits["Healthy LifeStyle"]![key1]!.forEach((key, value) {
             if(key=="Icon") {
-              HabitIcons.add(Methods().Habbits["Healthy LifeStyle"]![key1]![key]);
+              HabitIcons.add(Habbits["Healthy LifeStyle"]![key1]![key]);
             }
           });
         });
@@ -56,11 +56,11 @@ class AddHabitBloc extends Bloc<AddHabitEvent, AddHabitState> {
        if(event is LovedOnesClickedEvent){
          List<String> Habitnames=[];
          List<String> HabitIcons=[];
-         Methods().Habbits["Loved Ones"]?.forEach((key1, value) {
+         Habbits["Loved Ones"]?.forEach((key1, value) {
            Habitnames.add(key1);
-           Methods().Habbits["Loved Ones"]![key1]!.forEach((key, value) {
+           Habbits["Loved Ones"]![key1]!.forEach((key, value) {
              if(key=="Icon") {
-               HabitIcons.add(Methods().Habbits["Loved Ones"]![key1]![key]);
+               HabitIcons.add(Habbits["Loved Ones"]![key1]![key]);
              }
            });
          });
@@ -69,11 +69,11 @@ class AddHabitBloc extends Bloc<AddHabitEvent, AddHabitState> {
        if(event is PersonalFinanceEvent){
          List<String> Habitnames=[];
          List<String> HabitIcons=[];
-         Methods().Habbits["Personal Finance"]?.forEach((key1, value) {
+         Habbits["Personal Finance"]?.forEach((key1, value) {
            Habitnames.add(key1);
-           Methods().Habbits["Personal Finance"]![key1]!.forEach((key, value) {
+           Habbits["Personal Finance"]![key1]!.forEach((key, value) {
              if(key=="Icon") {
-               HabitIcons.add(Methods().Habbits["Personal Finance"]![key1]![key]);
+               HabitIcons.add(Habbits["Personal Finance"]![key1]![key]);
              }
            });
          });
@@ -82,11 +82,11 @@ class AddHabitBloc extends Bloc<AddHabitEvent, AddHabitState> {
        if(event is OthersEvent){
          List<String> Habitnames=[];
          List<String> HabitIcons=[];
-         Methods().Habbits["Others"]?.forEach((key1, value) {
+         Habbits["Others"]?.forEach((key1, value) {
            Habitnames.add(key1);
-           Methods().Habbits["Others"]![key1]!.forEach((key, value) {
+           Habbits["Others"]![key1]!.forEach((key, value) {
              if(key=="Icon") {
-               HabitIcons.add(Methods().Habbits["Others"]![key1]![key]);
+               HabitIcons.add(Habbits["Others"]![key1]![key]);
              }
            });
          });
@@ -95,11 +95,11 @@ class AddHabitBloc extends Bloc<AddHabitEvent, AddHabitState> {
        if(event is CustomEvent){
          List<String> Habitnames=[];
          List<String> HabitIcons=[];
-         Methods().Habbits["Custom"]?.forEach((key1, value) {
+         Habbits["Custom"]?.forEach((key1, value) {
            Habitnames.add(key1);
-           Methods().Habbits["Custom"]![key1]!.forEach((key, value) {
+           Habbits["Custom"]![key1]!.forEach((key, value) {
              if(key=="Icon") {
-               HabitIcons.add(Methods().Habbits["Custom"]![key1]![key]);
+               HabitIcons.add(Habbits["Custom"]![key1]![key]);
              }
            });
          });

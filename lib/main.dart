@@ -39,6 +39,10 @@ Future<void> main() async {
     print(value.length);
     userhabitScreenController.UserHabit.value=value;
   });
+  await Sharedpref().loadHabits().then((value) {
+    print(value['Custom']);
+    Habbits=value;
+  });
   await initializeService();
   // await AndroidAlarmManager.initialize();
   // final int helloAlarmID = 200;

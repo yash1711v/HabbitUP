@@ -23,7 +23,7 @@ DateTime selectedDate = DateTime.now();
 
 
 //--------------------habit adisionscreen Variables
-List<String> Properties = Methods().Habbits[
+List<String> Properties = Habbits[
 SelectedCatagory]![selectedHabit]!['properties'];
 int SelectedIndex = SelectedColorIndex;
 

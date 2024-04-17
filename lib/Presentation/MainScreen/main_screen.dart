@@ -8,6 +8,7 @@ import 'package:HabitUp/Presentation/MainScreen/Pages/Routine/routine_bloc.dart'
 import 'package:HabitUp/Presentation/MainScreen/main_screen_bloc.dart';
 
 
+import '../../CommonMethods/Methods.dart';
 import '../../CommonMethods/Variable.dart';
 import '../../Widgets/BottomnavBar/bottom_Navbar.dart';
 import 'Pages/More/more_screen.dart';
@@ -26,6 +27,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('Value--->${Habbits["Custom"]}');
 
     return Scaffold(
       body: BlocBuilder<MainScreenBloc, MainScreenState>(

@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../../../../../../CommonMethods/Methods.dart';
 import '../../../../../../../../../CommonMethods/Variable.dart';
+import '../../../../../../../../../FirebaseFunctionality/DatabaseFeatures.dart';
+import '../../../../../../../../../LocalStorage/SharedPref/Sharedpref.dart';
 import '../../../../../../../../../Widgets/BottomSheet/Duration/duration_bloc.dart';
 import '../../../../../../../../../Widgets/BottomSheet/Duration/duration_of_habit.dart';
 import '../../../../../../../../../Widgets/BottomSheet/IconChangeBottomSheet/icon_change_bottomsheet.dart';
@@ -14,6 +17,8 @@ import '../../../../../../../../../Widgets/BottomSheet/RepeatsEveryDay/bottom_sh
 import '../../../../../../../../../Widgets/BottomSheet/RepeatsEveryDay/bottom_sheet_bloc.dart';
 import '../../../../../../../../../Widgets/BottomSheet/TagBottomSheet/tag_bottom_sheet.dart';
 import '../../../../../../../../../Widgets/CustomDialogBox.dart';
+import '../../../../../../Progress/progress_bloc.dart';
+import '../../../../../routine_bloc.dart';
 import '../habbit_addision_ screen.dart';
 List<String> properties = [
   "Repeats every day",
@@ -22,6 +27,35 @@ List<String> properties = [
   "No Reminder",
   "Morning Routine"
 ];
+List<String> colorsforsaving = [
+  "0xFF9D6BCE",
+  "0xFFF36C00",
+  "0xFFA8E32C",
+  "0xFF01BBF6",
+  "0xFFD03C91",
+  "0xFFFEF656",
+  "0xFFFE8596",
+  "0xFFF69140",
+  "0xFFCCF379",
+  "0xFF9EB8DD",
+  "0xFFFDD7F0",
+  "0xFFF5EDC9",
+];
+late Map<String,List<int>>datesOnwhichTheHabbitsAreList={
+  "January":[],
+  "February":[],
+  "March":[],
+  "April":[],
+  "May":[],
+  "June":[],
+  "July":[],
+  "August":[],
+  "September":[],
+  "October":[],
+  "November":[],
+  "December":[],
+};
+List<String> reminder=[];
 class CustomHabitAdission extends StatefulWidget {
   const CustomHabitAdission({super.key});
 
@@ -110,7 +144,99 @@ class _CustomHabitAdissionState extends State<CustomHabitAdission> {
           Padding(
               padding: const EdgeInsets.only(right: 10, left: 10),
               child: TextButton(
-                onPressed: () async {},
+                onPressed: () async {
+                  if(doesHabitExist(userhabitScreenController.UserHabit.value['Custom']==null?[]:userhabitScreenController.UserHabit.value["Custom"], "$SelectedHabitname")){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                        backgroundColor: Theme.of(context).inputDecorationTheme.fillColor,
+                        shape: const RoundedRectangleBorder(
+                          // side: BorderSide(width: borderWidth, color: borderColor),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        content: Text("Habit With This Name Already  Exist Please Change The Name OR Change The Habit",style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color,),)));
+                  }else{
+                    setState(() {
+                      Habbits["Custom"]!.putIfAbsent(SelectedHabitname, () => {
+                        "color ": SelectedColorIndex,
+                        "Icon": habitIcon,
+                        "properties": [
+                          "Repeats every day",
+                          "Set a target",
+                          "Time: All day",
+                          "No Reminder",
+                          "Morning Routine"
+                        ],
+                        "changableunits": "",
+                      });
+                    });
+
+                    print('Value--->${Habbits["Custom"]}');
+
+                    userhabitScreenController.UserHabit.value.putIfAbsent("Custom", () => []);
+                    datesOnwhichTheHabbitsAreSet.forEach((key, value) {
+                      datesOnwhichTheHabbitsAreList[key]=datesOnwhichTheHabbitsAreSet[key]!.toList();
+
+                    });
+                    reminder=Reminders.toList();
+                    setState(() {
+                      userhabitScreenController.UserHabit.value["Custom"].add({
+                        SelectedHabitname: {
+                          "colors": colorsforsaving[SelectedColorIndex],
+                          "icon": habitIcon,
+                          "dates": datesOnwhichTheHabbitsAreList, // Convert set to list
+                          "Subtasks": Subtasks.toList(),
+                          "target": target,
+                          "Reminders": reminder, // Convert set to list
+                          "Completed": generateDateMap(),
+                          "Progress": generateDateMapProgress(),
+                          "startTime":startTime.isNotEmpty?startTime:"0000",
+                          "endTime":endTime.isNotEmpty?endTime:"0000",
+                          "Hastag":Tags[SelectedIndexfortags],
+                          "logs":generateDateMapLogs(),
+                          "changableunits": "",
+                        }
+                      });
+                    });
+
+
+
+                    Sharedpref().saveHabits(Habbits);
+
+
+
+                    Sharedpref().saveData(userhabitScreenController.UserHabit.value);
+                    String Uid=await Sharedpref().getUid();
+                    await Sharedpref().loadData().then((value) {
+                      value.forEach((key, value2) {
+                        value2.forEach((element) {
+                          element.forEach((key3,value3) {
+
+                            value3.forEach((key4, value4) {
+                              print('key $key4: \n value $value4');});
+
+                          });
+                        });
+                      });
+
+                      DatabaseFeatures().updateUserhabits(UserHabits: value, Uid: Uid);
+                    });
+
+                    BlocProvider.of<RoutineBloc>(contextRoutineScreen).add(ListchangeEvent(fancyCards: fancyCards,state: whichState, habits: userhabitScreenController.UserHabit.value));
+                    Navigator.pushNamed(context, '/MainScreen');
+                    ScaffoldMessenger.of(context).showSnackBar(   SnackBar(
+                        backgroundColor: Theme.of(context).inputDecorationTheme.fillColor,
+                        shape: const RoundedRectangleBorder(
+                          // side: BorderSide(width: borderWidth, color: borderColor),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        content: Text("Habit  Exists but added",style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color,),)));
+                  }
+                    BlocProvider.of<ProgressBloc>(contextProgress).add(Progresschangeevent(userhabitScreenController.UserHabit.value));
+
+
+
+
+                },
                 child: Text(
                   "Create",
                   style: TextStyle(

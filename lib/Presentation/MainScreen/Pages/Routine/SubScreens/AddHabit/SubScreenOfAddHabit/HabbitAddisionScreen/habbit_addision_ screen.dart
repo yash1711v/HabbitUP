@@ -165,7 +165,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                               "endTime":endTime.isNotEmpty?endTime:"0000",
                               "Hastag":Tags[SelectedIndexfortags],
                               "logs":generateDateMapLogs(),
-                              "changableunits": Methods().Habbits[SelectedCatagory]![selectedHabit]!['changableunits'],
+                              "changableunits": Habbits[SelectedCatagory]![selectedHabit]!['changableunits'],
                             }
                           });
                         });
@@ -197,7 +197,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                                 "endTime":endTime.isNotEmpty?endTime:"0000",
                                 "Hastag":Tags[SelectedIndexfortags],
                                 "logs":generateDateMapLogs(),
-                                "changableunits": Methods().Habbits[SelectedCatagory]![selectedHabit]!['changableunits'],
+                                "changableunits": Habbits[SelectedCatagory]![selectedHabit]!['changableunits'],
                               }
                             });
                           });
@@ -353,8 +353,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                     width: 319,
                     height: 268,
                     child: ListView.builder(
-                      itemCount: Methods()
-                          .Habbits[SelectedCatagory]![selectedHabit]![
+                      itemCount: Habbits[SelectedCatagory]![selectedHabit]![
                               'properties']
                           .length, // Assuming you have 5 containers
                       itemBuilder: (context, index) {
@@ -371,9 +370,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                               topRight: Radius.circular(20),
                             ),
                           );
-                        } else if (index ==
-                            Methods()
-                                    .Habbits[SelectedCatagory]![selectedHabit]![
+                        } else if (index == Habbits[SelectedCatagory]![selectedHabit]![
                                         'properties']
                                     .length -
                                 1) {
@@ -439,7 +436,7 @@ class _HabbitAddisionScreenState extends State<HabbitAddisionScreen> {
                                                     icon: habitIcon,
                                                     target: InputValidator.validateInput(
                                                         Unit.text,
-                                                        unit: Methods().Habbits[
+                                                        unit: Habbits[
                                                                     SelectedCatagory]![
                                                                 selectedHabit]![
                                                             "changableunits"]),

@@ -1,19 +1,35 @@
 {
   "project_info": {
     "project_number": "939913727709",
-    "firebase_url": "https://HabitUp-870ac-default-rtdb.firebaseio.com",
-    "project_id": "HabitUp-870ac",
-    "storage_bucket": "HabitUp-870ac.appspot.com"
+    "firebase_url": "https://habitup-870ac-default-rtdb.firebaseio.com",
+    "project_id": "habitup-870ac",
+    "storage_bucket": "habitup-870ac.appspot.com"
   },
   "client": [
     {
       "client_info": {
         "mobilesdk_app_id": "1:939913727709:android:8ae3e2cd004322a08cd534",
         "android_client_info": {
-          "package_name": "com.example.HabitUp"
+          "package_name": "com.example.habitup"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "939913727709-m0bbrvn26bvojbivlb7ienfqsrp958b5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.habitup",
+            "certificate_hash": "9958a11f4dabf22d3cfadcc5ec2ff490e2b8c1c0"
+          }
+        },
+        {
+          "client_id": "939913727709-vjc08ps2cgi9e4ids519eq7sdhl9k7cv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.habitup",
+            "certificate_hash": "29532b7a7a40e4bdaad8e81b516861fafe23e8a8"
+          }
+        },
         {
           "client_id": "939913727709-0sh382crktp3m177j3u65k63u2h6jtls.apps.googleusercontent.com",
           "client_type": 3
@@ -35,7 +51,7 @@
               "client_id": "939913727709-u1psnfirk02mrpd3393poac9gpoa8ekm.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.HabitUp"
+                "bundle_id": "com.example.habitup"
               }
             }
           ]
@@ -46,7 +62,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:939913727709:android:c4e91889b163f7958cd534",
         "android_client_info": {
-          "package_name": "com.habitapps.HabitUp"
+          "package_name": "com.habitapps.habitup"
         }
       },
       "oauth_client": [
@@ -54,7 +70,7 @@
           "client_id": "939913727709-0seaqvs90aeeqd6h9uoko535m1ti1ijh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.habitapps.HabitUp",
+            "package_name": "com.habitapps.habitup",
             "certificate_hash": "f24b3c34bdd9ac8900870794ecca141b81afe3c7"
           }
         },
@@ -62,7 +78,7 @@
           "client_id": "939913727709-2063qroqil41a2upvu0lviabprs7f5qp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.habitapps.HabitUp",
+            "package_name": "com.habitapps.habitup",
             "certificate_hash": "e17eef8ba5e9cfe85b00c0b3ac02049f65cd8baa"
           }
         },
@@ -70,7 +86,7 @@
           "client_id": "939913727709-hjl3m5lvlhuskd98cnhlm55sl4911rt4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.habitapps.HabitUp",
+            "package_name": "com.habitapps.habitup",
             "certificate_hash": "9958a11f4dabf22d3cfadcc5ec2ff490e2b8c1c0"
           }
         },
@@ -95,7 +111,7 @@
               "client_id": "939913727709-u1psnfirk02mrpd3393poac9gpoa8ekm.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.HabitUp"
+                "bundle_id": "com.example.habitup"
               }
             }
           ]

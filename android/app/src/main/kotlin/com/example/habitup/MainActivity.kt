@@ -1,4 +1,4 @@
-package com.example.HabitUp
+package com.habitapps.habitup
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -51,22 +51,23 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyB7CS9_HeDUCKrYFrQYW1BoAPIIN3r7pLU',
-    appId: '1:939913727709:android:8ae3e2cd004322a08cd534',
+    appId: '1:939913727709:android:c4e91889b163f7958cd534',
     messagingSenderId: '939913727709',
-    projectId: 'HabitUp-870ac',
-    databaseURL: 'https://HabitUp-870ac-default-rtdb.firebaseio.com',
-    storageBucket: 'HabitUp-870ac.appspot.com',
+    projectId: 'habitup-870ac',
+    databaseURL: 'https://habitup-870ac-default-rtdb.firebaseio.com',
+    storageBucket: 'habitup-870ac.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDDpf3VMit51URK_tYeurCq3W_qGb_PymU',
-    appId: '1:939913727709:ios:29b8a4f651c3c3178cd534',
+    appId: '1:939913727709:ios:e237c4bd3864c0648cd534',
     messagingSenderId: '939913727709',
-    projectId: 'HabitUp-870ac',
-    databaseURL: 'https://HabitUp-870ac-default-rtdb.firebaseio.com',
-    storageBucket: 'HabitUp-870ac.appspot.com',
+    projectId: 'habitup-870ac',
+    databaseURL: 'https://habitup-870ac-default-rtdb.firebaseio.com',
+    storageBucket: 'habitup-870ac.appspot.com',
     androidClientId: '939913727709-0seaqvs90aeeqd6h9uoko535m1ti1ijh.apps.googleusercontent.com',
-    iosClientId: '939913727709-u1psnfirk02mrpd3393poac9gpoa8ekm.apps.googleusercontent.com',
-    iosBundleId: 'com.example.HabitUp',
+    iosClientId: '939913727709-tmua14279ilgvmp5kb59cm4t01u4v30i.apps.googleusercontent.com',
+    iosBundleId: 'com.habitapps.habitup',
   );
+
 }

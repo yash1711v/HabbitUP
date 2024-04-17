@@ -1,3 +1,4 @@
+import 'package:HabitUp/Presentation/MainScreen/Pages/Routine/SubScreens/AddHabit/SubScreenOfAddHabit/HabbitAddisionScreen/CustomHabit/CustomHabitAdission.dart';
 import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,30 @@ class AddHabitScreen extends StatefulWidget {
 class _AddHabitScreenState extends State<AddHabitScreen> {
   final TextEditingController controller = TextEditingController();
   bool searconTap = false;
+  List<String> CustomHabitNames=[];
+  List<String> CustomHabitIcons=[];
 
+  void Customames(){
+    Habbits["Custom"]?.forEach((key1, value) {
+      setState(() {
+        CustomHabitNames.add(key1);
+      });
+      Habbits["Custom"]![key1]!.forEach((key, value) {
+        if(key=="Icon") {
+          setState(() {
+            CustomHabitIcons.add(Habbits["Custom"]![key1]![key]);
+
+          });
+        }
+      });
+    });
+  }
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Customames();
+  }
   @override
   Widget build(BuildContext context2) {
     return BlocBuilder<AddHabitBloc, AddHabitState>(
@@ -107,7 +131,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
 
                   },
                   onSubmitted: (value) {
-                    SearchedResult(Methods().Habbits, value);
+                    SearchedResult(Habbits, value);
                     setState(() {
                       searconTap=!searconTap;
                     });
@@ -171,10 +195,10 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
 
                                 SelectedCatagory = "Healthy LifeStyle";
                                 target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
+                                SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
                                 SelectedColorIndex = 3;
-                                Properties = Methods().Habbits[SelectedCatagory]![
+                                Properties = Habbits[SelectedCatagory]![
                                     selectedHabit]!['properties'];
                                 Navigator.of(context2).pushNamed(
                                   "/HabitAddisionScree",
@@ -314,11 +338,11 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
 
                                 SelectedCatagory = "Healthy LifeStyle";
                                 target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
+                                SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
                                 SelectedColorIndex = 3;
                                 Properties =
-                                    Methods().Habbits[SelectedCatagory]![
+                                    Habbits[SelectedCatagory]![
                                         selectedHabit]!['properties'];
                                 Navigator.of(context2).pushNamed(
                                   "/HabitAddisionScree",
@@ -427,10 +451,10 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                 SelectedCatagory = "Staying fit";
                                 SelectedColorIndex = 1;
                                 target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
+                                SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
                                 Properties =
-                                    Methods().Habbits[SelectedCatagory]![
+                                    Habbits[SelectedCatagory]![
                                         selectedHabit]!['properties'];
                                 print(Properties);
                                 Navigator.of(context2).pushNamed(
@@ -539,11 +563,11 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
 
                                 SelectedCatagory = "Staying fit";
                                 target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
+                                SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
                                 SelectedColorIndex = 1;
                                 Properties =
-                                    Methods().Habbits[SelectedCatagory]![
+                                    Habbits[SelectedCatagory]![
                                         selectedHabit]!['properties'];
                                 Navigator.of(context2).pushNamed(
                                   "/HabitAddisionScree",
@@ -651,11 +675,11 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
 
                                 SelectedCatagory = "Healthy LifeStyle";
                                 target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
+                                SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
                                 SelectedColorIndex = 3;
                                 Properties =
-                                    Methods().Habbits[SelectedCatagory]![
+                                    Habbits[SelectedCatagory]![
                                         selectedHabit]!['properties'];
                                 Navigator.of(context2).pushNamed(
                                   "/HabitAddisionScree",
@@ -763,11 +787,11 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
 
                                 SelectedCatagory = "Stress Relief";
                                 target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
+                                SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
                                 SelectedColorIndex = 0;
                                 Properties =
-                                    Methods().Habbits[SelectedCatagory]![
+                                    Habbits[SelectedCatagory]![
                                         selectedHabit]!['properties'];
                                 Navigator.of(context2).pushNamed(
                                   "/HabitAddisionScree",
@@ -875,11 +899,11 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
 
                                 SelectedCatagory = "Healthy LifeStyle";
                                 target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
+                                SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
                                 SelectedColorIndex = 3;
                                 Properties =
-                                    Methods().Habbits[SelectedCatagory]![
+                                    Habbits[SelectedCatagory]![
                                         selectedHabit]!['properties'];
                                 Navigator.of(context2).pushNamed(
                                   "/HabitAddisionScree",
@@ -987,11 +1011,11 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
 
                                 SelectedCatagory = "Others";
                                 target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
+                                SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
                                 SelectedColorIndex = 4;
                                 Properties =
-                                    Methods().Habbits[SelectedCatagory]![
+                                    Habbits[SelectedCatagory]![
                                         selectedHabit]!['properties'];
                                 Navigator.of(context2).pushNamed(
                                   "/HabitAddisionScree",
@@ -1098,11 +1122,11 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                 selectedHabit = "Study";
                                 SelectedCatagory = "Others";
                                 target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
+                                SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
                                 SelectedColorIndex = 4;
                                 Properties =
-                                    Methods().Habbits[SelectedCatagory]![
+                                    Habbits[SelectedCatagory]![
                                         selectedHabit]!['properties'];
                                 Navigator.of(context2).pushNamed(
                                   "/HabitAddisionScree",
@@ -1209,11 +1233,11 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                 selectedHabit = "Brush 2 times a day";
                                 SelectedCatagory = "Others";
                                 target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
+                                SelectedHabitIcon = Habbits[
                                     SelectedCatagory]![selectedHabit]!['Icon'];
                                 SelectedColorIndex = 4;
                                 Properties =
-                                    Methods().Habbits[SelectedCatagory]![
+                                    Habbits[SelectedCatagory]![
                                         selectedHabit]!['properties'];
                                 Navigator.of(context2).pushNamed(
                                   "/HabitAddisionScree",
@@ -1321,1045 +1345,160 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                     ),
                   ),
 
-                  Padding(
-                    padding: EdgeInsets.only(top: 25, left: 19),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: 197,
-                          height: 23,
-                          child: Text(
-                            'CustomHabits',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontFamily: 'DM Sans',
-                              fontWeight: FontWeight.w500,
-                              height: 0,
+                  Visibility(
+                    visible: CustomHabitNames.length != 0,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 25, left: 19),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 197,
+                            height: 23,
+                            child: Text(
+                              'CustomHabits',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'DM Sans',
+                                fontWeight: FontWeight.w500,
+                                height: 0,
+                              ),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 11.0,
-                    ),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 15.0),
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                selectedHabit = "Drink water";
+                  Visibility(
+                    visible: CustomHabitNames.length != 0,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 11.0,
+                      ),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 15.0),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 81,
+                            child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                                itemCount: CustomHabitNames.length,
+                                itemBuilder: (BuildContext context,int index){
+                                  return   Padding(
+                                    padding: const EdgeInsets.only(left: 15.0),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        selectedHabit = CustomHabitNames[index];
 
-                                SelectedCatagory = "Healthy LifeStyle";
-                                target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
-                                SelectedCatagory]![selectedHabit]!['Icon'];
-                                SelectedColorIndex = 3;
-                                Properties =
-                                Methods().Habbits[SelectedCatagory]![
-                                selectedHabit]!['properties'];
-                                Navigator.of(context2).pushNamed(
-                                  "/HabitAddisionScree",
-                                );
-                              },
-                              child: Container(
-                                width: 123,
-                                height: 80,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: ShapeDecoration(
-                                  color: Theme.of(context)
-                                      .inputDecorationTheme
-                                      .fillColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                ),
-                                child: Container(
-                                  width: 123,
-                                  height: 80,
-                                  decoration: ShapeDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment(-1.00, 0.00),
-                                      end: Alignment(1, 0),
-                                      colors: [
-                                        Color(0x0001BBF6),
-                                        Color(0x3301BBF6)
-                                      ],
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                  ),
-                                  child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 7.0, left: 5),
-                                              child: SizedBox(
-                                                width: 81,
-                                                height: 45,
-                                                child: Text(
-                                                  "Drinking Water",
-                                                  style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .titleMedium
-                                                        ?.color,
-                                                    fontSize: 16,
-                                                    fontFamily: 'DM Sans',
-                                                    fontWeight: FontWeight.w700,
-                                                    height: 0,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 12.0, right: 5),
-                                              child: SvgPicture.asset(
-                                                "assets/ImagesY/RoutineScreen/AddhabbitIcons/HealthyLifeStyle/Drop_Icon.svg",
-                                                width: 24,
-                                                height: 24,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding:
-                                          const EdgeInsets.only(top: 13.0),
-                                          child: Container(
-                                            width: 123,
-                                            height: 15,
-                                            decoration: const ShapeDecoration(
-                                              color: Color(0xFF01BBF6),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(0),
-                                                  topRight: Radius.circular(0),
-                                                  bottomLeft:
-                                                  Radius.circular(15),
-                                                  bottomRight:
-                                                  Radius.circular(15),
-                                                ),
-                                              ),
-                                            ),
+                                        SelectedCatagory = "Custom";
+                                        target = "30";
+                                        SelectedHabitIcon = Habbits[
+                                        SelectedCatagory]![selectedHabit]!['Icon'];
+                                        SelectedColorIndex = 3;
+                                        Properties =properties;
+                                        Navigator.of(context2).pushNamed(
+                                          "/HabitAddisionScree",
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 123,
+                                        height: 80,
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: ShapeDecoration(
+                                          color: Theme.of(context)
+                                              .inputDecorationTheme
+                                              .fillColor,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(15),
                                           ),
                                         ),
-                                      ]),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                selectedHabit = "Exercise";
-
-                                SelectedCatagory = "Staying fit";
-                                SelectedColorIndex = 1;
-                                target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
-                                SelectedCatagory]![selectedHabit]!['Icon'];
-                                Properties =
-                                Methods().Habbits[SelectedCatagory]![
-                                selectedHabit]!['properties'];
-                                print(Properties);
-                                Navigator.of(context2).pushNamed(
-                                  "/HabitAddisionScree",
-                                );
-                              },
-                              child: Container(
-                                width: 123,
-                                height: 80,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: ShapeDecoration(
-                                  color: Theme.of(context)
-                                      .inputDecorationTheme
-                                      .fillColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                ),
-                                child: Container(
-                                  width: 123,
-                                  height: 80,
-                                  decoration: ShapeDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment(-1.00, 0.00),
-                                      end: Alignment(1, 0),
-                                      colors: [
-                                        Color(0x00DB6100),
-                                        Color(0x33DB6100)
-                                      ],
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                  ),
-                                  child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 7.0, left: 5),
-                                              child: SizedBox(
-                                                width: 81,
-                                                height: 45,
-                                                child: Text(
-                                                  "Exercise",
-                                                  style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .titleMedium
-                                                        ?.color,
-                                                    fontSize: 16,
-                                                    fontFamily: 'DM Sans',
-                                                    fontWeight: FontWeight.w700,
-                                                    height: 0,
-                                                  ),
-                                                ),
-                                              ),
+                                        child: Container(
+                                          width: 123,
+                                          height: 80,
+                                          decoration: ShapeDecoration(
+                                            gradient: LinearGradient(
+                                              begin: Alignment(-1.00, 0.00),
+                                              end: Alignment(1, 0),
+                                              colors: [
+                                                Color(0x0001BBF6),
+                                                Color(0x3301BBF6)
+                                              ],
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 12.0, right: 5),
-                                              child: SvgPicture.asset(
-                                                "assets/ImagesY/RoutineScreen/AddhabbitIcons/StayingFitIcons/ExcerciseIcon.svg",
-                                                width: 24,
-                                                height: 24,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding:
-                                          const EdgeInsets.only(top: 13.0),
-                                          child: Container(
-                                            width: 123,
-                                            height: 15,
-                                            decoration: const ShapeDecoration(
-                                              color: Color(0xffF36C00),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(0),
-                                                  topRight: Radius.circular(0),
-                                                  bottomLeft:
-                                                  Radius.circular(15),
-                                                  bottomRight:
-                                                  Radius.circular(15),
-                                                ),
-                                              ),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(15),
                                             ),
                                           ),
-                                        ),
-                                      ]),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                selectedHabit = "Morning Walk";
-
-                                SelectedCatagory = "Staying fit";
-                                target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
-                                SelectedCatagory]![selectedHabit]!['Icon'];
-                                SelectedColorIndex = 1;
-                                Properties =
-                                Methods().Habbits[SelectedCatagory]![
-                                selectedHabit]!['properties'];
-                                Navigator.of(context2).pushNamed(
-                                  "/HabitAddisionScree",
-                                );
-                              },
-                              child: Container(
-                                width: 123,
-                                height: 80,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: ShapeDecoration(
-                                  color: Theme.of(context)
-                                      .inputDecorationTheme
-                                      .fillColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                ),
-                                child: Container(
-                                  width: 123,
-                                  height: 80,
-                                  decoration: ShapeDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment(-1.00, 0.00),
-                                      end: Alignment(1, 0),
-                                      colors: [
-                                        Color(0x00DB6100),
-                                        Color(0x33DB6100)
-                                      ],
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                  ),
-                                  child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 7.0, left: 5),
-                                              child: SizedBox(
-                                                width: 81,
-                                                height: 45,
-                                                child: Text(
-                                                  "Morning Walk",
-                                                  style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .titleMedium
-                                                        ?.color,
-                                                    fontSize: 16,
-                                                    fontFamily: 'DM Sans',
-                                                    fontWeight: FontWeight.w700,
-                                                    height: 0,
+                                          child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(
+                                                          top: 7.0, left: 5),
+                                                      child: SizedBox(
+                                                        width: 81,
+                                                        height: 45,
+                                                        child: Text(
+                                                          CustomHabitNames[index],
+                                                          style: TextStyle(
+                                                            color: Theme.of(context)
+                                                                .textTheme
+                                                                .titleMedium
+                                                                ?.color,
+                                                            fontSize: 16,
+                                                            fontFamily: 'DM Sans',
+                                                            fontWeight: FontWeight.w700,
+                                                            height: 0,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(
+                                                          bottom: 12.0, right: 5),
+                                                      child: SvgPicture.asset(
+                                                        CustomHabitIcons[index],
+                                                        width: 24,
+                                                        height: 24,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                  const EdgeInsets.only(top: 13.0),
+                                                  child: Container(
+                                                    width: 123,
+                                                    height: 15,
+                                                    decoration: const ShapeDecoration(
+                                                      color: Color(0xFF01BBF6),
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.only(
+                                                          topLeft: Radius.circular(0),
+                                                          topRight: Radius.circular(0),
+                                                          bottomLeft:
+                                                          Radius.circular(15),
+                                                          bottomRight:
+                                                          Radius.circular(15),
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 12.0, right: 5),
-                                              child: SvgPicture.asset(
-                                                "assets/ImagesY/RoutineScreen/AddhabbitIcons/StayingFitIcons/Morning_Walk.svg",
-                                                width: 24,
-                                                height: 24,
-                                              ),
-                                            )
-                                          ],
+                                              ]),
                                         ),
-                                        Padding(
-                                          padding:
-                                          const EdgeInsets.only(top: 13.0),
-                                          child: Container(
-                                            width: 123,
-                                            height: 15,
-                                            decoration: const ShapeDecoration(
-                                              color: Color(0xffF36C00),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(0),
-                                                  topRight: Radius.circular(0),
-                                                  bottomLeft:
-                                                  Radius.circular(15),
-                                                  bottomRight:
-                                                  Radius.circular(15),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ]),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                selectedHabit = "Sleep Early";
-
-                                SelectedCatagory = "Healthy LifeStyle";
-                                target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
-                                SelectedCatagory]![selectedHabit]!['Icon'];
-                                SelectedColorIndex = 3;
-                                Properties =
-                                Methods().Habbits[SelectedCatagory]![
-                                selectedHabit]!['properties'];
-                                Navigator.of(context2).pushNamed(
-                                  "/HabitAddisionScree",
-                                );
-                              },
-                              child: Container(
-                                width: 123,
-                                height: 80,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: ShapeDecoration(
-                                  color: Theme.of(context)
-                                      .inputDecorationTheme
-                                      .fillColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                ),
-                                child: Container(
-                                  width: 123,
-                                  height: 80,
-                                  decoration: ShapeDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment(-1.00, 0.00),
-                                      end: Alignment(1, 0),
-                                      colors: [
-                                        Color(0x0001BBF6),
-                                        Color(0x3301BBF6)
-                                      ],
+                                      ),
                                     ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                  ),
-                                  child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 7.0, left: 5),
-                                              child: SizedBox(
-                                                width: 81,
-                                                height: 45,
-                                                child: Text(
-                                                  "Sleep Early",
-                                                  style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .titleMedium
-                                                        ?.color,
-                                                    fontSize: 16,
-                                                    fontFamily: 'DM Sans',
-                                                    fontWeight: FontWeight.w700,
-                                                    height: 0,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 12.0, right: 5),
-                                              child: SvgPicture.asset(
-                                                "assets/ImagesY/RoutineScreen/AddhabbitIcons/HealthyLifeStyle/Sleep_Early_Icon.svg",
-                                                width: 24,
-                                                height: 24,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding:
-                                          const EdgeInsets.only(top: 13.0),
-                                          child: Container(
-                                            width: 123,
-                                            height: 15,
-                                            decoration: const ShapeDecoration(
-                                              color: Color(0xFF01BBF6),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(0),
-                                                  topRight: Radius.circular(0),
-                                                  bottomLeft:
-                                                  Radius.circular(15),
-                                                  bottomRight:
-                                                  Radius.circular(15),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ]),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                selectedHabit = "Read A Book";
-
-                                SelectedCatagory = "Stress Relief";
-                                target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
-                                SelectedCatagory]![selectedHabit]!['Icon'];
-                                SelectedColorIndex = 0;
-                                Properties =
-                                Methods().Habbits[SelectedCatagory]![
-                                selectedHabit]!['properties'];
-                                Navigator.of(context2).pushNamed(
-                                  "/HabitAddisionScree",
-                                );
-                              },
-                              child: Container(
-                                width: 123,
-                                height: 80,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: ShapeDecoration(
-                                  color: Theme.of(context)
-                                      .inputDecorationTheme
-                                      .fillColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                ),
-                                child: Container(
-                                  width: 123,
-                                  height: 80,
-                                  decoration: ShapeDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment(-1.00, 0.00),
-                                      end: Alignment(1, 0),
-                                      colors: [
-                                        Color(0x009D6BCE),
-                                        Color(0x339D6BCE)
-                                      ],
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                  ),
-                                  child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 7.0, left: 5),
-                                              child: SizedBox(
-                                                width: 81,
-                                                height: 45,
-                                                child: Text(
-                                                  "Read A Book",
-                                                  style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .titleMedium
-                                                        ?.color,
-                                                    fontSize: 16,
-                                                    fontFamily: 'DM Sans',
-                                                    fontWeight: FontWeight.w700,
-                                                    height: 0,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 12.0, right: 5),
-                                              child: SvgPicture.asset(
-                                                "assets/ImagesY/RoutineScreen/AddhabbitIcons/StressRelief/Read_A_book_Icon.svg",
-                                                width: 24,
-                                                height: 24,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding:
-                                          const EdgeInsets.only(top: 13.0),
-                                          child: Container(
-                                            width: 123,
-                                            height: 15,
-                                            decoration: const ShapeDecoration(
-                                              color: Color(0xFF9D6BCE),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(0),
-                                                  topRight: Radius.circular(0),
-                                                  bottomLeft:
-                                                  Radius.circular(15),
-                                                  bottomRight:
-                                                  Radius.circular(15),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ]),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                selectedHabit = "Limit caffiene";
-
-                                SelectedCatagory = "Healthy LifeStyle";
-                                target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
-                                SelectedCatagory]![selectedHabit]!['Icon'];
-                                SelectedColorIndex = 3;
-                                Properties =
-                                Methods().Habbits[SelectedCatagory]![
-                                selectedHabit]!['properties'];
-                                Navigator.of(context2).pushNamed(
-                                  "/HabitAddisionScree",
-                                );
-                              },
-                              child: Container(
-                                width: 123,
-                                height: 80,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: ShapeDecoration(
-                                  color: Theme.of(context)
-                                      .inputDecorationTheme
-                                      .fillColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                ),
-                                child: Container(
-                                  width: 123,
-                                  height: 80,
-                                  decoration: ShapeDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment(-1.00, 0.00),
-                                      end: Alignment(1, 0),
-                                      colors: [
-                                        Color(0x0001BBF6),
-                                        Color(0x3301BBF6)
-                                      ],
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                  ),
-                                  child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 7.0, left: 5),
-                                              child: SizedBox(
-                                                width: 81,
-                                                height: 45,
-                                                child: Text(
-                                                  "Limit caffiene",
-                                                  style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .titleMedium
-                                                        ?.color,
-                                                    fontSize: 16,
-                                                    fontFamily: 'DM Sans',
-                                                    fontWeight: FontWeight.w700,
-                                                    height: 0,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 12.0, right: 5),
-                                              child: SvgPicture.asset(
-                                                "assets/ImagesY/RoutineScreen/AddhabbitIcons/HealthyLifeStyle/limit_Caffien_icon.svg",
-                                                width: 24,
-                                                height: 24,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding:
-                                          const EdgeInsets.only(top: 13.0),
-                                          child: Container(
-                                            width: 123,
-                                            height: 15,
-                                            decoration: const ShapeDecoration(
-                                              color: Color(0xFF01BBF6),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(0),
-                                                  topRight: Radius.circular(0),
-                                                  bottomLeft:
-                                                  Radius.circular(15),
-                                                  bottomRight:
-                                                  Radius.circular(15),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ]),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                selectedHabit = "Make your bed";
-
-                                SelectedCatagory = "Others";
-                                target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
-                                SelectedCatagory]![selectedHabit]!['Icon'];
-                                SelectedColorIndex = 4;
-                                Properties =
-                                Methods().Habbits[SelectedCatagory]![
-                                selectedHabit]!['properties'];
-                                Navigator.of(context2).pushNamed(
-                                  "/HabitAddisionScree",
-                                );
-                              },
-                              child: Container(
-                                width: 123,
-                                height: 80,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: ShapeDecoration(
-                                  color: Theme.of(context)
-                                      .inputDecorationTheme
-                                      .fillColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                ),
-                                child: Container(
-                                  width: 123,
-                                  height: 80,
-                                  decoration: ShapeDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment(-1.00, 0.00),
-                                      end: Alignment(1, 0),
-                                      colors: [
-                                        Color(0x00D03C91),
-                                        Color(0x33D03C91)
-                                      ],
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                  ),
-                                  child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 7.0, left: 5),
-                                              child: SizedBox(
-                                                width: 81,
-                                                height: 45,
-                                                child: Text(
-                                                  "Make your bed",
-                                                  style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .titleMedium
-                                                        ?.color,
-                                                    fontSize: 16,
-                                                    fontFamily: 'DM Sans',
-                                                    fontWeight: FontWeight.w700,
-                                                    height: 0,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 12.0, right: 5),
-                                              child: SvgPicture.asset(
-                                                "assets/ImagesY/RoutineScreen/AddhabbitIcons/Others/Make_your_Bed_Icon.svg",
-                                                width: 24,
-                                                height: 24,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding:
-                                          const EdgeInsets.only(top: 13.0),
-                                          child: Container(
-                                            width: 123,
-                                            height: 15,
-                                            decoration: const ShapeDecoration(
-                                              color: Color(0xFFD03C91),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(0),
-                                                  topRight: Radius.circular(0),
-                                                  bottomLeft:
-                                                  Radius.circular(15),
-                                                  bottomRight:
-                                                  Radius.circular(15),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ]),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                selectedHabit = "Study";
-                                SelectedCatagory = "Others";
-                                target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
-                                SelectedCatagory]![selectedHabit]!['Icon'];
-                                SelectedColorIndex = 4;
-                                Properties =
-                                Methods().Habbits[SelectedCatagory]![
-                                selectedHabit]!['properties'];
-                                Navigator.of(context2).pushNamed(
-                                  "/HabitAddisionScree",
-                                );
-                              },
-                              child: Container(
-                                width: 123,
-                                height: 80,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: ShapeDecoration(
-                                  color: Theme.of(context)
-                                      .inputDecorationTheme
-                                      .fillColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                ),
-                                child: Container(
-                                  width: 123,
-                                  height: 80,
-                                  decoration: ShapeDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment(-1.00, 0.00),
-                                      end: Alignment(1, 0),
-                                      colors: [
-                                        Color(0x00D03C91),
-                                        Color(0x33D03C91)
-                                      ],
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                  ),
-                                  child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 7.0, left: 5),
-                                              child: SizedBox(
-                                                width: 81,
-                                                height: 45,
-                                                child: Text(
-                                                  "Study",
-                                                  style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .titleMedium
-                                                        ?.color,
-                                                    fontSize: 16,
-                                                    fontFamily: 'DM Sans',
-                                                    fontWeight: FontWeight.w700,
-                                                    height: 0,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 12.0, right: 5),
-                                              child: SvgPicture.asset(
-                                                "assets/ImagesY/RoutineScreen/AddhabbitIcons/Others/Make_your_Bed_Icon.svg",
-                                                width: 24,
-                                                height: 24,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding:
-                                          const EdgeInsets.only(top: 13.0),
-                                          child: Container(
-                                            width: 123,
-                                            height: 15,
-                                            decoration: const ShapeDecoration(
-                                              color: Color(0xFFD03C91),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(0),
-                                                  topRight: Radius.circular(0),
-                                                  bottomLeft:
-                                                  Radius.circular(15),
-                                                  bottomRight:
-                                                  Radius.circular(15),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ]),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                selectedHabit = "Brush 2 times a day";
-                                SelectedCatagory = "Others";
-                                target = "30";
-                                SelectedHabitIcon = Methods().Habbits[
-                                SelectedCatagory]![selectedHabit]!['Icon'];
-                                SelectedColorIndex = 4;
-                                Properties =
-                                Methods().Habbits[SelectedCatagory]![
-                                selectedHabit]!['properties'];
-                                Navigator.of(context2).pushNamed(
-                                  "/HabitAddisionScree",
-                                );
-                              },
-                              child: Container(
-                                width: 123,
-                                height: 80,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: ShapeDecoration(
-                                  color: Theme.of(context)
-                                      .inputDecorationTheme
-                                      .fillColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                ),
-                                child: Container(
-                                  width: 123,
-                                  height: 80,
-                                  decoration: ShapeDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment(-1.00, 0.00),
-                                      end: Alignment(1, 0),
-                                      colors: [
-                                        Color(0x00D03C91),
-                                        Color(0x33D03C91)
-                                      ],
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                  ),
-                                  child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 7.0, left: 5),
-                                              child: SizedBox(
-                                                width: 81,
-                                                height: 45,
-                                                child: Text(
-                                                  "Brush 2 times a day",
-                                                  style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .titleMedium
-                                                        ?.color,
-                                                    fontSize: 16,
-                                                    fontFamily: 'DM Sans',
-                                                    fontWeight: FontWeight.w700,
-                                                    height: 0,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 12.0, right: 5),
-                                              child: SvgPicture.asset(
-                                                "assets/ImagesY/RoutineScreen/AddhabbitIcons/Others/Brush_2_times_Icon.svg",
-                                                width: 24,
-                                                height: 24,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding:
-                                          const EdgeInsets.only(top: 13.0),
-                                          child: Container(
-                                            width: 123,
-                                            height: 15,
-                                            decoration: const ShapeDecoration(
-                                              color: Color(0xFFD03C91),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(0),
-                                                  topRight: Radius.circular(0),
-                                                  bottomLeft:
-                                                  Radius.circular(15),
-                                                  bottomRight:
-                                                  Radius.circular(15),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ]),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 15,
-                            )
-                          ],
+                                  );
+                                }),
+                          )
                         ),
                       ),
                     ),
@@ -2523,10 +1662,10 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                               SelectedColorIndex = 1;
                                               target = "30";
                                               SelectedHabitIcon =
-                                                  Methods().Habbits[
+                                                  Habbits[
                                                           SelectedCatagory]![
                                                       selectedHabit]!['Icon'];
-                                              Properties = Methods().Habbits[
+                                              Properties = Habbits[
                                                       SelectedCatagory]![
                                                   selectedHabit]!['properties'];
                                               print(Properties);
@@ -2804,10 +1943,10 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                               SelectedColorIndex = 0;
                                               target = "30";
                                               SelectedHabitIcon =
-                                                  Methods().Habbits[
+                                                  Habbits[
                                                           SelectedCatagory]![
                                                       selectedHabit]!['Icon'];
-                                              Properties = Methods().Habbits[
+                                              Properties = Habbits[
                                                       SelectedCatagory]![
                                                   selectedHabit]!['properties'];
                                               print(Properties);
@@ -3085,11 +2224,11 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                                   "Healthy LifeStyle";
                                               target = "30";
                                               SelectedHabitIcon =
-                                                  Methods().Habbits[
+                                                  Habbits[
                                                           SelectedCatagory]![
                                                       selectedHabit]!['Icon'];
                                               SelectedColorIndex = 3;
-                                              Properties = Methods().Habbits[
+                                              Properties = Habbits[
                                                       SelectedCatagory]![
                                                   selectedHabit]!['properties'];
                                               Navigator.of(context2).pushNamed(
@@ -3365,11 +2504,11 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                               SelectedCatagory = "Loved Ones";
                                               target = "30";
                                               SelectedHabitIcon =
-                                                  Methods().Habbits[
+                                                  Habbits[
                                                           SelectedCatagory]![
                                                       selectedHabit]!['Icon'];
                                               SelectedColorIndex = 6;
-                                              Properties = Methods().Habbits[
+                                              Properties = Habbits[
                                                       SelectedCatagory]![
                                                   selectedHabit]!['properties'];
                                               Navigator.of(context2).pushNamed(
@@ -3648,11 +2787,11 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                                   "Personal Finance";
                                               target = "30";
                                               SelectedHabitIcon =
-                                                  Methods().Habbits[
+                                                  Habbits[
                                                           SelectedCatagory]![
                                                       selectedHabit]!['Icon'];
                                               SelectedColorIndex = 2;
-                                              Properties = Methods().Habbits[
+                                              Properties = Habbits[
                                                       SelectedCatagory]![
                                                   selectedHabit]!['properties'];
                                               Navigator.of(context2).pushNamed(
@@ -3919,15 +3058,14 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                           child: GestureDetector(
                                             onTap: () {
                                               selectedHabit = Habitnames[index];
-
                                               SelectedCatagory = "Others";
                                               target = "30";
                                               SelectedHabitIcon =
-                                                  Methods().Habbits[
+                                                  Habbits[
                                                           SelectedCatagory]![
                                                       selectedHabit]!['Icon'];
                                               SelectedColorIndex = 4;
-                                              Properties = Methods().Habbits[
+                                              Properties = Habbits[
                                                       SelectedCatagory]![
                                                   selectedHabit]!['properties'];
                                               Navigator.of(context2).pushNamed(
